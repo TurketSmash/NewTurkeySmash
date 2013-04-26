@@ -10,9 +10,11 @@ namespace Libraries
         #region Fields 
 
         private Vector2 position = new Vector2(0, 0);
-        private Texture2D texture;
+        public Texture2D texture;
         private Rectangle edge;
         private float scale = 1.0f;
+        public int Width { get { return texture.Width; } }
+        public int Height { get { return texture.Height; } }
 
         #endregion
 
