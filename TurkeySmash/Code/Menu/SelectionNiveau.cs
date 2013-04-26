@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Media;
+using TurkeySmash.Code.Main;
 namespace TurkeySmash
 {
     class SelectionNiveau : Menu
@@ -36,10 +37,7 @@ namespace TurkeySmash
         {
             niveauSelect = "spacefarm";
             MediaPlayer.Pause();
-            /*if (Accueil.modeDeJeu == "1j")
-                Basic.SetScreen(new Jeu());
-            else
-                Basic.SetScreen(new Multi());*/
+            Basic.SetScreen(new Jeu());
         }
 
         public override void Bouton2()

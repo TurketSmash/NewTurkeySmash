@@ -18,9 +18,11 @@ namespace TurkeySmash.Code.Main
         public static SoundEffect sonEspace = TurkeySmashGame.content.Load<SoundEffect>("Sons\\sonEspace");
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
 
+        private Sprite background;
         private StaticPhysicsObject level;
         private Libraries.Sprite levelSprite;
         private Character character;
+        private Libraries.Sprite charSprite;
 
         public Jeu()
         {
@@ -29,12 +31,17 @@ namespace TurkeySmash.Code.Main
 
         public override void Init()
         {
-            world =new World(Vector2.UnitY * 100f);
+            world =new World(Vector2.UnitY * 300f);
 
+            background = new Sprite();
+            background.Load(TurkeySmashGame.content, "Jeu\\background");
             levelSprite = new Libraries.Sprite();
-            levelSprite.Load(TurkeySmashGame.content, "level");
-            level = new StaticPhysicsObject(world, new Vector2((float)TurkeySmashGame.WindowSize.X/2, (float)TurkeySmashGame.WindowSize.Y/2), 1f, levelSprite);
-            
+            levelSprite.Load(TurkeySmashGame.content, "Jeu\\ground");
+            level = new StaticPhysicsObject(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y - levelSprite.Height) , 10f, levelSprite);
+            charSprite = new Libraries.Sprite();
+            charSprite.Load(TurkeySmashGame.content, "Jeu\\naruto");
+            character = new Character(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y/2), 2f, charSprite);
+
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
             sonInstance.Resume();
@@ -42,11 +49,18 @@ namespace TurkeySmash.Code.Main
 
         public override void Update(GameTime gameTime, Input input)
         {
+
             if (input.Escape())
             {
                 sonInstance.Pause();
                 Basic.SetScreen(new Pause());
             }
+            character.Update(gameTime);
+
+            Console.Write(character.body.LocalCenter);
+            Console.WriteLine(character.bodyPosition);
+            //Mise a jour du world en 30 FPS
+            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
         }
 
 
@@ -54,6 +68,13 @@ namespace TurkeySmash.Code.Main
         {
             if (state == SceneState.Active)
             {
+                TurkeySmashGame.spriteBatch.Begin();
+
+                background.DrawAsBackground(TurkeySmashGame.spriteBatch);
+                level.Draw(levelSprite, TurkeySmashGame.spriteBatch);
+                character.Draw(charSprite, TurkeySmashGame.spriteBatch);
+
+                TurkeySmashGame.spriteBatch.End();
             }
             //hud.Draw(); FIXME
         }

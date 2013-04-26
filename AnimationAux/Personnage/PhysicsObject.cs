@@ -36,7 +36,7 @@ namespace TurkeySmash
 
         public virtual void Draw(Sprite sprite, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite.texture, new Rectangle((int)bodyPosition.X, (int)bodyPosition.Y, sprite.Width, sprite.Height), null, Color.White, body.Rotation, sprite.Position, SpriteEffects.None, 0f);
+            spriteBatch.Draw(sprite.texture, new Rectangle((int)bodyPosition.X, (int)bodyPosition.Y, sprite.Width, sprite.Height), null, Color.White, body.Rotation, sprite.Origin, SpriteEffects.None, 0f);
         }
 
     }

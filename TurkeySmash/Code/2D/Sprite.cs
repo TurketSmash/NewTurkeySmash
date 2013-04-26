@@ -83,6 +83,11 @@ namespace TurkeySmash
             spriteBatch.Draw(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
         }
 
+        public void DrawAsBackground(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)TurkeySmashGame.WindowSize.X, (int)TurkeySmashGame.WindowSize.Y), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+        }
+
         #endregion
 
         public void Resize(float largeur)
