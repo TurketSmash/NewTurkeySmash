@@ -17,9 +17,9 @@ namespace TurkeySmash
         public PhysicsObject(World world, Vector2 position, float density, Vector2 bodySize)
         {
             body = BodyFactory.CreateRectangle(
-                world,bodySize.X, bodySize.Y, density);
+                world,ConvertUnits.ToSimUnits(bodySize.X), ConvertUnits.ToSimUnits(bodySize.Y), density);
             body.BodyType = BodyType.Dynamic;
-            body.Position = position;
+            body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
         }
 
