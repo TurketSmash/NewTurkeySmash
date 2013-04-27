@@ -32,7 +32,7 @@ namespace TurkeySmash
             {
                 if (players[i] != null)
                 {
-                    pourcentages[i].Texte = Convert.ToString(players[i].pourcent) + " %";
+                    pourcentages[i].Texte = string.Format("{0} %",players[i].pourcent);
                     i++;
                 }
 
