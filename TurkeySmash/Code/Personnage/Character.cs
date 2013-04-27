@@ -49,6 +49,7 @@ namespace TurkeySmash
                 canJump = false;
             }
 
+            //Attack
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 PhysicsObject hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + sprite.Width/2 , ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(sprite.Width/2, sprite.Height/2));
@@ -56,9 +57,12 @@ namespace TurkeySmash
                 body.IgnoreCollisionWith(hit.body);
                 world.Step(1 / 300f);
                 world.RemoveBody(hit.body);
-                Console.Write(ConvertUnits.ToDisplayUnits(bodyPosition));
-                Console.WriteLine(ConvertUnits.ToDisplayUnits(hit.bodyPosition));
             }
+        }
+
+        public override void Draw(Sprite sprite, SpriteBatch spriteBatch)
+        {
+
         }
 
         private bool bodyOnCollision(Fixture fixA, Fixture fixB, Contact contact)
