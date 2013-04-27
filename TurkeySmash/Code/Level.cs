@@ -51,20 +51,29 @@ namespace TurkeySmash
                 {
                     personnages[i].Update(gameTime);
 
-                    if (personnages[i].bodyPosition.X < ConvertUnits.ToSimUnits(-100)
-                        || personnages[i].bodyPosition.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + 100)
-                        || personnages[i].bodyPosition.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + 100)
-                        || personnages[i].bodyPosition.Y < ConvertUnits.ToSimUnits(-100))
-
-                        personnages[i].bodyPosition = respownPoint;
+                    if (outOfScreen(personnages[i].bodyPosition))
+                    {
+                        respawn(personnages[i]);
+                    }
                 }
-
             }
         }
 
-        public void respawn()
+        bool outOfScreen(Vector2 position)
         {
+            return (personnages[i].bodyPosition.X < ConvertUnits.ToSimUnits(-100)
+                   || personnages[i].bodyPosition.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + 100)
+                   || personnages[i].bodyPosition.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + 100)
+                   || personnages[i].bodyPosition.Y < ConvertUnits.ToSimUnits(-100));
+        }
 
+        void respawn(Character personnage)
+        {
+            if (!personnage.Mort)
+            {
+                personnage.bodyPosition = respownPoint;
+                personnage.vie--;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

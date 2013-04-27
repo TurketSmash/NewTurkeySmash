@@ -16,7 +16,6 @@ namespace TurkeySmash
         HUD hud = new HUD();
         public static SoundEffect sonEspace = TurkeySmashGame.content.Load<SoundEffect>("Sons\\sonEspace");
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
-        Character character;
         Sprite charSprite;
         Character[] personnages = new Character[4];
         Level level;
