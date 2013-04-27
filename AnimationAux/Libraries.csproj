@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="2D\ConvertUnits.cs" />
     <Compile Include="2D\Sprite.cs" />
     <Compile Include="Divers\Input.cs" />
     <Compile Include="Personnage\Character.cs" />

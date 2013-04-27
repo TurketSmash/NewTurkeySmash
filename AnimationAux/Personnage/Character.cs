@@ -26,7 +26,7 @@ namespace TurkeySmash
 
         protected virtual void Controls()
         {
-            int forcePower = 10000000;
+            int forcePower = 6;
             Vector2 force = Vector2.Zero;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
@@ -34,7 +34,7 @@ namespace TurkeySmash
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 force.X = forcePower;
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                body.ApplyForce(-Vector2.UnitY * forcePower);
+                body.ApplyForce(-Vector2.UnitY *2* forcePower);
 
             body.ApplyForce(force, body.Position);
         }

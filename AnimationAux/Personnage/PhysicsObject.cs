@@ -28,15 +28,15 @@ namespace TurkeySmash
         {
             this.sprite = sprite;
             body = BodyFactory.CreateRectangle(
-                world, sprite.Width, sprite.Height, density);
+                world,ConvertUnits.ToSimUnits(sprite.Width), ConvertUnits.ToSimUnits(sprite.Height), density);
             body.BodyType = BodyType.Dynamic;
-            body.Position = position;
+            body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
         }
 
         public virtual void Draw(Sprite sprite, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite.texture, new Rectangle((int)bodyPosition.X, (int)bodyPosition.Y, sprite.Width, sprite.Height), null, Color.White, body.Rotation, sprite.Origin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(sprite.texture, new Rectangle((int)ConvertUnits.ToDisplayUnits(bodyPosition.X), (int)ConvertUnits.ToDisplayUnits(bodyPosition.Y), sprite.Width, sprite.Height), null, Color.White, body.Rotation, sprite.Origin, SpriteEffects.None, 0f);
         }
 
     }
