@@ -1,6 +1,5 @@
-Content\Jeu\background.xnb
-Content\Jeu\ground.xnb
-Content\Jeu\naruto.xnb
+Content\SuperMario.xnb
+Content\Pourcent.xnb
 Content\Menu\MenuOption.xnb
 Content\Menu\MenuPrincipal.xnb
 Content\Menu\MenuResolution.xnb
@@ -9,11 +8,13 @@ Content\Menu\Farm Space.xnb
 Content\Defaut.xnb
 Content\Menu\perso1.xnb
 Content\Menu\thecity.xnb
-Content\SuperMario.xnb
-Content\Pourcent.xnb
 Content\Sons\byebye.xnb
 Content\Sons\latch_1.xnb
 Content\Sons\menuSelect.xnb
 Content\Sons\sonEspace.xnb
 Content\Sons\musique1.xnb
+Content\Jeu\ground.xnb
+Content\Jeu\naruto.xnb
+Content\Jeu\background.xnb
+Content\Jeu\cube.xnb
 Content\Sons\musique1.wma

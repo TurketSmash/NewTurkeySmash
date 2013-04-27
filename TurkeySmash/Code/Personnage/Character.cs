@@ -16,6 +16,7 @@ namespace TurkeySmash
     {
 
         public int vie = 5;
+        public int poucent = 0;
         bool canJump;
         World world;
 

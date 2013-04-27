@@ -19,10 +19,8 @@ namespace TurkeySmash
         public static GraphicsDeviceManager manager;
         public static SpriteBatch spriteBatch;
         public static ContentManager content;
-        public static Vector2 WindowSize
-        {
-            get { return new Vector2(manager.PreferredBackBufferWidth, manager.PreferredBackBufferHeight); }
-        }
+        public static Vector2 WindowSize { get { return new Vector2(manager.PreferredBackBufferWidth, manager.PreferredBackBufferHeight); } }
+        public static Vector2 WindowMid { get { return new Vector2(WindowSize.X / 2, WindowSize.Y / 2); } }
         Input input1;
 
         public TurkeySmashGame()
