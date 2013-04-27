@@ -31,13 +31,13 @@ namespace TurkeySmash.Code.Main
             background.Load(content, backGroundName);
 
             spritePlateFormes = new Sprite();
-            spritePlateFormes.Load(content, "Jeu\\ground.png");
+            spritePlateFormes.Load(content, "Jeu\\ground");
 
             switch (backGroundName)
             {
                 case "Jeu\\background":
-                    platesFormes[0] = new StaticPhysicsObject(world, new Vector2(-500, -500), 1, spritePlateFormes);
-                    platesFormes[1] = new StaticPhysicsObject(world, new Vector2(300, 400), 1, spritePlateFormes);
+                    platesFormes[0] = new StaticPhysicsObject(world, new Vector2(300, 400), 10, spritePlateFormes);
+                    platesFormes[1] = new StaticPhysicsObject(world, new Vector2(900, 700), 10, spritePlateFormes);
                     break;
             }
         }
