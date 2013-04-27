@@ -12,7 +12,7 @@ namespace TurkeySmash
     {
         public Body body;
         public Sprite sprite;
-        public Vector2 bodyPosition { get { return body.Position; } }
+        public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
 
         public PhysicsObject(World world, Vector2 position, float density, Vector2 bodySize)
         {

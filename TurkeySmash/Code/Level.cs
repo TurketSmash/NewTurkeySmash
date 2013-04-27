@@ -11,22 +11,21 @@ namespace TurkeySmash
 {
     class Level
     {
-        Rectangle cadreDecor = new Rectangle(-3500, 2500, 7000, -5000);
         Sprite background;
 
         StaticPhysicsObject[] platesFormes = new StaticPhysicsObject[2];
         Sprite spritePlateFormes;
 
-        Point[] spawnPoints = new Point[4];
-        Point positionRespawn = new Point(0, 1100);
+        Vector2 respownPoint = new Vector2(ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X / 2), ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y / 2));
+        Vector2[] spawnPoints = new Vector2[4];
         Character[] personnages;
         World world;
 
         public Level(World _world, string backgroundName, string spritePlateFormesNames, Character[] personnages, ContentManager content)
         {
             this.world = _world;
-            spawnPoints[0] = new Point(1200, 300);
-            spawnPoints[1] = new Point(-1200, 300);
+            spawnPoints[0] = new Vector2(1200, 300);
+            spawnPoints[1] = new Vector2(-1200, 300);
             this.personnages = personnages;
 
             background = new Sprite();
@@ -46,10 +45,20 @@ namespace TurkeySmash
 
         public void Update(GameTime gameTime)
         {
-            foreach (PhysicsObject objet in personnages)
+            for (int i = 0; i < personnages.Length; i++)
             {
-                if (objet != null)
-                    objet.Update(gameTime);
+                if (personnages[i] != null)
+                {
+                    personnages[i].Update(gameTime);
+
+                    if (personnages[i].bodyPosition.X < ConvertUnits.ToSimUnits(-100)
+                        || personnages[i].bodyPosition.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + 100)
+                        || personnages[i].bodyPosition.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + 100)
+                        || personnages[i].bodyPosition.Y < ConvertUnits.ToSimUnits(-100))
+
+                        personnages[i].bodyPosition = respownPoint;
+                }
+
             }
         }
 
@@ -60,15 +69,15 @@ namespace TurkeySmash
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            background.Draw(spriteBatch);
+            background.DrawAsBackground(spriteBatch);
             foreach (StaticPhysicsObject elements in platesFormes)
             {
                 elements.Draw(elements.sprite, spriteBatch);
             }
-            foreach (Character elements in personnages)
+            for (int i = 0; i < personnages.Length; i++)
             {
-                if (elements != null)
-                    elements.Draw(elements.sprite, spriteBatch);
+                if (personnages[i] != null)
+                    personnages[i].Draw(personnages[i].sprite, spriteBatch);
             }
         }
     }
