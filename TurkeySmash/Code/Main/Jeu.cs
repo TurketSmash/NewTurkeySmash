@@ -33,6 +33,7 @@ namespace TurkeySmash
             boxSprite = new Sprite();
             boxSprite.Load(TurkeySmashGame.content, "Jeu\\cube");
             box = new PhysicsObject(world, TurkeySmashGame.WindowMid, 1f, boxSprite);
+            box.body.Friction = 1f;
 
             charSprite = new Sprite();
             charSprite.Load(TurkeySmashGame.content, "Jeu\\naruto");
@@ -56,6 +57,7 @@ namespace TurkeySmash
             }
             level.Update(gameTime);
             hud.Update(personnages);
+
             //Mise a jour du world en 30 FPS
             world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
         }

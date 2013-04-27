@@ -16,7 +16,7 @@ namespace TurkeySmash
     {
 
         public int vie = 5;
-        public int poucent = 0;
+        public int pourcent = 0;
         bool canJump;
         World world;
 
@@ -43,7 +43,6 @@ namespace TurkeySmash
 
             //Jump
             body.OnCollision += bodyOnCollision;
-            world.Step(1 / 30);
             if (canJump & Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 body.ApplyForce(-Vector2.UnitY * 100);
@@ -52,10 +51,13 @@ namespace TurkeySmash
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                Body hit = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(sprite.Width), ConvertUnits.ToSimUnits(sprite.Height), 1);
-                hit.BodyType = BodyType.Kinematic;
-                hit.Position = new Vector2(bodyPosition.X + sprite.Width, bodyPosition.Y);
-                hit.OnCollision += hitOnColision;
+                PhysicsObject hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + sprite.Width/2 , ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(sprite.Width/2, sprite.Height/2));
+                hit.body.OnCollision += hitOnColision;
+                body.IgnoreCollisionWith(hit.body);
+                world.Step(1 / 300f);
+                world.RemoveBody(hit.body);
+                Console.Write(ConvertUnits.ToDisplayUnits(bodyPosition));
+                Console.WriteLine(ConvertUnits.ToDisplayUnits(hit.bodyPosition));
             }
         }
 
@@ -67,7 +69,7 @@ namespace TurkeySmash
 
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
-            fixB.Body.ApplyLinearImpulse(new Vector2(2.0f, 1.0f));
+            fixB.Body.ApplyLinearImpulse(new Vector2(1f, -.5f));
             return true;
         }
     }
