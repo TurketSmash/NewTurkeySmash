@@ -10,12 +10,11 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Libraries;
 #endregion
 
 namespace TurkeySmash
 {
-    public class TurkeySmashGame : Microsoft.Xna.Framework.Game
+    class TurkeySmashGame : Microsoft.Xna.Framework.Game
     {
         public static GraphicsDeviceManager manager;
         public static SpriteBatch spriteBatch;

@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurkeySmash", "TurkeySmash\TurkeySmash.csproj", "{792553FB-0E95-4323-ACB0-5A0F0DB5C80F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurkeySmashContent", "TurkeySmashContent\TurkeySmashContent.contentproj", "{887346CD-7CA0-425C-919D-8E43777D859D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libraries", "AnimationAux\Libraries.csproj", "{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farseer Physics XNA", "Farseer Physics Engine 3.3.1 Samples XNA\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj", "{0A850700-1ABB-4288-A391-6726B90EBEB9}"
 EndProject
@@ -41,18 +39,6 @@ Global
 		{887346CD-7CA0-425C-919D-8E43777D859D}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{887346CD-7CA0-425C-919D-8E43777D859D}.Release|x86.ActiveCfg = Release|x86
 		{887346CD-7CA0-425C-919D-8E43777D859D}.Release|Xbox 360.ActiveCfg = Release|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Debug|x86.ActiveCfg = Debug|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Debug|x86.Build.0 = Debug|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Debug|Xbox 360.ActiveCfg = Debug|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Release|Any CPU.ActiveCfg = Release|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Release|Mixed Platforms.Build.0 = Release|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Release|x86.ActiveCfg = Release|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Release|x86.Build.0 = Release|x86
-		{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}.Release|Xbox 360.ActiveCfg = Release|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Mixed Platforms.Build.0 = Debug|x86

@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 
-namespace Libraries
+namespace TurkeySmash
 {
     /// <summary>
     /// Convert units between display and simulation units.
     /// </summary>
-    public static class ConvertUnits
+    static class ConvertUnits
     {
         private static float _displayUnitsToSimUnitsRatio = 100f;
         private static float _simUnitsToDisplayUnitsRatio = 1 / _displayUnitsToSimUnitsRatio;

@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Content;
 
 #endregion
 
-namespace Libraries
+namespace TurkeySmash
 {
-    public class Screen
+    class Screen
     {
         public enum SceneState
         {

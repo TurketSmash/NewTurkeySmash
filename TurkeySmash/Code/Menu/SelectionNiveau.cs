@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Media;
-using TurkeySmash.Code.Main;
+
 namespace TurkeySmash
 {
     class SelectionNiveau : Menu

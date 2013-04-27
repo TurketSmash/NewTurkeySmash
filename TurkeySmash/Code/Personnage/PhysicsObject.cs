@@ -4,12 +4,11 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
-using Libraries;
 
 namespace TurkeySmash
 {
 
-    public class PhysicsObject
+    class PhysicsObject
     {
         public Body body;
         public Sprite sprite;

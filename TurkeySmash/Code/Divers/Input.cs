@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Libraries
+namespace TurkeySmash
 {
-    public class Input
+    class Input
     {
         #region Fields
 

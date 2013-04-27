@@ -5,35 +5,37 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
-using Libraries;
 using Microsoft.Xna.Framework.Content;
 
-namespace TurkeySmash.Code.Main
+namespace TurkeySmash
 {
-    public class Level
+    class Level
     {
-        private Rectangle cadreDecor = new Rectangle(-3500, 2500, 7000, -5000);
-        public Sprite background { get; set; }
-        public Sprite spritePlateFormes { get; set; }
-        private Point[] spawnPoints = new Point[4];
-        private Point positionRespawn = new Point(0, 1100);
+        Rectangle cadreDecor = new Rectangle(-3500, 2500, 7000, -5000);
+        Sprite background;
+
         StaticPhysicsObject[] platesFormes = new StaticPhysicsObject[2];
+        Sprite spritePlateFormes;
+
+        Point[] spawnPoints = new Point[4];
+        Point positionRespawn = new Point(0, 1100);
+        Character[] personnages;
         World world;
 
-
-        public Level(World _world, string backGroundName, ContentManager content)
+        public Level(World _world, string backgroundName, string spritePlateFormesNames, Character[] personnages, ContentManager content)
         {
             this.world = _world;
             spawnPoints[0] = new Point(1200, 300);
             spawnPoints[1] = new Point(-1200, 300);
+            this.personnages = personnages;
 
             background = new Sprite();
-            background.Load(content, backGroundName);
+            background.Load(content, backgroundName);
 
             spritePlateFormes = new Sprite();
-            spritePlateFormes.Load(content, "Jeu\\ground");
+            spritePlateFormes.Load(content, spritePlateFormesNames);
 
-            switch (backGroundName)
+            switch (backgroundName)
             {
                 case "Jeu\\background":
                     platesFormes[0] = new StaticPhysicsObject(world, new Vector2(300, 400), 10, spritePlateFormes);
@@ -42,12 +44,30 @@ namespace TurkeySmash.Code.Main
             }
         }
 
+        public void Update(GameTime gameTime)
+        {
+            foreach (PhysicsObject objet in personnages)
+            {
+                
+            }
+        }
+
+        public void respawn()
+        {
+
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
             foreach (StaticPhysicsObject elements in platesFormes)
             {
                 elements.Draw(elements.sprite, spriteBatch);
+            }
+            foreach (Character elements in personnages)
+            {
+                if (elements != null)
+                    elements.Draw(elements.sprite, spriteBatch);
             }
         }
     }

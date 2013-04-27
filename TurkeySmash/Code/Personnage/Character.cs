@@ -5,13 +5,17 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
-using Libraries;
 
 namespace TurkeySmash
 {
 
-    public class Character : PhysicsObject
+    class Character : PhysicsObject
     {
+
+        int vie = 5;
+
+        public bool Mort { get { return vie < 1; } }
+
         public Character(World world, Vector2 position, float density, Sprite sprite)
             : base(world, position, density, sprite)
         {
@@ -19,12 +23,7 @@ namespace TurkeySmash
             body.Friction = 2f;
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-            Controls();
-        }
-
-        protected virtual void Controls()
+        public void Update(GameTime gameTime)
         {
             int forcePower = 6;
             Vector2 force = Vector2.Zero;
@@ -34,9 +33,24 @@ namespace TurkeySmash
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 force.X = forcePower;
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                body.ApplyForce(-Vector2.UnitY *2* forcePower);
+                body.ApplyForce(-Vector2.UnitY * 2 * forcePower);
 
             body.ApplyForce(force, body.Position);
         }
+
+        //protected virtual void Controls()
+        //{
+        //    int forcePower = 6;
+        //    Vector2 force = Vector2.Zero;
+
+        //    if (Keyboard.GetState().IsKeyDown(Keys.Left))
+        //        force.X = -forcePower;
+        //    if (Keyboard.GetState().IsKeyDown(Keys.Right))
+        //        force.X = forcePower;
+        //    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+        //        body.ApplyForce(-Vector2.UnitY *2* forcePower);
+
+        //    body.ApplyForce(force, body.Position);
+        //}
     }
 }

@@ -111,9 +111,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\2D\ConvertUnits.cs" />
     <Compile Include="Code\2D\Font.cs" />
     <Compile Include="Code\2D\HUD.cs" />
     <Compile Include="Code\2D\Sprite.cs" />
+    <Compile Include="Code\Divers\Input.cs" />
+    <Compile Include="Code\Level.cs" />
     <Compile Include="Code\Main\Basic.cs" />
     <Compile Include="Code\Main\Jeu.cs" />
     <Compile Include="Code\Menu\Accueil.cs" />
@@ -127,6 +130,10 @@
     <Compile Include="Code\Menu\Resolution.cs" />
     <Compile Include="Code\Menu\SelectionNiveau.cs" />
     <Compile Include="Code\Menu\SelectionPersonnages.cs" />
+    <Compile Include="Code\Personnage\Character.cs" />
+    <Compile Include="Code\Personnage\PhysicsObject.cs" />
+    <Compile Include="Code\Personnage\StaticPhysicsObject.cs" />
+    <Compile Include="Code\Screen\Screen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Code\Main\Program.cs" />
     <Compile Include="Code\Main\TurkeySmashGame.cs" />
@@ -136,10 +143,6 @@
     <Content Include="Content\GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AnimationAux\Libraries.csproj">
-      <Project>{F2F7FA8C-1FC7-42CC-93D8-E5DFF48AC09B}</Project>
-      <Name>Libraries</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Farseer Physics Engine 3.3.1 Samples XNA\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj">
       <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
       <Name>Farseer Physics XNA</Name>
