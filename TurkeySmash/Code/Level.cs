@@ -61,10 +61,10 @@ namespace TurkeySmash
 
         bool outOfScreen(Vector2 position)
         {
-            return (personnages[i].bodyPosition.X < ConvertUnits.ToSimUnits(-100)
-                   || personnages[i].bodyPosition.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + 100)
-                   || personnages[i].bodyPosition.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + 100)
-                   || personnages[i].bodyPosition.Y < ConvertUnits.ToSimUnits(-100));
+            return (position.X < ConvertUnits.ToSimUnits(-100)
+                   || position.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + 100)
+                   || position.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + 100)
+                   || position.Y < ConvertUnits.ToSimUnits(-100));
         }
 
         void respawn(Character personnage)
