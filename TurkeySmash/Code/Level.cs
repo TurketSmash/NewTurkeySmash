@@ -48,7 +48,8 @@ namespace TurkeySmash
         {
             foreach (PhysicsObject objet in personnages)
             {
-                
+                if (objet != null)
+                    objet.Update(gameTime);
             }
         }
 

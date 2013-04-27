@@ -23,7 +23,7 @@ namespace TurkeySmash
             body.Friction = 2f;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             int forcePower = 6;
             Vector2 force = Vector2.Zero;

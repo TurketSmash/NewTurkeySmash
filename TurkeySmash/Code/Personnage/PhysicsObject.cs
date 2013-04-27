@@ -33,6 +33,11 @@ namespace TurkeySmash
             body.Restitution = 0.3f;
         }
 
+        public virtual void Update(GameTime gameTime)
+        {
+
+        }
+
         public virtual void Draw(Sprite sprite, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite.texture, new Rectangle((int)ConvertUnits.ToDisplayUnits(bodyPosition.X), (int)ConvertUnits.ToDisplayUnits(bodyPosition.Y), sprite.Width, sprite.Height), null, Color.White, body.Rotation, sprite.Origin, SpriteEffects.None, 0f);
