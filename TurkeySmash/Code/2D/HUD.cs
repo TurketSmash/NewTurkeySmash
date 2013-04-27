@@ -6,38 +6,33 @@ namespace TurkeySmash
 {
     class HUD
     {
-        private Font[] pourcentages = new Font[4];
-        private int playersCount = 0;
+        Font[] pourcentages = new Font[4];
 
         public HUD() { }
 
-        /*public void Load(AnimatedModel[] players)
+        public void Load(Character[] players)
         {
-            int i = 0;
-            foreach (Personnage player in players)
+            for (int i = 0; i < players.Length; i++)
             {
-                if (player != null)
+                if (players[i] != null)
                 {
                     pourcentages[i] = new Font((i + 1) * (TurkeySmashGame.manager.PreferredBackBufferWidth / 4),
                                             (3.5f * TurkeySmashGame.manager.PreferredBackBufferHeight / 4));
                     pourcentages[i].NameFont = "Pourcent";
                     pourcentages[i].Load(TurkeySmashGame.content);
                     pourcentages[i].SizeText = 1.0f;
-                    playersCount++;
-                    i++;
                 }
             }
             pourcentages[0].Color = Color.Red;
         }
 
-        public void Update(AnimatedModel[] players)
+        public void Update(Character[] players)
         {
-            int i = 0;
-            foreach (Personnage player in players)
+            for(int i = 0; i < players.Length; i++)
             {
-                if (player != null)
+                if (players[i] != null)
                 {
-                    pourcentages[i].Texte = Convert.ToString(player.Percent) + " %";
+                    pourcentages[i].Texte = Convert.ToString(players[i].pourcent) + " %";
                     i++;
                 }
 
@@ -48,12 +43,13 @@ namespace TurkeySmash
         {
             TurkeySmashGame.spriteBatch.Begin();
 
-            for (int i = 0; i < playersCount; i++)
+            for (int i = 0; i < pourcentages.Length; i++)
             {
-                pourcentages[i].Draw(TurkeySmashGame.spriteBatch);
+                if (pourcentages[i] != null)
+                    pourcentages[i].Draw(TurkeySmashGame.spriteBatch);
             }
 
             TurkeySmashGame.spriteBatch.End(); 
-        }*/
+        }
     }
 }
