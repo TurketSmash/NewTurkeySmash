@@ -10,14 +10,14 @@ using Microsoft.Xna.Framework.Content;
 
 namespace TurkeySmash.Code.Main
 {
-    class Level
+    public class Level
     {
         private Rectangle cadreDecor = new Rectangle(-3500, 2500, 7000, -5000);
         public Sprite background { get; set; }
         public Sprite spritePlateFormes { get; set; }
         private Point[] spawnPoints = new Point[4];
         private Point positionRespawn = new Point(0, 1100);
-        StaticPhysicsObject[] platesFormes;
+        StaticPhysicsObject[] platesFormes = new StaticPhysicsObject[2];
         World world;
 
 
@@ -31,26 +31,24 @@ namespace TurkeySmash.Code.Main
             background.Load(content, backGroundName);
 
             spritePlateFormes = new Sprite();
-            spritePlateFormes.Load(content, "plateformes.png");
+            spritePlateFormes.Load(content, "Jeu\\ground.png");
 
             switch (backGroundName)
             {
-                case "BolossLand":
+                case "Jeu\\background":
                     platesFormes[0] = new StaticPhysicsObject(world, new Vector2(-500, -500), 1, spritePlateFormes);
                     platesFormes[1] = new StaticPhysicsObject(world, new Vector2(300, 400), 1, spritePlateFormes);
                     break;
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, GraphicsDevice device, GameTime time)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             background.Draw(spriteBatch);
             foreach (StaticPhysicsObject elements in platesFormes)
             {
                 elements.Draw(elements.sprite, spriteBatch);
             }
-            spriteBatch.End();
         }
     }
 }

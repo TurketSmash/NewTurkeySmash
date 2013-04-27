@@ -19,10 +19,11 @@ namespace TurkeySmash.Code.Main
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
 
         private Sprite background;
-        private StaticPhysicsObject level;
-        private Libraries.Sprite levelSprite;
+        //private StaticPhysicsObject level;
+        //private Libraries.Sprite levelSprite;
         private Character character;
         private Libraries.Sprite charSprite;
+        Level level;
 
         public Jeu()
         {
@@ -33,11 +34,13 @@ namespace TurkeySmash.Code.Main
         {
             world =new World(Vector2.UnitY * 300f);
 
-            background = new Sprite();
-            background.Load(TurkeySmashGame.content, "Jeu\\background");
-            levelSprite = new Libraries.Sprite();
-            levelSprite.Load(TurkeySmashGame.content, "Jeu\\ground");
-            level = new StaticPhysicsObject(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y - levelSprite.Height) , 10f, levelSprite);
+            level = new Level(world, "Jeu\\background", TurkeySmashGame.content);
+
+            //background = new Sprite();
+            //background.Load(TurkeySmashGame.content, "Jeu\\background");
+            //levelSprite = new Libraries.Sprite();
+            //levelSprite.Load(TurkeySmashGame.content, "Jeu\\ground");
+            //level = new StaticPhysicsObject(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y - levelSprite.Height) , 10f, levelSprite);
             charSprite = new Libraries.Sprite();
             charSprite.Load(TurkeySmashGame.content, "Jeu\\naruto");
             character = new Character(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y/2), 2f, charSprite);
@@ -70,8 +73,9 @@ namespace TurkeySmash.Code.Main
             {
                 TurkeySmashGame.spriteBatch.Begin();
 
-                background.DrawAsBackground(TurkeySmashGame.spriteBatch);
-                level.Draw(levelSprite, TurkeySmashGame.spriteBatch);
+                level.Draw(TurkeySmashGame.spriteBatch);
+                //background.DrawAsBackground(TurkeySmashGame.spriteBatch);
+                //level.Draw(levelSprite, TurkeySmashGame.spriteBatch);
                 character.Draw(charSprite, TurkeySmashGame.spriteBatch);
 
                 TurkeySmashGame.spriteBatch.End();
