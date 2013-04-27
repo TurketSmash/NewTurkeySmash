@@ -5,6 +5,7 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace TurkeySmash
 {
@@ -13,6 +14,7 @@ namespace TurkeySmash
     {
 
         int vie = 5;
+        bool canJump = false;
 
         public bool Mort { get { return vie < 1; } }
 
@@ -32,25 +34,24 @@ namespace TurkeySmash
                 force.X = -forcePower;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 force.X = forcePower;
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                body.ApplyForce(-Vector2.UnitY * 2 * forcePower);
+
+            body.OnCollision += bodyOnCollision;
+            if (canJump)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    body.ApplyForce(-Vector2.UnitY * 2 * forcePower);
+                    canJump = false;
+                }
+            }
 
             body.ApplyForce(force, body.Position);
         }
 
-        //protected virtual void Controls()
-        //{
-        //    int forcePower = 6;
-        //    Vector2 force = Vector2.Zero;
-
-        //    if (Keyboard.GetState().IsKeyDown(Keys.Left))
-        //        force.X = -forcePower;
-        //    if (Keyboard.GetState().IsKeyDown(Keys.Right))
-        //        force.X = forcePower;
-        //    if (Keyboard.GetState().IsKeyDown(Keys.Space))
-        //        body.ApplyForce(-Vector2.UnitY *2* forcePower);
-
-        //    body.ApplyForce(force, body.Position);
-        //}
+        private bool bodyOnCollision (Fixture fixA,Fixture fixB, Contact contact)
+        {
+            canJump = true;
+            return true;
+        }
     }
 }
