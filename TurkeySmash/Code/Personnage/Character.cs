@@ -14,7 +14,8 @@ namespace TurkeySmash
     {
 
         int vie = 5;
-        bool canJump = false;
+        bool canJump;
+        World world;
 
         public bool Mort { get { return vie < 1; } }
 
@@ -23,6 +24,7 @@ namespace TurkeySmash
         {
             body.FixedRotation = true;
             body.Friction = 2f;
+            this.world = world;
         }
 
         public override void Update(GameTime gameTime)
@@ -35,17 +37,16 @@ namespace TurkeySmash
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 force.X = forcePower;
 
+            body.ApplyForce(force, body.Position);
+
             body.OnCollision += bodyOnCollision;
-            if (canJump)
+            world.Step(1 / 300);
+            if (canJump & Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                {
-                    body.ApplyForce(-Vector2.UnitY * 2 * forcePower);
-                    canJump = false;
-                }
+                body.ApplyForce(-Vector2.UnitY *100);
+                canJump = false;
             }
 
-            body.ApplyForce(force, body.Position);
         }
 
         private bool bodyOnCollision (Fixture fixA,Fixture fixB, Contact contact)
