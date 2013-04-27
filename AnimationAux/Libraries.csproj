@@ -95,6 +95,7 @@
     <Compile Include="2D\Sprite.cs" />
     <Compile Include="Divers\Input.cs" />
     <Compile Include="Personnage\Character.cs" />
+    <Compile Include="Personnage\Level.cs" />
     <Compile Include="Personnage\PhysicsObject.cs" />
     <Compile Include="Personnage\StaticPhysicsObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
