@@ -48,7 +48,7 @@ namespace TurkeySmash
                 {
                     force.X = -forcePower;
                     isMovingRight = false;
-                    effects = SpriteEffects.FlipVertically;
+                    effects = SpriteEffects.FlipHorizontally;
                 }
 
                 if (input.Right(playerindex))
@@ -97,13 +97,13 @@ namespace TurkeySmash
                 {
                     force.X = -forcePower;
                     isMovingRight = false;
-                    effects = SpriteEffects.FlipVertically;
+                    effects = SpriteEffects.FlipHorizontally;
                 }
 
                 if (input.Right(playerindex))
                 {
                     force.X = forcePower;
-                    isMovingRight = true
+                    isMovingRight = true;
                     effects = SpriteEffects.None;
                 }
                 body.ApplyForce(force, body.Position);
