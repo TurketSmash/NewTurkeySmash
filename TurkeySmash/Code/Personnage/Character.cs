@@ -60,10 +60,6 @@ namespace TurkeySmash
             }
         }
 
-        public override void Draw(Sprite sprite, SpriteBatch spriteBatch)
-        {
-
-        }
 
         private bool bodyOnCollision(Fixture fixA, Fixture fixB, Contact contact)
         {

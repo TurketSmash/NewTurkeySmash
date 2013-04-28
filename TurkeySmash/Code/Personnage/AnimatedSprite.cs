@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace TurkeySmash
 {
@@ -19,13 +21,17 @@ namespace TurkeySmash
 
     class AnimatedSprite
     {
-        public Vector2 Position;
-        protected AnimatedSpriteDef definition;
-        protected Texture2D sprite;
-        protected Point CurrentFrame;
-        protected bool FinishedAnimation = false;
-        protected double TimeBetweenFrame = 16;
-        protected double lastFrameUpdatedTime = 0;
+        public Vector2 position;
+        AnimatedSpriteDef definition;
+        Texture2D sprite;
+        Point CurrentFrame;
+        bool FinishedAnimation = false;
+        double TimeBetweenFrame = 16;
+        double lastFrameUpdatedTime = 0;
+        public Body body;
+        public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
+        public Vector2 bodySize;
+        public Vector2 Origin { get { return new Vector2(bodySize.X / 2, bodySize.Y / 2); } }
 
         int frameRate = 60;
         public int FrameRate
@@ -49,16 +55,16 @@ namespace TurkeySmash
             }
         }
 
-        public AnimatedSprite(AnimatedSpriteDef definition)
+        public AnimatedSprite(World world, Vector2 position, float density, Vector2 bodySize, AnimatedSpriteDef definition)
         {
             this.definition = definition;
-            this.Position = new Vector2();
+            this.bodySize = bodySize;
             CurrentFrame = new Point();
-        }
-
-        public void Initialize()
-        {
             frameRate = definition.FrameRate;
+            body = BodyFactory.CreateRectangle(world, bodySize.X, bodySize.Y, density);
+            body.BodyType = BodyType.Dynamic;
+            body.Position = ConvertUnits.ToSimUnits(position);
+            body.Restitution = 0.3f;
         }
 
         public void LoadContent()
@@ -111,7 +117,8 @@ namespace TurkeySmash
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, new Rectangle((int)Position.X, (int)Position.Y, definition.FrameSize.X, definition.FrameSize.Y),
+            Console.WriteLine(" {0} x, {0} y", bodyPosition.X, bodyPosition.Y);
+            spriteBatch.Draw(sprite, new Rectangle((int)ConvertUnits.ToDisplayUnits(bodyPosition.X - bodySize.X), (int)ConvertUnits.ToDisplayUnits(bodyPosition.Y - bodySize.Y), definition.FrameSize.X, definition.FrameSize.Y),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
                                     Color.White);
         }

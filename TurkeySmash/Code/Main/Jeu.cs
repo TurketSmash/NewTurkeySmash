@@ -41,7 +41,7 @@ namespace TurkeySmash
             personnages[0] = new Character(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y/2), 1f, charSprite);
             level = new Level(world, "Jeu\\background", "Jeu\\ground", personnages, TurkeySmashGame.content);
 
-            anim = new AnimatedSprite(new AnimatedSpriteDef()
+            anim = new AnimatedSprite(world, TurkeySmashGame.WindowMid, 1f, new Vector2(ConvertUnits.ToSimUnits(60), ConvertUnits.ToSimUnits(60)), new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\NarutoRun",
                 FrameRate = 60,
@@ -49,9 +49,8 @@ namespace TurkeySmash
                 Loop = true,
                 NbFrames = new Point(5, 1),
             });
-            anim.Position = new Vector2(250, 50);
+            anim.position = new Vector2(0, 0);
             anim.LoadContent();
-            anim.Initialize();
 
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
@@ -70,10 +69,11 @@ namespace TurkeySmash
             }
             level.Update(gameTime);
             anim.Update(gameTime);
+            anim.Update(gameTime);
             hud.Update(personnages);
 
             //Mise a jour du world en 30 FPS
-            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
+            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 60f)));
         }
 
 
