@@ -20,7 +20,6 @@ namespace TurkeySmash
         Level level;
         PhysicsObject box;
         Sprite boxSprite;
-        AnimatedSprite anim;
 
         public Jeu()
         {
@@ -35,7 +34,7 @@ namespace TurkeySmash
             box = new PhysicsObject(world, TurkeySmashGame.WindowMid, 1f, boxSprite);
             box.body.Friction = 1f;
 
-            personnages[0] = new Character(world, TurkeySmashGame.WindowMid, 1f, new Vector2(ConvertUnits.ToSimUnits(60), ConvertUnits.ToSimUnits(60)), new AnimatedSpriteDef()
+            personnages[0] = new Character(world, TurkeySmashGame.WindowMid, 1f, new Vector2(ConvertUnits.ToSimUnits(55), ConvertUnits.ToSimUnits(55)), new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\NarutoRun",
                 FrameRate = 60,
