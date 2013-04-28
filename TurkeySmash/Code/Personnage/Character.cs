@@ -22,6 +22,8 @@ namespace TurkeySmash
         Input input;
         bool isMovingRight = true;
         World world;
+        float oldDrop;
+        float newDrop;
 
         public bool Mort { get { return vie < 1; } }
 
@@ -38,8 +40,17 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime)
         {
-            if (playerindex == PlayerIndex.One)
+            newDrop = bodyPosition.Y;
+
+            if (FinishedAnimation && canJump)
+            {
+                Reset(new Point(0, 1));
+                TimeBetweenFrame = 100;
+            }
+
             #region P1
+
+            if (playerindex == PlayerIndex.One)
             {
                 //Right & Left
                 int forcePower = 3;
@@ -65,6 +76,7 @@ namespace TurkeySmash
                 {
                     body.ApplyForce(-Vector2.UnitY * 100);
                     canJump = false;
+                    CurrentFrame.Y = 2;
                 }
 
                 //Attack
@@ -87,8 +99,9 @@ namespace TurkeySmash
             }
             #endregion
 
-            if (playerindex == PlayerIndex.Two)
             #region P2
+
+            if (playerindex == PlayerIndex.Two)
             {
                 //Right & Left
                 int forcePower = 3;
@@ -98,13 +111,22 @@ namespace TurkeySmash
                     force.X = -forcePower;
                     isMovingRight = false;
                     effects = SpriteEffects.FlipHorizontally;
+                    if (canJump)
+                    {
+                        definition.Loop = false;
+                        CurrentFrame.Y = 0;
+                    }
                 }
-
-                if (input.Right(playerindex))
+                else if (input.Right(playerindex))
                 {
                     force.X = forcePower;
                     isMovingRight = true;
                     effects = SpriteEffects.None;
+                    if (canJump)
+                    {
+                        definition.Loop = false;
+                        CurrentFrame.Y = 0;
+                    }
                 }
                 body.ApplyForce(force, body.Position);
 
@@ -114,6 +136,9 @@ namespace TurkeySmash
                 {
                     body.ApplyForce(-Vector2.UnitY * 100);
                     canJump = false;
+                    definition.Loop = false;
+                    FinishedAnimation = false;
+                    CurrentFrame.Y = 2;
                 }
 
                 //Attack
@@ -122,19 +147,38 @@ namespace TurkeySmash
                     PhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X/2,bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2,bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
-                    hit.body.IsSensor =true;
+                    hit.body.IsSensor = true;
                     hit.body.OnCollision += hitOnColision;
                     world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
+                    
+                    
+                    Reset(new Point());
+                    definition.Loop = false;
+                    FinishedAnimation = false;
+                    TimeBetweenFrame = 50;
+                    CurrentFrame.Y = 3;
                 }
             }
-                #endregion 
+
+            #endregion
+
+            if (newDrop > oldDrop + 0.1)
+            {
+                CurrentFrame = new Point(4, 2);
+                definition.Loop = false;
+                FinishedAnimation = true;
+            }
+
+            oldDrop = newDrop;
+            pourcent = (int)body.UserData;
+
             base.Update(gameTime);
         }
 

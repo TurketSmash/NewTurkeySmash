@@ -36,7 +36,7 @@ namespace TurkeySmash
 
             personnages[0] = new Character(world, TurkeySmashGame.WindowMid, 1f, new Vector2(55, 55),PlayerIndex.One, new AnimatedSpriteDef()
             {
-                AssetName = "Jeu\\NarutoRun",
+                AssetName = "Jeu\\Narutosheet",
                 FrameRate = 60,
                 FrameSize = new Point(88, 88),
                 Loop = true,
@@ -45,14 +45,14 @@ namespace TurkeySmash
 
             personnages[1] = new Character(world, new Vector2(TurkeySmashGame.WindowSize.X/2,TurkeySmashGame.WindowSize.Y/2-100), 1f, new Vector2(55, 55), PlayerIndex.Two, new AnimatedSpriteDef()
             {
-                AssetName = "Jeu\\NarutoRun",
+                AssetName = "Jeu\\Narutosheet",
                 FrameRate = 60,
                 FrameSize = new Point(88, 88),
                 Loop = true,
                 NbFrames = new Point(5, 1),
             });
 
-            level = new Level(world, "Jeu\\level1", personnages, TurkeySmashGame.content);
+            level = new Level(world, "Jeu\\background1", personnages, TurkeySmashGame.content);
             
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;

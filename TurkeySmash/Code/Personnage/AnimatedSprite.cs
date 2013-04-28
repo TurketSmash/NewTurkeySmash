@@ -24,9 +24,9 @@ namespace TurkeySmash
         public AnimatedSpriteDef definition;
         Texture2D sprite;
         protected Point CurrentFrame;
-        bool FinishedAnimation = false;
+        protected bool FinishedAnimation = false;
         protected double TimeBetweenFrame = 100;
-        double lastFrameUpdatedTime = 0;
+        protected double lastFrameUpdatedTime = 0;
         float scale = 1.0f;
         public Body body;
         public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
@@ -48,11 +48,12 @@ namespace TurkeySmash
             sprite = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
         }
 
-        public void Reset()
+        public void Reset(Point point)
         {
-            CurrentFrame = new Point();
+            CurrentFrame = point;
             FinishedAnimation = false;
             lastFrameUpdatedTime = 0;
+            definition.Loop = true;
         }
 
         public virtual void Update(GameTime time)
