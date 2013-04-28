@@ -21,11 +21,11 @@ namespace TurkeySmash
 
     class AnimatedSprite
     {
-        AnimatedSpriteDef definition;
+        public AnimatedSpriteDef definition;
         Texture2D sprite;
         protected Point CurrentFrame;
         bool FinishedAnimation = false;
-        double TimeBetweenFrame = 16;
+        protected double TimeBetweenFrame = 100;
         double lastFrameUpdatedTime = 0;
         public Body body;
         public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
@@ -34,26 +34,6 @@ namespace TurkeySmash
         protected SpriteEffects effects;
 
         int frameRate = 60;
-        public int FrameRate
-        {
-            get
-            {
-                return frameRate;
-            }
-            set
-            {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Framerate can't be less or equl to 0");
-                else
-                {
-                    if (frameRate != value)
-                    {
-                        frameRate = value;
-                        TimeBetweenFrame = 1000.0d / (double)value;
-                    }
-                }
-            }
-        }
 
         public AnimatedSprite(World world, Vector2 position, float density, Vector2 bodySize, AnimatedSpriteDef definition)
         {
@@ -105,7 +85,6 @@ namespace TurkeySmash
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Console.WriteLine(" {0} x, {0} y", bodyPosition.X, bodyPosition.Y);
             spriteBatch.Draw(sprite, new Rectangle((int)(ConvertUnits.ToDisplayUnits(bodyPosition.X) - bodySize.X), (int)(ConvertUnits.ToDisplayUnits(bodyPosition.Y) - bodySize.Y), definition.FrameSize.X, definition.FrameSize.Y),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
                                     Color.White, 0, Vector2.Zero, effects, 0);
