@@ -34,8 +34,8 @@ namespace TurkeySmash
         {
             this.Window.AllowUserResizing = false;
             this.Window.Title = "TurkeySmash";
-            manager.PreferredBackBufferWidth = 1600; //parametre par defaut
-            manager.PreferredBackBufferHeight = 900;
+            manager.PreferredBackBufferWidth = 1920; //parametre par defaut
+            manager.PreferredBackBufferHeight = 1080;
             manager.IsFullScreen = false;           
             manager.ApplyChanges();
 

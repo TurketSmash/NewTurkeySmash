@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework.Content;
 
 namespace TurkeySmash
@@ -13,7 +14,7 @@ namespace TurkeySmash
     {
         Sprite background;
 
-        StaticPhysicsObject[] platesFormes = new StaticPhysicsObject[2];
+        StaticPhysicsObject[] bodylist = new StaticPhysicsObject[6];
         Sprite spritePlateFormes;
 
         Vector2 respownPoint = new Vector2(ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X / 2), ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y / 2));
@@ -21,7 +22,7 @@ namespace TurkeySmash
         Character[] personnages;
         World world;
 
-        public Level(World _world, string backgroundName, string spritePlateFormesNames, Character[] personnages, ContentManager content)
+        public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
             this.world = _world;
             spawnPoints[0] = new Vector2(1200, 300);
@@ -31,14 +32,22 @@ namespace TurkeySmash
             background = new Sprite();
             background.Load(content, backgroundName);
 
-            spritePlateFormes = new Sprite();
-            spritePlateFormes.Load(content, spritePlateFormesNames);
+            //spritePlateFormes = new Sprite();
+            //spritePlateFormes.Load(content, spritePlateFormesNames);
 
             switch (backgroundName)
             {
-                case "Jeu\\background":
-                    platesFormes[0] = new StaticPhysicsObject(world, new Vector2(300, 400), 10, spritePlateFormes);
-                    platesFormes[1] = new StaticPhysicsObject(world, new Vector2(900, 700), 10, spritePlateFormes);
+                case "Jeu\\level1":
+                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(235, 665), 10, new Vector2(240, 70));
+                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(1117, 335), 10, new Vector2(240, 70)); //3 plateformes volantes
+                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(1458, 510), 10, new Vector2(240, 70));
+                    bodylist[3] = new StaticPhysicsObject(world, new Vector2(550, 720), 10, new Vector2(68, 172)); //partie gauche de la plateforme centrale
+                    bodylist[4] = new StaticPhysicsObject(world, new Vector2(882, 754), 10, new Vector2(580, 102)); //partie central de la plateforme centrale
+                    //bodylist[5] = new StaticPhysicsObject(world, new Vector2(1204, 738), 10, new Vector2(68, 139)); //partie droite de la plateforme centrale
+                    break;
+
+                case "Jeu\\level2":
+                    
                     break;
             }
         }
@@ -86,10 +95,10 @@ namespace TurkeySmash
         public void Draw(SpriteBatch spriteBatch)
         {
             background.DrawAsBackground(spriteBatch);
-            foreach (StaticPhysicsObject elements in platesFormes)
-            {
-                elements.Draw(elements.sprite, spriteBatch);
-            }
+            //foreach (StaticPhysicsObject elements in bodylist)
+            //{
+            //    elements.Draw(elements.sprite, spriteBatch);
+            //}
             for (int i = 0; i < personnages.Length; i++)
             {
                 if (personnages[i] != null)

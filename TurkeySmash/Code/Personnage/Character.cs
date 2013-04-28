@@ -79,7 +79,7 @@ namespace TurkeySmash
                     {
                         hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2,bodySize.Y / 2));
                     }
-                    hit.body.BodyType = BodyType.Kinematic;
+                    hit.body.IsSensor = true;
                     hit.body.OnCollision += hitOnColision;
                     world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
@@ -128,7 +128,7 @@ namespace TurkeySmash
                     {
                         hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2,bodySize.Y / 2));
                     }
-                    hit.body.BodyType = BodyType.Kinematic;
+                    hit.body.IsSensor =true;
                     hit.body.OnCollision += hitOnColision;
                     world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
@@ -155,9 +155,9 @@ namespace TurkeySmash
             Console.WriteLine(playerindex +" : " + pourcentB);
 
             if (isMovingRight)
-                fixB.Body.ApplyLinearImpulse(new Vector2(1f, -.5f) * (1 + (pourcentB / 100)));
+                fixB.Body.ApplyLinearImpulse(new Vector2(1f, -.7f) * (1 + (pourcentB / 100)));
             else
-                fixB.Body.ApplyLinearImpulse(new Vector2(-1f, -.5f) * (1 + (pourcentB / 100)));
+                fixB.Body.ApplyLinearImpulse(new Vector2(-1f, -.7f) * (1 + (pourcentB / 100)));
 
             if (fixB.Body.UserData != null)
                 fixB.Body.UserData = (int)fixB.Body.UserData + 7;
