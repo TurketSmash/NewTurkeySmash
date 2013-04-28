@@ -42,6 +42,16 @@ namespace TurkeySmash
                 Loop = true,
                 NbFrames = new Point(5, 1),
             });
+
+            personnages[1] = new Character(world, TurkeySmashGame.WindowMid, 1f, new Vector2(55, 55), PlayerIndex.Two, new AnimatedSpriteDef()
+            {
+                AssetName = "Jeu\\NarutoRun",
+                FrameRate = 60,
+                FrameSize = new Point(88, 88),
+                Loop = true,
+                NbFrames = new Point(5, 1),
+            });
+
             level = new Level(world, "Jeu\\background", "Jeu\\ground", personnages, TurkeySmashGame.content);
 
             sonInstance.Volume = 0.5f;
