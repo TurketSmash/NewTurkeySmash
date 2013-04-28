@@ -9,7 +9,6 @@ namespace TurkeySmash
 
         GamePadState pad;
         PlayerIndex player;
-        Character personnage;
         enum GameState { Game, Disconnected }
         GameState gameState = GameState.Game;
         bool disconnect = false;

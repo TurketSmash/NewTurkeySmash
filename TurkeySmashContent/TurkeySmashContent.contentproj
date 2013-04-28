@@ -177,13 +177,37 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\level1.png">
-      <Name>level1</Name>
+    <Compile Include="Jeu\level2.png">
+      <Name>level2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Jeu\level2.png">
-      <Name>level2</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\background1.png">
+      <Name>background1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\plateforme2.png">
+      <Name>plateforme2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\plateforme1Left.png">
+      <Name>plateforme1Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\plateforme1Mid.png">
+      <Name>plateforme1Mid</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\plateforme1Right.png">
+      <Name>plateforme1Right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
