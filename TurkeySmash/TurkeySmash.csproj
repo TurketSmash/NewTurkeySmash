@@ -130,6 +130,7 @@
     <Compile Include="Code\Menu\Resolution.cs" />
     <Compile Include="Code\Menu\SelectionNiveau.cs" />
     <Compile Include="Code\Menu\SelectionPersonnages.cs" />
+    <Compile Include="Code\Personnage\AnimatedSprite.cs" />
     <Compile Include="Code\Personnage\Character.cs" />
     <Compile Include="Code\Personnage\PhysicsObject.cs" />
     <Compile Include="Code\Personnage\StaticPhysicsObject.cs" />
