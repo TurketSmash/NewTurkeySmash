@@ -81,7 +81,7 @@ namespace TurkeySmash
                     }
                     hit.body.BodyType = BodyType.Kinematic;
                     hit.body.OnCollision += hitOnColision;
-                    world.Step(1 / 300f);
+                    world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
                 }
             }
@@ -91,7 +91,7 @@ namespace TurkeySmash
             #region P2
             {
                 //Right & Left
-                int forcePower = 6;
+                int forcePower = 3;
                 Vector2 force = Vector2.Zero;
                 if (input.Left(playerindex))
                 {
@@ -122,15 +122,15 @@ namespace TurkeySmash
                     PhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(body.Position.X + 15 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X/2,bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(body.Position.X - 15 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2,bodySize.Y / 2));
                     }
                     hit.body.BodyType = BodyType.Kinematic;
                     hit.body.OnCollision += hitOnColision;
-                    world.Step(1 / 300f);
+                    world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
                 }
             }
