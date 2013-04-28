@@ -31,7 +31,7 @@ namespace TurkeySmash
             this.playerindex = playerindex;
             input = new Input(playerindex);
             body.FixedRotation = true;
-            body.Friction = 1f;
+            body.Friction = 0.5f;
             this.world = world;
             body.UserData = this.pourcent;
         }
@@ -42,18 +42,20 @@ namespace TurkeySmash
             #region P1
             {
                 //Right & Left
-                int forcePower = 6;
+                int forcePower = 3;
                 Vector2 force = Vector2.Zero;
                 if (input.Left(playerindex))
                 {
                     force.X = -forcePower;
                     isMovingRight = false;
+                    effects = SpriteEffects.FlipVertically;
                 }
 
                 if (input.Right(playerindex))
                 {
                     force.X = forcePower;
                     isMovingRight = true;
+                    effects = SpriteEffects.None;
                 }
                 body.ApplyForce(force, body.Position);
 
@@ -71,11 +73,11 @@ namespace TurkeySmash
                     PhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(body.Position.X + 15 + bodySize.X / 2, body.Position.Y), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X/2,bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(body.Position.X - 15 - bodySize.X / 2, body.Position.Y), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2,bodySize.Y / 2));
                     }
                     hit.body.BodyType = BodyType.Kinematic;
                     hit.body.OnCollision += hitOnColision;
@@ -95,12 +97,14 @@ namespace TurkeySmash
                 {
                     force.X = -forcePower;
                     isMovingRight = false;
+                    effects = SpriteEffects.FlipVertically;
                 }
 
                 if (input.Right(playerindex))
                 {
                     force.X = forcePower;
-                    isMovingRight = true;
+                    isMovingRight = true
+                    effects = SpriteEffects.None;
                 }
                 body.ApplyForce(force, body.Position);
 
@@ -118,11 +122,11 @@ namespace TurkeySmash
                     PhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 15 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(body.Position.X + 15 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 15 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(body.Position.X - 15 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2((bodySize.X / 2), bodySize.Y / 2));
                     }
                     hit.body.BodyType = BodyType.Kinematic;
                     hit.body.OnCollision += hitOnColision;
