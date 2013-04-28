@@ -63,27 +63,32 @@ namespace TurkeySmash
 
         public bool Up()
         {
-            return (Keyboard.GetState().IsKeyDown(Keys.Up) || GamePad.GetState(player).ThumbSticks.Left.X < 0.5f);
+            return (Keyboard.GetState().IsKeyDown(Keys.Up) || GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f);
         }
 
         public bool Down()
         {
-            return (Keyboard.GetState().IsKeyDown(Keys.Down) || GamePad.GetState(player).ThumbSticks.Left.X < 0.5f);
+            return (Keyboard.GetState().IsKeyDown(Keys.Down) || GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f);
         }
 
-        public bool Right()
+        public bool Right(PlayerIndex player)
         {
-            return (Keyboard.GetState().IsKeyDown(Keys.Right) || GamePad.GetState(player).ThumbSticks.Left.X < 0.5f);
+            return (Keyboard.GetState().IsKeyDown(Keys.Right) || GamePad.GetState(player).ThumbSticks.Left.X > 0.5f);
         }
 
-        public bool Left()
+        public bool Left(PlayerIndex player)
         {
-            return (Keyboard.GetState().IsKeyDown(Keys.Left) || GamePad.GetState(player).ThumbSticks.Left.X < 0.5f);
+            return (Keyboard.GetState().IsKeyDown(Keys.Left) || GamePad.GetState(player).ThumbSticks.Left.X < -0.5f);
         }
-        
-        public bool Jump()
+
+        public bool Jump(PlayerIndex player)
         {
             return (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(player).Buttons.A == ButtonState.Pressed);
+        }
+
+        public bool Action(PlayerIndex player)
+        {
+            return (Keyboard.GetState().IsKeyDown(Keys.A) || GamePad.GetState(player).Buttons.B == ButtonState.Pressed);
         }
 
         public bool Enter()
@@ -99,5 +104,6 @@ namespace TurkeySmash
         }
 
         #endregion 
+    
     }
 }

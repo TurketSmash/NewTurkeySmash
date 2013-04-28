@@ -7,6 +7,7 @@ namespace TurkeySmash
     class HUD
     {
         Font[] pourcentages = new Font[4];
+        Color[] color = new Color[4];
 
         public HUD() { }
 
@@ -23,7 +24,8 @@ namespace TurkeySmash
                     pourcentages[i].SizeText = 1.0f;
                 }
             }
-            pourcentages[0].Color = Color.Red;
+            pourcentages[0].Color = Color.Red; //= color[0];
+            //pourcentages[1].Color = Color.Black;
         }
 
         public void Update(Character[] players)
@@ -32,7 +34,8 @@ namespace TurkeySmash
             {
                 if (players[i] != null)
                 {
-                    pourcentages[i].Texte = string.Format("{0} %",players[i].pourcent);
+                    pourcentages[i].Texte = string.Format("{0} %", players[i].body.UserData);
+                    color[i] = new Color(255, 255 - (255 * ((int)players[i].body.UserData / 100)), 255 - (255 * ((int)players[i].body.UserData / 100)));
                     i++;
                 }
 
