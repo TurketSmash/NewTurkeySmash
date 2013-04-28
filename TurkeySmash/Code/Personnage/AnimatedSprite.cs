@@ -27,10 +27,10 @@ namespace TurkeySmash
         bool FinishedAnimation = false;
         protected double TimeBetweenFrame = 100;
         double lastFrameUpdatedTime = 0;
+        float scale = 1.0f;
         public Body body;
         public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
         public Vector2 bodySize;
-        public Vector2 Origin { get { return new Vector2(bodySize.X / 2, bodySize.Y / 2); } }
         protected SpriteEffects effects;
 
         int frameRate = 60;
@@ -41,7 +41,7 @@ namespace TurkeySmash
             this.bodySize = bodySize;
             CurrentFrame = new Point();
             frameRate = definition.FrameRate;
-            body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(bodySize.X), ConvertUnits.ToSimUnits(bodySize.Y), density);
+            body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(bodySize.X * scale), ConvertUnits.ToSimUnits(bodySize.Y * scale), density);
             body.BodyType = BodyType.Dynamic;
             body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
@@ -85,9 +85,14 @@ namespace TurkeySmash
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, new Rectangle((int)(ConvertUnits.ToDisplayUnits(bodyPosition.X) - bodySize.X), (int)(ConvertUnits.ToDisplayUnits(bodyPosition.Y) - bodySize.Y), definition.FrameSize.X, definition.FrameSize.Y),
+            spriteBatch.Draw(sprite, new Vector2(ConvertUnits.ToDisplayUnits(bodyPosition.X) - (bodySize.X * scale), ConvertUnits.ToDisplayUnits(bodyPosition.Y) - (bodySize.Y * scale)),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
-                                    Color.White, 0, Vector2.Zero, effects, 0);
+                                    Color.White, 0, Vector2.Zero, scale, effects, 0);
+        }
+
+        public void Resize(float largeur, float longueur)
+        {
+            scale = largeur / longueur;
         }
     }
 }
