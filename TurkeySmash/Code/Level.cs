@@ -86,7 +86,7 @@ namespace TurkeySmash
             for (int i = 0; i < personnages.Length; i++)
             {
                 if (personnages[i] != null)
-                    personnages[i].Draw(personnages[i].sprite, spriteBatch);
+                    personnages[i].Draw(spriteBatch);
             }
         }
     }

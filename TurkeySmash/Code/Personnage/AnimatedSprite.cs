@@ -65,10 +65,6 @@ namespace TurkeySmash
             body.BodyType = BodyType.Dynamic;
             body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
-        }
-
-        public void LoadContent()
-        {
             sprite = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
         }
 
@@ -79,7 +75,7 @@ namespace TurkeySmash
             lastFrameUpdatedTime = 0;
         }
 
-        public void Update(GameTime time)
+        public virtual void Update(GameTime time)
         {
             if (FinishedAnimation) return;
             lastFrameUpdatedTime += time.ElapsedGameTime.Milliseconds;

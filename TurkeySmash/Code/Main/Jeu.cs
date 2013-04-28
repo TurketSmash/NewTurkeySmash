@@ -16,7 +16,6 @@ namespace TurkeySmash
         HUD hud = new HUD();
         public static SoundEffect sonEspace = TurkeySmashGame.content.Load<SoundEffect>("Sons\\sonEspace");
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
-        Sprite charSprite;
         Character[] personnages = new Character[4];
         Level level;
         PhysicsObject box;
@@ -36,12 +35,7 @@ namespace TurkeySmash
             box = new PhysicsObject(world, TurkeySmashGame.WindowMid, 1f, boxSprite);
             box.body.Friction = 1f;
 
-            charSprite = new Sprite();
-            charSprite.Load(TurkeySmashGame.content, "Jeu\\naruto");
-            personnages[0] = new Character(world, new Vector2(TurkeySmashGame.WindowSize.X/2, TurkeySmashGame.WindowSize.Y/2), 1f, charSprite);
-            level = new Level(world, "Jeu\\background", "Jeu\\ground", personnages, TurkeySmashGame.content);
-
-            anim = new AnimatedSprite(world, TurkeySmashGame.WindowMid, 1f, new Vector2(ConvertUnits.ToSimUnits(60), ConvertUnits.ToSimUnits(60)), new AnimatedSpriteDef()
+            personnages[0] = new Character(world, TurkeySmashGame.WindowMid, 1f, new Vector2(ConvertUnits.ToSimUnits(60), ConvertUnits.ToSimUnits(60)), new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\NarutoRun",
                 FrameRate = 60,
@@ -49,8 +43,7 @@ namespace TurkeySmash
                 Loop = true,
                 NbFrames = new Point(5, 1),
             });
-            anim.position = new Vector2(0, 0);
-            anim.LoadContent();
+            level = new Level(world, "Jeu\\background", "Jeu\\ground", personnages, TurkeySmashGame.content);
 
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
@@ -68,12 +61,10 @@ namespace TurkeySmash
                 Basic.SetScreen(new Pause());
             }
             level.Update(gameTime);
-            anim.Update(gameTime);
-            anim.Update(gameTime);
             hud.Update(personnages);
 
             //Mise a jour du world en 30 FPS
-            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 60f)));
+            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
         }
 
 
@@ -84,7 +75,6 @@ namespace TurkeySmash
                 TurkeySmashGame.spriteBatch.Begin();
 
                 level.Draw(TurkeySmashGame.spriteBatch);
-                anim.Draw(TurkeySmashGame.spriteBatch);
                 box.Draw(boxSprite, TurkeySmashGame.spriteBatch);
 
                 TurkeySmashGame.spriteBatch.End();
