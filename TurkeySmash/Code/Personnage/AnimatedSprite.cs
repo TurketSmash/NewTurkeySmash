@@ -21,10 +21,9 @@ namespace TurkeySmash
 
     class AnimatedSprite
     {
-        public Vector2 position;
         AnimatedSpriteDef definition;
         Texture2D sprite;
-        Point CurrentFrame;
+        protected Point CurrentFrame;
         bool FinishedAnimation = false;
         double TimeBetweenFrame = 16;
         double lastFrameUpdatedTime = 0;
@@ -32,6 +31,7 @@ namespace TurkeySmash
         public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
         public Vector2 bodySize;
         public Vector2 Origin { get { return new Vector2(bodySize.X / 2, bodySize.Y / 2); } }
+        protected SpriteEffects effects;
 
         int frameRate = 60;
         public int FrameRate
@@ -61,7 +61,7 @@ namespace TurkeySmash
             this.bodySize = bodySize;
             CurrentFrame = new Point();
             frameRate = definition.FrameRate;
-            body = BodyFactory.CreateRectangle(world, bodySize.X, bodySize.Y, density);
+            body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(bodySize.X), ConvertUnits.ToSimUnits(bodySize.Y), density);
             body.BodyType = BodyType.Dynamic;
             body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
@@ -88,9 +88,6 @@ namespace TurkeySmash
                     if (CurrentFrame.X >= definition.NbFrames.X)
                     {
                         CurrentFrame.X = 0;
-                        CurrentFrame.Y++;
-                        if (CurrentFrame.Y >= definition.NbFrames.Y)
-                            CurrentFrame.Y = 0;
                     }
                 }
                 else
@@ -99,13 +96,8 @@ namespace TurkeySmash
                     if (CurrentFrame.X >= definition.NbFrames.X)
                     {
                         CurrentFrame.X = 0;
-                        CurrentFrame.Y++;
-                        if (CurrentFrame.Y >= definition.NbFrames.Y)
-                        {
-                            CurrentFrame.X = definition.NbFrames.X - 1;
-                            CurrentFrame.Y = definition.NbFrames.Y - 1;
-                            FinishedAnimation = true;
-                        }
+                        CurrentFrame.X = definition.NbFrames.X - 1;
+                        FinishedAnimation = true;
                     }
                 }
             }
@@ -114,9 +106,9 @@ namespace TurkeySmash
         public void Draw(SpriteBatch spriteBatch)
         {
             Console.WriteLine(" {0} x, {0} y", bodyPosition.X, bodyPosition.Y);
-            spriteBatch.Draw(sprite, new Rectangle((int)ConvertUnits.ToDisplayUnits(bodyPosition.X - bodySize.X), (int)ConvertUnits.ToDisplayUnits(bodyPosition.Y - bodySize.Y), definition.FrameSize.X, definition.FrameSize.Y),
+            spriteBatch.Draw(sprite, new Rectangle((int)(ConvertUnits.ToDisplayUnits(bodyPosition.X) - bodySize.X), (int)(ConvertUnits.ToDisplayUnits(bodyPosition.Y) - bodySize.Y), definition.FrameSize.X, definition.FrameSize.Y),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
-                                    Color.White);
+                                    Color.White, 0, Vector2.Zero, effects, 0);
         }
     }
 }

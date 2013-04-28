@@ -34,8 +34,8 @@ namespace TurkeySmash
             {
                 if (players[i] != null)
                 {
-                    pourcentages[i].Texte = string.Format("{0} %", players[i].body.UserData);
-                    color[i] = new Color(255, 255 - (255 * ((int)players[i].body.UserData / 100)), 255 - (255 * ((int)players[i].body.UserData / 100)));
+                    pourcentages[i].Texte = string.Format("{0} %", players[i].pourcent);
+                    color[i] = new Color(255, 255 - (255 * ((int)players[i].pourcent / 100)), 255 - (255 * ((int)players[i].pourcent / 100)));
                     i++;
                 }
 

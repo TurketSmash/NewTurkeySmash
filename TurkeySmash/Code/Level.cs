@@ -74,6 +74,13 @@ namespace TurkeySmash
                 personnage.bodyPosition = respownPoint;
                 personnage.vie--;
             }
+            personnage.body.UserData = 0;
+            personnage.body.ResetDynamics();
+        }
+
+        void partieTerminee(Character personnage)
+        {
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
