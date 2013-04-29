@@ -22,7 +22,7 @@ namespace TurkeySmash
     class AnimatedSprite
     {
         public AnimatedSpriteDef definition;
-        Texture2D sprite;
+        Texture2D texture;
         protected Point CurrentFrame;
         protected bool FinishedAnimation = false;
         protected double TimeBetweenFrame = 100;
@@ -46,7 +46,7 @@ namespace TurkeySmash
             body.BodyType = BodyType.Dynamic;
             body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
-            sprite = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
+            texture = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
             this.world = world;
         }
 
@@ -88,7 +88,7 @@ namespace TurkeySmash
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, new Vector2(ConvertUnits.ToDisplayUnits(bodyPosition.X) - (bodySize.X * scale), ConvertUnits.ToDisplayUnits(bodyPosition.Y) - (bodySize.Y * scale)),
+            spriteBatch.Draw(texture, new Vector2(ConvertUnits.ToDisplayUnits(bodyPosition.X) - (bodySize.X * scale), ConvertUnits.ToDisplayUnits(bodyPosition.Y) - (bodySize.Y * scale)),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
                                     Color.White, 0, Vector2.Zero, scale, effects, 0);
         }

@@ -2,10 +2,7 @@ Content\Menu\MenuOption.xnb
 Content\Menu\MenuPrincipal.xnb
 Content\Menu\MenuResolution.xnb
 Content\Menu\MenuPause.xnb
-Content\Menu\Farm Space.xnb
 Content\Defaut.xnb
-Content\Menu\perso1.xnb
-Content\Menu\thecity.xnb
 Content\SuperMario.xnb
 Content\Pourcent.xnb
 Content\Sons\byebye.xnb
@@ -29,4 +26,12 @@ Content\Jeu\level2\plateformeBlocVert.xnb
 Content\Jeu\sakura.xnb
 Content\HUD\HUDnaruto.xnb
 Content\HUD\HUDSakura.xnb
+Content\Menu\BoutonLevel1.xnb
+Content\Menu\BoutonLevel2.xnb
+Content\Menu\BoutonNaruto.xnb
+Content\Menu\BoutonSakura.xnb
+Content\Sons\musique2.xnb
+Content\Sons\Halo.xnb
 Content\Sons\musique1.wma
+Content\Sons\musique2.wma
+Content\Sons\Halo.wma

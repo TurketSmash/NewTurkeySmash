@@ -21,6 +21,7 @@ namespace TurkeySmash
         PhysicsObject box;
         Sprite boxSprite;
 
+
         public Jeu()
         {
             state = SceneState.Active;
