@@ -37,19 +37,19 @@ namespace TurkeySmash
 
             switch (backgroundName)
             {
-                case "Jeu\\background1":
+                case "Jeu\\level1\\background1":
                     #region bodies
                     
                     Sprite plateforme1Mid = new Sprite();
-                    plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\plateforme1Mid");
+                    plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Mid");
                     Sprite plateforme1Left = new Sprite();
-                    plateforme1Left.Load(TurkeySmashGame.content, "Jeu\\plateforme1Left");
-                    Sprite plateforme1Right = new Sprite();
-                    plateforme1Right.Load(TurkeySmashGame.content, "Jeu\\plateforme1Right");
+                    plateforme1Left.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Left");
+                    //Sprite plateforme1Right = new Sprite();
+                    //plateforme1Right.Load(TurkeySmashGame.content, "Jeu\\plateforme1Right");   /créé un bug CHELOU
                     Sprite plateforme2 = new Sprite();
-                    plateforme2.Load(TurkeySmashGame.content, "Jeu\\plateforme2");
+                    plateforme2.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme2");
                     
-                    bodylist = new StaticPhysicsObject[6];
+                    bodylist = new StaticPhysicsObject[5];
 
                     bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin*0.111f, Ywin*0.611f), 1, plateforme2);
                     bodylist[1] =  new StaticPhysicsObject(world, new Vector2(Xwin*0.512f, Ywin*0.515f), 1, plateforme2); //3 plateformes volantes
@@ -64,8 +64,22 @@ namespace TurkeySmash
 
                     break;
 
-                case "Jeu\\level2":
-                    
+                case "Jeu\\level2\\background2":
+                    #region bodies
+                    Sprite plateforme3 = new Sprite();
+                    plateforme3.Load(TurkeySmashGame.content, "Jeu\\level2\\plateforme3");
+                    Sprite plateformeBlocBleu = new Sprite();
+                    plateformeBlocBleu.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocBleu");
+                    Sprite plateformeBlocJaune = new Sprite();
+                    plateformeBlocJaune.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocJaune");
+                    Sprite plateformeBlocRouge = new Sprite();
+                    plateformeBlocRouge.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocRouge");
+                    Sprite plateformeBlocVert = new Sprite();
+                    plateformeBlocVert.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocVert");
+
+                    bodylist = new StaticPhysicsObject[5];
+
+                    #endregion
                     break;
             }
         }

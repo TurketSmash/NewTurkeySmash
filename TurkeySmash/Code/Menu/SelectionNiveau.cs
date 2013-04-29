@@ -35,14 +35,14 @@ namespace TurkeySmash
 
         public override void Bouton1()
         {
-            niveauSelect = "spacefarm";
+            niveauSelect = "level1";
             MediaPlayer.Pause();
             Basic.SetScreen(new Jeu());
         }
 
         public override void Bouton2()
         {
-            niveauSelect = "thecity";
+            niveauSelect = "level2";
             MediaPlayer.Pause();
             /*if (Accueil.modeDeJeu == "1j")
                 Basic.SetScreen(new Jeu());
