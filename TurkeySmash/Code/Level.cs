@@ -16,7 +16,8 @@ namespace TurkeySmash
 
         StaticPhysicsObject[] bodylist;
 
-        Vector2 respownPoint = new Vector2(ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X / 2), ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y / 2));
+        Vector2 respownPoint = new Vector2(ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X / 3), ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y / 2));
+        Vector2 respownPoint2 = new Vector2(ConvertUnits.ToSimUnits(2 * TurkeySmashGame.WindowSize.X / 3), ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y / 2));
         Vector2[] spawnPoints = new Vector2[4];
         Character[] personnages;
         World world;
@@ -117,8 +118,16 @@ namespace TurkeySmash
         {
             if (!personnage.Mort)
             {
-                personnage.bodyPosition = respownPoint;
-                personnage.vie--;
+                if (personnage == personnages[0])
+                {
+                    personnage.bodyPosition = respownPoint;
+                    personnage.vie--;
+                }
+                else
+                {
+                    personnage.bodyPosition = respownPoint2;
+                    personnage.vie--;
+                }
             }
             personnage.body.UserData = 0;
             personnage.body.ResetDynamics();

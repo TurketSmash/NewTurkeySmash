@@ -52,7 +52,10 @@ namespace TurkeySmash
                 NbFrames = new Point(6, 1),
             });
 
-            level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
+            if (SelectionNiveau.niveauSelect == "level1")
+                level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
+            else
+                level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
             
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;

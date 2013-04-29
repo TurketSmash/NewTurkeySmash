@@ -20,9 +20,14 @@ namespace TurkeySmash
         private Font bouton1;
         private BoutonTexte bouton1MOINS;
         private BoutonTexte bouton1PLUS;
+        private BoutonTexte bouton1Change;
         private BoutonTexte bouton2;
         private float xPos = 350;
         private float yPos = 300;
+
+        Song song2 = TurkeySmashGame.content.Load<Song>("Sons\\musique2");
+        Song song3 = TurkeySmashGame.content.Load<Song>("Sons\\Halo");
+        bool aDejaChangéGROSBULLSHITDeNikeurDeControleur = false;
 
         #endregion
 
@@ -35,9 +40,11 @@ namespace TurkeySmash
             bouton1 = new Font(xPos, yPos + 100);
             bouton1MOINS = new BoutonTexte(xPos - 75, yPos + 100);
             bouton1PLUS = new BoutonTexte(xPos + 75, yPos + 100);
-            bouton2 = new BoutonTexte(xPos, yPos + 200);
+            bouton1Change = new BoutonTexte(xPos, yPos + 200);
+            bouton2 = new BoutonTexte(xPos, yPos + 350);
             bouton1MOINS.Texte = "Vol-";
             bouton1PLUS.Texte = "Vol+";
+            bouton1Change.Texte = "Change de musique";
             bouton2.Texte = "Retour";
         }
 
@@ -46,10 +53,13 @@ namespace TurkeySmash
             backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuOption");
             bouton1MOINS.Load(TurkeySmashGame.content, boutons);
             bouton1PLUS.Load(TurkeySmashGame.content, boutons);
+            bouton1Change.Load(TurkeySmashGame.content, boutons);
             bouton2.Load(TurkeySmashGame.content, boutons);
         }
 
         #endregion
+
+
 
 
         public override void Bouton1()
@@ -63,6 +73,18 @@ namespace TurkeySmash
         }
 
         public override void Bouton3()
+        {
+            if (aDejaChangéGROSBULLSHITDeNikeurDeControleur == false)
+            {
+                MediaPlayer.Play(song2);
+                aDejaChangéGROSBULLSHITDeNikeurDeControleur = true;
+            }
+            else
+                MediaPlayer.Play(song3);
+
+        }
+
+        public override void Bouton4()
         {
             Basic.Quit();
         }

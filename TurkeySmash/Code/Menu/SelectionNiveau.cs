@@ -26,9 +26,9 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuPrincipal");
-            bouton1.Load(TurkeySmashGame.content, "Menu\\Farm Space", boutons);
+            bouton1.Load(TurkeySmashGame.content, "Menu\\BoutonLevel1", boutons);
             bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth / 3, TurkeySmashGame.manager.PreferredBackBufferHeight / 2);
-            bouton2.Load(TurkeySmashGame.content, "Menu\\thecity", boutons);
+            bouton2.Load(TurkeySmashGame.content, "Menu\\BoutonLevel2", boutons);
             bouton2.Position = new Microsoft.Xna.Framework.Vector2(2 * TurkeySmashGame.manager.PreferredBackBufferWidth / 3, TurkeySmashGame.manager.PreferredBackBufferHeight / 2);
             bouton3.Load(TurkeySmashGame.content, boutons);
         }
@@ -44,10 +44,7 @@ namespace TurkeySmash
         {
             niveauSelect = "level2";
             MediaPlayer.Pause();
-            /*if (Accueil.modeDeJeu == "1j")
-                Basic.SetScreen(new Jeu());
-            else
-                Basic.SetScreen(new Multi());*/
+            Basic.SetScreen(new Jeu());
         }
 
         public override void Bouton3()
