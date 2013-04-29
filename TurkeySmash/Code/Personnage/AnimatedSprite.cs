@@ -32,6 +32,7 @@ namespace TurkeySmash
         public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
         public Vector2 bodySize;
         protected SpriteEffects effects;
+        protected World world;
 
         int frameRate = 60;
 
@@ -46,6 +47,7 @@ namespace TurkeySmash
             body.Position = ConvertUnits.ToSimUnits(position);
             body.Restitution = 0.3f;
             sprite = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
+            this.world = world;
         }
 
         public void Reset(Point point)

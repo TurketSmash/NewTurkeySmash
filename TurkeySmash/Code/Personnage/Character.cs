@@ -21,7 +21,6 @@ namespace TurkeySmash
         PlayerIndex playerindex;
         Input input;
         bool isMovingRight = true;
-        World world;
         float oldDrop;
         float newDrop;
 
@@ -34,7 +33,6 @@ namespace TurkeySmash
             input = new Input(playerindex);
             body.FixedRotation = true;
             body.Friction = 0.5f;
-            this.world = world;
             body.UserData = this.pourcent;
         }
 
@@ -106,7 +104,6 @@ namespace TurkeySmash
                     hit.body.OnCollision += hitOnColision;
                     world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
-
 
                     Reset(new Point());
                     definition.Loop = false;
