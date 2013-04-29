@@ -52,11 +52,11 @@ namespace TurkeySmash
                     bodylist = new StaticPhysicsObject[5];
 
                     bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin*0.111f, Ywin*0.611f), 1, plateforme2);
-                    bodylist[1] =  new StaticPhysicsObject(world, new Vector2(Xwin*0.512f, Ywin*0.515f), 1, plateforme2); //3 plateformes volantes
-                    bodylist[2] =  new StaticPhysicsObject(world, new Vector2(Xwin*0.735f, Ywin*0.520f), 1, plateforme2);
+                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin*0.512f, Ywin*0.515f), 1, plateforme2); //3 plateformes volantes
+                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin*0.735f, Ywin*0.520f), 1, plateforme2);
 
-                    bodylist[3] =  new StaticPhysicsObject(world, new Vector2((Xwin/2) - (plateforme1Mid.Width/2) + (plateforme1Left.Width/2),(2*Ywin/3)-(plateforme1Mid.Height /2) - (plateforme1Left.Height/2)+1), 1, plateforme1Left); //partie gauche de la plateforme centrale
-                    bodylist[4] =  new StaticPhysicsObject(world, new Vector2(Xwin/2, 2*Ywin/3), 1, plateforme1Mid); //partie central de la plateforme centrale
+                    bodylist[3] = new StaticPhysicsObject(world, new Vector2((Xwin/2) - (plateforme1Mid.Width/2) + (plateforme1Left.Width/2),(2*Ywin/3)-(plateforme1Mid.Height /2) - (plateforme1Left.Height/2)+1), 1, plateforme1Left); //partie gauche de la plateforme centrale
+                    bodylist[4] = new StaticPhysicsObject(world, new Vector2(Xwin/2, 2*Ywin/3), 1, plateforme1Mid); //partie central de la plateforme centrale
                     //bodylist[5] = new StaticPhysicsObject(world, new Vector2((Xwin/2) + (plateforme1Mid.Width/2) - (plateforme1Right.Width/2) -1,(2*Ywin/3)-(plateforme1Mid.Height /2) - (plateforme1Right.Height/2)+1), 1, plateforme1Right); //partie droite de la plateforme centrale
 
                     #endregion
@@ -77,7 +77,12 @@ namespace TurkeySmash
                     Sprite plateformeBlocVert = new Sprite();
                     plateformeBlocVert.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocVert");
 
-                    bodylist = new StaticPhysicsObject[5];
+                    bodylist = new StaticPhysicsObject[4];
+                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin*0.479f , Ywin*0.731f) , 1, plateforme3);
+                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin*0.861f+(plateformeBlocBleu.Width/2), Ywin*0.55f + plateformeBlocBleu.Height/2), 1, plateformeBlocBleu);
+                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.191f + (plateformeBlocJaune.Width / 2), Ywin *0.457f + plateformeBlocJaune.Height/2), 1, plateformeBlocJaune);
+                    bodylist[3] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.383f + plateformeBlocRouge.Width / 2, Ywin * 0.55f + plateformeBlocRouge.Height / 2), 1, plateformeBlocRouge);
+                    //bodylist[4] = new StaticPhysicsObject(world, new Vector2(0, 0), 1, plateformeBlocVert); //utilisable
 
                     #endregion
                     break;
