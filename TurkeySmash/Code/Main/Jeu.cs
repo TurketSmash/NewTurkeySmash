@@ -85,10 +85,10 @@ namespace TurkeySmash
 
                 level.Draw(TurkeySmashGame.spriteBatch);
                 box.Draw(boxSprite, TurkeySmashGame.spriteBatch);
+                hud.Draw();
 
                 TurkeySmashGame.spriteBatch.End();
             }
-            hud.Draw();
         }
         
     

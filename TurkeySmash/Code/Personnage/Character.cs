@@ -60,13 +60,22 @@ namespace TurkeySmash
                     force.X = -forcePower;
                     isMovingRight = false;
                     effects = SpriteEffects.FlipHorizontally;
+                    if (canJump)
+                    {
+                        definition.Loop = false;
+                        CurrentFrame.Y = 0;
+                    }
                 }
-
-                if (input.Right(playerindex))
+                else if (input.Right(playerindex))
                 {
                     force.X = forcePower;
                     isMovingRight = true;
                     effects = SpriteEffects.None;
+                    if (canJump)
+                    {
+                        definition.Loop = false;
+                        CurrentFrame.Y = 0;
+                    }
                 }
                 body.ApplyForce(force, body.Position);
 
@@ -76,6 +85,8 @@ namespace TurkeySmash
                 {
                     body.ApplyForce(-Vector2.UnitY * 100);
                     canJump = false;
+                    definition.Loop = false;
+                    FinishedAnimation = false;
                     CurrentFrame.Y = 2;
                 }
 
@@ -85,16 +96,23 @@ namespace TurkeySmash
                     PhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X/2,bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2,bodySize.Y / 2));
+                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     hit.body.IsSensor = true;
                     hit.body.OnCollision += hitOnColision;
                     world.Step(1 / 3000f);
                     world.RemoveBody(hit.body);
+
+
+                    Reset(new Point());
+                    definition.Loop = false;
+                    FinishedAnimation = false;
+                    TimeBetweenFrame = 50;
+                    CurrentFrame.Y = 3;
                 }
             }
             #endregion
