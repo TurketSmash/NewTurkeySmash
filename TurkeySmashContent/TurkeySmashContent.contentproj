@@ -42,18 +42,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\background.png">
-      <Name>background</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Jeu\ground.png">
-      <Name>ground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="SuperMario.spritefont">
       <Name>SuperMario</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -165,44 +153,67 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\level2.png">
-      <Name>level2</Name>
+    <Compile Include="Jeu\narutosheet.png">
+      <Name>narutosheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\background1.png">
+    <Compile Include="Jeu\level1\background1.png">
       <Name>background1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Jeu\plateforme2.png">
+    <Compile Include="Jeu\level1\plateforme1Left.png">
+      <Name>plateforme1Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\level1\plateforme1Mid.png">
+      <Name>plateforme1Mid</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\level1\plateforme1Right.png">
+      <Name>plateforme1Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\level1\plateforme2.png">
       <Name>plateforme2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\plateforme1Left.png">
-      <Name>plateforme1Left</Name>
+    <Compile Include="Jeu\level2\background2.png">
+      <Name>background2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Jeu\plateforme1Mid.png">
-      <Name>plateforme1Mid</Name>
+    <Compile Include="Jeu\level2\plateforme3.png">
+      <Name>plateforme3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Jeu\plateforme1Right.png">
-      <Name>plateforme1Right</Name>
+    <Compile Include="Jeu\level2\plateformeBlocBleu.png">
+      <Name>plateformeBlocBleu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jeu\narutosheet.png">
-      <Name>narutosheet</Name>
+    <Compile Include="Jeu\level2\plateformeBlocJaune.png">
+      <Name>plateformeBlocJaune</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\level2\plateformeBlocRouge.png">
+      <Name>plateformeBlocRouge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\level2\plateformeBlocVert.png">
+      <Name>plateformeBlocVert</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
