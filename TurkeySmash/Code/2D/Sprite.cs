@@ -9,7 +9,7 @@ namespace TurkeySmash
     {
         #region Fields 
 
-        Vector2 position = new Vector2(0, 0);
+        Vector2 position;
         public Texture2D texture;
         Rectangle edge;
         private float scale = 1.0f;
@@ -60,8 +60,8 @@ namespace TurkeySmash
 
         public Sprite(float x = 0, float y = 0)
         {
-            x = position.X;
-            y = position.Y;
+            position.X = x;
+            position.Y = y;
         }
 
         #endregion
