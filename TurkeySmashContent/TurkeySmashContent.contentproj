@@ -250,6 +250,12 @@
       <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ContentPipelineExtension\ContentPipelineExtension.csproj">
+      <Project>{54BB1CB2-3BC0-473B-853F-E97197D4BF31}</Project>
+      <Name>ContentPipelineExtension</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

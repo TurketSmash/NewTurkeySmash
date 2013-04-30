@@ -5,7 +5,7 @@ namespace TurkeySmash
     /// <summary>
     /// Convert units between display and simulation units.
     /// </summary>
-    static class ConvertUnits
+    public static class ConvertUnits
     {
         private static float _displayUnitsToSimUnitsRatio = 100f;
         private static float _simUnitsToDisplayUnitsRatio = 1 / _displayUnitsToSimUnitsRatio;
