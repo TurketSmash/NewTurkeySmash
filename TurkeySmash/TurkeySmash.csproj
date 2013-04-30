@@ -5,7 +5,7 @@
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TurkeySmash</RootNamespace>
     <AssemblyName>TurkeySmash</AssemblyName>
@@ -152,10 +152,6 @@
       <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
       <Name>Farseer Physics XNA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Libraries\Libraries.csproj">
-      <Project>{CDE8AC81-D481-427A-81B3-62F690DA0F17}</Project>
-      <Name>Libraries</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TurkeySmashContent\TurkeySmashContent.contentproj">
       <Name>TurkeySmashContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
@@ -189,6 +185,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

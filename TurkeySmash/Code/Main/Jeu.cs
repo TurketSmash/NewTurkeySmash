@@ -17,7 +17,7 @@ namespace TurkeySmash
         public static SoundEffect sonEspace = TurkeySmashGame.content.Load<SoundEffect>("Sons\\sonEspace");
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
         Character[] personnages = new Character[4];
-        TurkeySmash.Level level;
+        Level level;
         PhysicsObject box;
         Sprite boxSprite;
 
@@ -54,9 +54,9 @@ namespace TurkeySmash
             });
 
             if (SelectionNiveau.niveauSelect == "level1")
-                level = new TurkeySmash.Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
+                level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
             else
-                level = new TurkeySmash.Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
+                level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
             
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
