@@ -137,6 +137,8 @@
     <Compile Include="Code\Personnage\AnimatedSprite.cs" />
     <Compile Include="Code\Personnage\Character.cs" />
     <Compile Include="Code\Personnage\PhysicsObject.cs" />
+    <Compile Include="Code\Personnage\RectPhysicsObject.cs" />
+    <Compile Include="Code\Personnage\RoundPhysicsObject.cs" />
     <Compile Include="Code\Personnage\StaticPhysicsObject.cs" />
     <Compile Include="Code\Screen\Screen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
