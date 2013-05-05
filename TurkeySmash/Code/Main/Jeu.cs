@@ -18,9 +18,6 @@ namespace TurkeySmash
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
         Character[] personnages = new Character[4];
         Level level;
-        PhysicsObject box;
-        Sprite boxSprite;
-
 
         public Jeu()
         {
@@ -30,12 +27,13 @@ namespace TurkeySmash
         public override void Init()
         {
             world =new World(Vector2.UnitY * 20f);
-            boxSprite = new Sprite();
-            boxSprite.Load(TurkeySmashGame.content, "Jeu\\cube");
-            box = new PhysicsObject(world, TurkeySmashGame.WindowMid, 1f, boxSprite);
-            box.body.Friction = 1f;
 
-            personnages[0] = new Character(world, TurkeySmashGame.WindowMid, 1f, new Vector2(55, 55),PlayerIndex.One, new AnimatedSpriteDef()
+            if (SelectionNiveau.niveauSelect == "level1")
+                level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
+            else
+                level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
+
+            personnages[0] = new Character(world,level.spawnPoints[0], 1f, new Vector2(55, 55),PlayerIndex.One, new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\narutosheet",
                 FrameRate = 60,
@@ -44,7 +42,7 @@ namespace TurkeySmash
                 NbFrames = new Point(5, 1),
             });
 
-            personnages[1] = new Character(world, new Vector2(TurkeySmashGame.WindowSize.X/2,TurkeySmashGame.WindowSize.Y/2-100), 1f, new Vector2(52, 52), PlayerIndex.Two, new AnimatedSpriteDef()
+            personnages[1] = new Character(world, level.spawnPoints[1], 1f, new Vector2(52, 52), PlayerIndex.Two, new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\sakura",
                 FrameRate = 60,
@@ -53,10 +51,6 @@ namespace TurkeySmash
                 NbFrames = new Point(6, 1),
             });
 
-            if (SelectionNiveau.niveauSelect == "level1")
-                level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
-            else
-                level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
             
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
@@ -88,7 +82,6 @@ namespace TurkeySmash
                 TurkeySmashGame.spriteBatch.Begin();
 
                 level.Draw(TurkeySmashGame.spriteBatch);
-                box.Draw(boxSprite, TurkeySmashGame.spriteBatch);
                 hud.Draw();
 
                 TurkeySmashGame.spriteBatch.End();
