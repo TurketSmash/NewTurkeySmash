@@ -32,7 +32,7 @@ namespace TurkeySmash
             this.playerindex = playerindex;
             input = new Input(playerindex);
             body.FixedRotation = true;
-            body.Friction = 0.5f;
+            body.Friction = 0.3f;
             body.UserData = this.pourcent;
         }
 
@@ -91,14 +91,14 @@ namespace TurkeySmash
                 //Attack
                 if (input.Action(playerindex))
                 {
-                    PhysicsObject hit;
+                    RectPhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     hit.body.IsSensor = true;
                     hit.body.OnCollision += hitOnColision;
@@ -159,14 +159,14 @@ namespace TurkeySmash
                 //Attack
                 if (input.Action(playerindex))
                 {
-                    PhysicsObject hit;
+                    RectPhysicsObject hit;
                     if (isMovingRight)
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     else
                     {
-                        hit = new PhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     }
                     hit.body.IsSensor = true;
                     hit.body.OnCollision += hitOnColision;
@@ -214,9 +214,9 @@ namespace TurkeySmash
             Console.WriteLine(playerindex +" : " + pourcentB);
 
             if (isMovingRight)
-                fixB.Body.ApplyLinearImpulse(new Vector2(1f, -.7f) * (1 + (pourcentB / 100)));
+                fixB.Body.ApplyLinearImpulse(new Vector2(1.8f, -.5f) * (1 + (pourcentB / 50)));
             else
-                fixB.Body.ApplyLinearImpulse(new Vector2(-1f, -.7f) * (1 + (pourcentB / 100)));
+                fixB.Body.ApplyLinearImpulse(new Vector2(-1.8f, -.5f) * (1 + (pourcentB / 150)));
 
             if (fixB.Body.UserData != null)
                 fixB.Body.UserData = (int)fixB.Body.UserData + 7;
