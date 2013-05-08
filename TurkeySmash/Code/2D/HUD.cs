@@ -42,7 +42,8 @@ namespace TurkeySmash
                 if (players[i] != null)
                 {
                     pourcentages[i].Texte = players[i].pourcent + " %";
-                    pourcentages[i].Color = new Color(255, 255 - (255 * ((int)players[i].pourcent / 100)), 255 - (255 * ((int)players[i].pourcent / 100)));
+                    int gradationRatio = 255 - (255 * players[i].pourcent / 250);
+                    pourcentages[i].Color = Color.FromNonPremultiplied(255,gradationRatio,gradationRatio, 255);
                 }
 
             }
