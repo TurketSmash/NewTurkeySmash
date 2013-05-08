@@ -62,32 +62,32 @@ namespace TurkeySmash
 
         public bool Up()
         {
-            return ((Keyboard.GetState().IsKeyDown(Keys.Up) & player == PlayerIndex.Two) || GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f);
+            return ((Keyboard.GetState().IsKeyDown(Keys.Up) & player == PlayerIndex.Two) || (GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f & player == PlayerIndex.One));
         }
 
         public bool Down()
         {
-            return ((Keyboard.GetState().IsKeyDown(Keys.Down) & player == PlayerIndex.Two) || GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f);
+            return ((Keyboard.GetState().IsKeyDown(Keys.Down) & player == PlayerIndex.Two) || (GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f & player == PlayerIndex.One));
         }
 
         public bool Right(PlayerIndex player)
         {
-            return ((Keyboard.GetState().IsKeyDown(Keys.Right) & player == PlayerIndex.Two) || GamePad.GetState(player).ThumbSticks.Left.X > 0.5f);
+            return ((Keyboard.GetState().IsKeyDown(Keys.Right) & player == PlayerIndex.Two) || (GamePad.GetState(player).ThumbSticks.Left.X > 0.5f & player == PlayerIndex.One));
         }
 
         public bool Left(PlayerIndex player)
         {
-            return ((Keyboard.GetState().IsKeyDown(Keys.Left) & player == PlayerIndex.Two) || GamePad.GetState(player).ThumbSticks.Left.X < -0.5f);
+            return ((Keyboard.GetState().IsKeyDown(Keys.Left) & player == PlayerIndex.Two) || (GamePad.GetState(player).ThumbSticks.Left.X < -0.5f & player == PlayerIndex.One));
         }
 
         public bool Jump(PlayerIndex player)
         {
-            return ((Keyboard.GetState().IsKeyDown(Keys.Space) & player == PlayerIndex.Two) || GamePad.GetState(player).Buttons.A == ButtonState.Pressed);
+            return ((Keyboard.GetState().IsKeyDown(Keys.Space) & player == PlayerIndex.Two) || (GamePad.GetState(player).Buttons.A == ButtonState.Pressed & player == PlayerIndex.One));
         }
 
         public bool Action(PlayerIndex player)
         {
-            return ((Keyboard.GetState().IsKeyDown(Keys.A) & player == PlayerIndex.Two) || GamePad.GetState(player).Buttons.B == ButtonState.Pressed);
+            return ((Keyboard.GetState().IsKeyDown(Keys.A) & player == PlayerIndex.Two) || (GamePad.GetState(player).Buttons.B == ButtonState.Pressed & player == PlayerIndex.One));
         }
 
         public bool Enter()

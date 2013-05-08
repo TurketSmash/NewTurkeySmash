@@ -46,10 +46,8 @@ namespace TurkeySmash
                 TimeBetweenFrame = 100;
             }
 
-            #region P1
+            #region Controls
 
-            if (playerindex == PlayerIndex.One)
-            {
                 //Right & Left
                 int forcePower = 3;
                 Vector2 force = Vector2.Zero;
@@ -111,77 +109,7 @@ namespace TurkeySmash
                     TimeBetweenFrame = 50;
                     CurrentFrame.Y = 3;
                 }
-            }
-            #endregion
-
-            #region P2
-
-            if (playerindex == PlayerIndex.Two)
-            {
-                //Right & Left
-                int forcePower = 3;
-                Vector2 force = Vector2.Zero;
-                if (input.Left(playerindex))
-                {
-                    force.X = -forcePower;
-                    isMovingRight = false;
-                    effects = SpriteEffects.FlipHorizontally;
-                    if (canJump)
-                    {
-                        definition.Loop = false;
-                        CurrentFrame.Y = 0;
-                    }
-                }
-                else if (input.Right(playerindex))
-                {
-                    force.X = forcePower;
-                    isMovingRight = true;
-                    effects = SpriteEffects.None;
-                    if (canJump)
-                    {
-                        definition.Loop = false;
-                        CurrentFrame.Y = 0;
-                    }
-                }
-                body.ApplyForce(force, body.Position);
-
-                //Jump
-                body.OnCollision += bodyOnCollision;
-                if (input.Jump(playerindex) & canJump)
-                {
-                    body.ApplyForce(-Vector2.UnitY * 100);
-                    canJump = false;
-                    definition.Loop = false;
-                    FinishedAnimation = false;
-                    CurrentFrame.Y = 2;
-                }
-
-                //Attack
-                if (input.Action(playerindex))
-                {
-                    RectPhysicsObject hit;
-                    if (isMovingRight)
-                    {
-                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    }
-                    else
-                    {
-                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    }
-                    hit.body.IsSensor = true;
-                    hit.body.OnCollision += hitOnColision;
-                    world.Step(1 / 3000f);
-                    world.RemoveBody(hit.body);
-                    
-                    
-                    Reset(new Point());
-                    definition.Loop = false;
-                    FinishedAnimation = false;
-                    TimeBetweenFrame = 50;
-                    CurrentFrame.Y = 3;
-                }
-            }
-
+            
             #endregion
 
             if (newDrop > oldDrop + 0.1)
