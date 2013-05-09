@@ -139,7 +139,7 @@ namespace TurkeySmash
 
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
-            float forceItem = 2.5f;
+            float forceItem = 2.0f;
             int pourcentB;
             if (fixB.Body.UserData != null)
             {

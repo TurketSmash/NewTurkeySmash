@@ -137,7 +137,7 @@ namespace TurkeySmash
                     #endregion
 
                     #region Items
-                    items[0] = new RoundPhysicsObject(world, new Vector2(Xwin * 0.270f, Ywin * 0.417f), 2.0f, 0.6f, football);
+                    items[0] = new RoundPhysicsObject(world, new Vector2(Xwin * 0.270f, Ywin * 0.417f), 4.0f, 0.7f, football);
                     items[1] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.648f), 3.0f, blocSwag);
                     items[2] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.581f), 3.0f, blocSwag);
                     items[3] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.516f), 3.0f, blocSwag);
