@@ -12,6 +12,7 @@ namespace TurkeySmash
         enum GameState { Game, Disconnected }
         GameState gameState = GameState.Game;
         bool disconnect = false;
+        public bool canAction = false;
 
         #endregion
 
@@ -88,6 +89,11 @@ namespace TurkeySmash
         public bool Action(PlayerIndex player)
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.A) & player == PlayerIndex.Two) || (GamePad.GetState(player).Buttons.B == ButtonState.Pressed & player == PlayerIndex.One));
+        }
+
+        public bool ActionReleased(PlayerIndex player)
+        {
+            return ((Keyboard.GetState().IsKeyUp(Keys.A) & player == PlayerIndex.Two) || (GamePad.GetState(player).Buttons.B == ButtonState.Released & player == PlayerIndex.One));
         }
 
         public bool Enter()

@@ -32,7 +32,7 @@ namespace TurkeySmash
             this.playerindex = playerindex;
             input = new Input(playerindex);
             body.FixedRotation = true;
-            body.Friction = 0.3f;
+            body.Friction = 0.1f;
             body.UserData = this.pourcent;
         }
 
@@ -87,7 +87,10 @@ namespace TurkeySmash
                 }
 
                 //Attack
-                if (input.Action(playerindex))
+                if (input.ActionReleased(playerindex))
+                    input.canAction = true;
+
+                if (input.Action(playerindex) & input.canAction)
                 {
                     RectPhysicsObject hit;
                     if (isMovingRight)
@@ -108,6 +111,8 @@ namespace TurkeySmash
                     FinishedAnimation = false;
                     TimeBetweenFrame = 50;
                     CurrentFrame.Y = 3;
+
+                    input.canAction = false;
                 }
             
             #endregion
@@ -134,20 +139,21 @@ namespace TurkeySmash
 
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
+            float forceItem = 2.5f;
             int pourcentB;
             if (fixB.Body.UserData != null)
+            {
+                forceItem = 1.0f;
+                fixB.Body.UserData = (int)fixB.Body.UserData + 7;
                 pourcentB = (int)fixB.Body.UserData;
+            }
             else
                 pourcentB = 0;
-            Console.WriteLine(playerindex +" : " + pourcentB);
-
             if (isMovingRight)
-                fixB.Body.ApplyLinearImpulse(new Vector2(1.8f, -.5f) * (1 + (pourcentB / 50)));
+                fixB.Body.ApplyLinearImpulse(new Vector2(1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
             else
-                fixB.Body.ApplyLinearImpulse(new Vector2(-1.8f, -.5f) * (1 + (pourcentB / 150)));
+                fixB.Body.ApplyLinearImpulse(new Vector2(-1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
 
-            if (fixB.Body.UserData != null)
-                fixB.Body.UserData = (int)fixB.Body.UserData + 7;
             return true;
         }
 

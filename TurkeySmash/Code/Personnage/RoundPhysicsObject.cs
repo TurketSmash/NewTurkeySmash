@@ -19,6 +19,7 @@ namespace TurkeySmash
             body.CreateFixture(circleShape);
             body.BodyType = BodyType.Dynamic;
             body.Position = ConvertUnits.ToSimUnits(position);
+            body.Friction = 0.4f;
             body.Restitution = restitution;
         }
 
