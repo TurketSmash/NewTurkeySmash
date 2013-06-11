@@ -68,7 +68,7 @@ namespace TurkeySmash
                 Basic.SetScreen(new Pause());
             }
             level.Update(gameTime);
-            hud.Update(personnages);
+            hud.Update(gameTime, personnages);
 
             //Mise a jour du world en 30 FPS
             world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));

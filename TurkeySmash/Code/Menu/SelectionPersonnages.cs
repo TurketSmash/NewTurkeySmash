@@ -12,6 +12,7 @@ namespace TurkeySmash
         private BoutonImage boutonNaruto;
         private BoutonImage boutonSakura;
         private BoutonTexte boutonRetour;
+        private BoutonTexte boutonOption;
         public static string persoSelect;
 
         #endregion
@@ -22,6 +23,7 @@ namespace TurkeySmash
         {
             boutonNaruto = new BoutonImage();
             boutonSakura = new BoutonImage();
+            boutonOption = new BoutonTexte();
             boutonRetour = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth / 2, 700);
             boutonRetour.Texte = "Retour";
         }
