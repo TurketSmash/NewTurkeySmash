@@ -18,19 +18,21 @@ namespace TurkeySmash
         public int vie = 5;
         public int pourcent = 0;
         bool canJump;
-        PlayerIndex playerindex;
-        Input input;
-        bool isMovingRight = true;
+        protected PlayerIndex playerindex;
+        protected bool lookingRight = true;
+        protected bool jump = false;
+        protected bool action = false;
+        protected bool isMoving = false;
+        int forcePower = 3;
         float oldDrop;
         float newDrop;
 
-        public bool Mort { get { return vie < 1; } }
+        public bool Mort { get { return vie < 0; } }
 
         public Character(World world, Vector2 position, float density, Vector2 bodySize, PlayerIndex playerindex, AnimatedSpriteDef definition)
             : base(world, position, density, bodySize, definition)
         {
             this.playerindex = playerindex;
-            input = new Input(playerindex);
             body.FixedRotation = true;
             body.Friction = 0.1f;
             body.UserData = this.pourcent;
@@ -47,77 +49,58 @@ namespace TurkeySmash
             }
 
             #region Controls
+            Vector2 force = Vector2.Zero;
+            body.OnCollision += bodyOnCollision;
 
-                //Right & Left
-                int forcePower = 3;
-                Vector2 force = Vector2.Zero;
-                if (input.Left(playerindex))
-                {
-                    force.X = -forcePower;
-                    isMovingRight = false;
-                    effects = SpriteEffects.FlipHorizontally;
-                    if (canJump)
-                    {
-                        definition.Loop = false;
-                        CurrentFrame.Y = 0;
-                    }
-                }
-                else if (input.Right(playerindex))
-                {
-                    force.X = forcePower;
-                    isMovingRight = true;
-                    effects = SpriteEffects.None;
-                    if (canJump)
-                    {
-                        definition.Loop = false;
-                        CurrentFrame.Y = 0;
-                    }
-                }
-                body.ApplyForce(force, body.Position);
+            if (lookingRight)
+                effects = SpriteEffects.None;
+            else
+                effects = SpriteEffects.FlipHorizontally;
 
-                //Jump
-                body.OnCollision += bodyOnCollision;
-                if (input.Jump(playerindex) & canJump)
+            if (isMoving)
+            {
+                force.X = lookingRight ? forcePower : -forcePower;
+                if (canJump)
                 {
-                    body.ApplyForce(-Vector2.UnitY * 100);
-                    canJump = false;
                     definition.Loop = false;
-                    FinishedAnimation = false;
-                    CurrentFrame.Y = 2;
+                    CurrentFrame.Y = 0;
                 }
+            }
+            body.ApplyForce(force, body.Position);
+                
+            //Jump
+            if (jump & canJump)
+            {
+                body.ApplyForce(-Vector2.UnitY * 100);
+                canJump = false;
+                definition.Loop = false;
+                FinishedAnimation = false;
+                CurrentFrame.Y = 2;
+            }
+            
+            //Attack
+            if (action)
+            {
+                RectPhysicsObject hit;
+                if (lookingRight)
+                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                else
+                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                hit.body.IsSensor = true;
+                hit.body.OnCollision += hitOnColision;
+                world.Step(1 / 3000f);
+                world.RemoveBody(hit.body);
 
-                //Attack
-                if (input.ActionReleased(playerindex))
-                    input.canAction = true;
-
-                if (input.Action(playerindex) & input.canAction)
-                {
-                    RectPhysicsObject hit;
-                    if (isMovingRight)
-                    {
-                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    }
-                    else
-                    {
-                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    }
-                    hit.body.IsSensor = true;
-                    hit.body.OnCollision += hitOnColision;
-                    world.Step(1 / 3000f);
-                    world.RemoveBody(hit.body);
-
-                    Reset(new Point());
-                    definition.Loop = false;
-                    FinishedAnimation = false;
-                    TimeBetweenFrame = 50;
-                    CurrentFrame.Y = 3;
-
-                    input.canAction = false;
-                }
+                Reset(new Point());
+                definition.Loop = false;
+                FinishedAnimation = false;
+                TimeBetweenFrame = 50;
+                CurrentFrame.Y = 3;
+            }
             
             #endregion
 
-            if (newDrop > oldDrop + 0.1)
+            if (newDrop > oldDrop + 0.1f)
             {
                 CurrentFrame = new Point(4, 2);
                 definition.Loop = false;
@@ -149,7 +132,7 @@ namespace TurkeySmash
             }
             else
                 pourcentB = 0;
-            if (isMovingRight)
+            if (lookingRight)
                 fixB.Body.ApplyLinearImpulse(new Vector2(1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
             else
                 fixB.Body.ApplyLinearImpulse(new Vector2(-1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
