@@ -8,9 +8,19 @@ namespace TurkeySmash
     {
         Font[] pourcentages = new Font[4];
         Sprite[] icone = new Sprite[4];
+        Font timerFont;
+        decimal timer = 0;
 
         public void Load(Character[] players)
         {
+            
+            timerFont = new Font(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y / 10);
+            timerFont.NameFont = "Pourcent";
+            timerFont.Load(TurkeySmashGame.content);
+            timerFont.SizeText = 1.0f;
+            
+
+
             for (int i = 0; i < players.Length; i++)
             {
                 if (players[i] != null)
@@ -35,7 +45,7 @@ namespace TurkeySmash
             }
         }
 
-        public void Update(Character[] players)
+        public void Update(GameTime gameTime, Character[] players)
         {
             for(int i = 0; i < players.Length; i++)
             {
@@ -45,12 +55,14 @@ namespace TurkeySmash
                     int gradationRatio = 255 - (255 * players[i].pourcent / 250);
                     pourcentages[i].Color = Color.FromNonPremultiplied(255,gradationRatio,gradationRatio, 255);
                 }
-
             }
+            timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
+            timerFont.Texte = (Math.Round((timer / 1000), 1)).ToString();
         }
 
         public void Draw()
         {
+            timerFont.Draw(TurkeySmashGame.spriteBatch);
             for (int i = 0; i < pourcentages.Length; i++)
             {
                 if (icone[i] != null)
