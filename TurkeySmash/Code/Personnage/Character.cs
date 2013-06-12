@@ -31,11 +31,10 @@ namespace TurkeySmash
         protected bool lookingRight = true;
         protected bool jump = false;
         protected bool action = false;
-        protected bool actionReleased = false;
         protected bool isMoving = false;
         protected Direction direction;
         
-        int forcePower = 2; // force appliquée au personnage lors des déplacements droite/gauche
+        int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
 
         float oldDrop; // variable pour calcul la chute du personnage
         float newDrop;
@@ -85,31 +84,23 @@ namespace TurkeySmash
                 //Attack
                 if (action)
                 {
-                    // animation attack
-                    if (action & actionReleased)
-                    {
-                        RectPhysicsObject hit;
-                        if (lookingRight)
-                            hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                        else
-                            hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                        hit.body.IsSensor = true;
-                        hit.body.OnCollision += hitOnColision;
-                        world.Step(1 / 3000f);
-                        world.RemoveBody(hit.body);
-                        inAction = true;
-                    }
+                    RectPhysicsObject hit;
+                    if (lookingRight)
+                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                     else
-                    {
-                        ForceItem += 0.1f;
-                    }
+                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                    hit.body.IsSensor = true;
+                    hit.body.OnCollision += hitOnColision;
+                    world.Step(1 / 3000f);
+                    world.RemoveBody(hit.body);
+                    inAction = true;
+                    ForceItem = 1.0f;
                     Reset(new Point());
                     definition.Loop = false;
                     FinishedAnimation = false;
                     TimeBetweenFrame = 50;
                     CurrentFrame.Y = 3;
                 }
-                Console.WriteLine(actionReleased);
 
                 if (isMoving)
                 {
@@ -125,7 +116,7 @@ namespace TurkeySmash
                 //Jump
                 if (jump & canJump)
                 {
-                    body.ApplyForce(-Vector2.UnitY * 75);
+                    body.ApplyForce(-Vector2.UnitY * 80);
                     canJump = false;
                     definition.Loop = false;
                     FinishedAnimation = false;
