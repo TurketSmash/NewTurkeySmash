@@ -159,6 +159,9 @@ namespace TurkeySmash
             {
                 if (personnages[i] != null)
                 {
+                    foreach (IA bolo in personnages.OfType<IA>())
+                        bolo.UpdatePosition(personnages);
+
                     personnages[i].Update(gameTime);
                     partieTerminee(personnages[i]);
 
