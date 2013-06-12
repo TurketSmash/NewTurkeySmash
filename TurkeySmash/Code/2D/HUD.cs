@@ -8,8 +8,9 @@ namespace TurkeySmash
     {
         Font[] pourcentages = new Font[4];
         Sprite[] icone = new Sprite[4];
+        Font life;
         Font timerFont;
-        decimal timer = 0;
+        decimal timer;
 
         public void Load(Character[] players)
         {
@@ -18,9 +19,16 @@ namespace TurkeySmash
             timerFont.NameFont = "Pourcent";
             timerFont.Load(TurkeySmashGame.content);
             timerFont.SizeText = 1.0f;
+            life = new Font(TurkeySmashGame.WindowMid);
+            life.NameFont = "Pourcent";
+            life.Load(TurkeySmashGame.content);
+            life.SizeText = 0.8f;
+
+            if (OptionsCombat.TypePartieSelect == "temps")
+                timer = OptionsCombat.TempsPartie * 60000 ; //60*1000 = 1 min en millisecond
+            else
+                timer = 0;
             
-
-
             for (int i = 0; i < players.Length; i++)
             {
                 if (players[i] != null)
@@ -47,21 +55,29 @@ namespace TurkeySmash
 
         public void Update(GameTime gameTime, Character[] players)
         {
-            for(int i = 0; i < players.Length; i++)
+            for (int i = 0; i < players.Length; i++)
             {
                 if (players[i] != null)
                 {
                     pourcentages[i].Texte = players[i].pourcent + " %";
                     int gradationRatio = 255 - (255 * players[i].pourcent / 250);
-                    pourcentages[i].Color = Color.FromNonPremultiplied(255,gradationRatio,gradationRatio, 255);
+                    pourcentages[i].Color = Color.FromNonPremultiplied(255, gradationRatio, gradationRatio, 255);
                 }
             }
-            timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
-            timerFont.Texte = (Math.Round((timer / 1000), 1)).ToString();
+            if (OptionsCombat.TypePartieSelect == "temps")
+                timer -= (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
+            else
+                timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            timerFont.Texte = (Math.Round((timer / 1000),0)).ToString();
+
+
+            life.Texte = (players[0].vie).ToString();
         }
 
         public void Draw()
         {
+            life.Draw(TurkeySmashGame.spriteBatch);
             timerFont.Draw(TurkeySmashGame.spriteBatch);
             for (int i = 0; i < pourcentages.Length; i++)
             {

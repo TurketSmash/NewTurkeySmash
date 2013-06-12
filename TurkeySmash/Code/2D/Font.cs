@@ -24,7 +24,7 @@ namespace TurkeySmash
         public float XPos { set { position.X = value; } }
         public float YPos { set { position.Y = value; } }
         public string NameFont { set { police = value; } }
-        public string Texte { set { texte = value; } }
+        public string Texte { get { return texte; } set { texte = value; } }
         public Color Color { set { color = value; } }
         public float SizeText { set { tailleText = value; } }
 

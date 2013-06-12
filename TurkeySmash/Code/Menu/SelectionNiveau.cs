@@ -19,7 +19,7 @@ namespace TurkeySmash
         {
             bouton1 = new BoutonImage();
             bouton2 = new BoutonImage();
-            bouton3 = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth / 2, 700);
+            bouton3 = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth / 2, TurkeySmashGame.WindowSize.Y * 0.6f);
             bouton3.Texte = "Retour";
         }
 

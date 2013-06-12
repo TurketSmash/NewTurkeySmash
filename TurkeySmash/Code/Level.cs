@@ -43,17 +43,17 @@ namespace TurkeySmash
                     spawnPoints[0] = new Vector2(Xwin * 0.331f,Ywin * 0.528f);
                     spawnPoints[1] = new Vector2(Xwin * 0.729f,Ywin * 0.444f);
 
-                    items = new PhysicsObject[3];
-                    itemsSprite = new Sprite[3];
+                    //items = new PhysicsObject[3];
+                    //itemsSprite = new Sprite[3];
                     bodylist = new StaticPhysicsObject[5];
 
                     #region Sprites Loading
 
                     Sprite caisseSprite = new Sprite();
                     caisseSprite.Load(TurkeySmashGame.content, "Jeu\\level1\\caisse");
-                    itemsSprite[0] = caisseSprite;
-                    itemsSprite[1] = caisseSprite;
-                    itemsSprite[2] = caisseSprite;
+                    //itemsSprite[0] = caisseSprite;
+                    //itemsSprite[1] = caisseSprite;
+                    //itemsSprite[2] = caisseSprite;
 
                     Sprite plateforme1Mid = new Sprite();
                     plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Mid");
@@ -79,12 +79,12 @@ namespace TurkeySmash
                     #endregion
 
                     #region Items
-                    items[0] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.489f, Ywin * 0.452f), 2, caisseSprite);
-                    items[1] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.530f, Ywin * 0.452f), 2, caisseSprite);
-                    items[2] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.509f, Ywin * 0.392f), 2, caisseSprite);
-                    items[0].body.Friction = 1f;
-                    items[1].body.Friction = 1f;
-                    items[2].body.Friction = 1f;
+                    //items[0] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.489f, Ywin * 0.452f), 2, caisseSprite);
+                    //items[1] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.530f, Ywin * 0.452f), 2, caisseSprite);
+                    //items[2] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.509f, Ywin * 0.392f), 2, caisseSprite);
+                    //items[0].body.Friction = 1f;
+                    //items[1].body.Friction = 1f;
+                    //items[2].body.Friction = 1f;
 
                     #endregion
 
@@ -158,7 +158,7 @@ namespace TurkeySmash
                 {
                     personnages[i].Update(gameTime);
 
-                    if (outOfScreen(personnages[i].bodyPosition))
+                    if (!personnages[i].Mort & outOfScreen(personnages[i].bodyPosition))
                     {
                         respawn(personnages[i]);
                     }
@@ -176,14 +176,17 @@ namespace TurkeySmash
 
         void respawn(Character personnage)
         {
+            if (personnage.vie == 1)
+                personnage.vie = 0;
+
             if (!personnage.Mort)
             {
-
                 personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
                 personnage.vie--;
             }
             personnage.body.UserData = 0;
             personnage.body.ResetDynamics();
+            Console.WriteLine(personnage.vie);
         }
 
         void partieTerminee(Character personnage)
@@ -192,18 +195,17 @@ namespace TurkeySmash
         }
 
 
-
         public void Draw(SpriteBatch spriteBatch)
         {
             background.DrawAsBackground(spriteBatch);
 
-            if (items != null)
+            /*if (items != null)
             {
                 for (int i = 0; i < items.Length; i++)
                 {
                     items[i].Draw(itemsSprite[i], spriteBatch);
                 }
-            }
+            }*/
             foreach (StaticPhysicsObject elements in bodylist)
             {
                 if (elements != null)

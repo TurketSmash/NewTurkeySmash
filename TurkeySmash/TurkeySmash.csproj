@@ -129,6 +129,7 @@
     <Compile Include="Code\Menu\IBouton.cs" />
     <Compile Include="Code\Menu\Menu.cs" />
     <Compile Include="Code\Menu\Options.cs" />
+    <Compile Include="Code\Menu\OptionsCombat.cs" />
     <Compile Include="Code\Menu\OptionsSon.cs" />
     <Compile Include="Code\Menu\Pause.cs" />
     <Compile Include="Code\Menu\Resolution.cs" />
