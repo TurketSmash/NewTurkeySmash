@@ -44,7 +44,7 @@ namespace TurkeySmash
         public override void Update(GameTime gameTime)
         {
             booleenDeLaFamille = false;
-            if (compteur < 50)
+            if (compteur < 25)
                 compteur = compteur + 1;
             else
             {
@@ -84,22 +84,6 @@ namespace TurkeySmash
                         isMoving = false;
             }
 
-            //Jump
-
-            jump = ((positionYLaPlusProche < bodyPosition.Y - 0.7) && (booleenDeLaFamille));
-
-
-            //Attack
-
-            if ((bodyPosition.X <= positionXLaPlusProche + 0.7) && (bodyPosition.X >= positionXLaPlusProche - 0.7) && (fuir == false))
-                canAction = true;
-            
-            action = canAction;
-            if (action)
-            {
-                canAction = false;
-                fuir = true;
-            }
 
             if (fuir)
             {
@@ -123,7 +107,26 @@ namespace TurkeySmash
                 fuir = false;
             }
 
-            Console.WriteLine(lookingRight);
+            //Jump
+
+            jump = ((positionYLaPlusProche < bodyPosition.Y - 1) && (booleenDeLaFamille));
+
+
+            //Attack
+
+            if ((bodyPosition.X <= positionXLaPlusProche + 0.6) && (bodyPosition.X >= positionXLaPlusProche - 0.6) && (fuir == false))
+                canAction = true ;
+
+            action = canAction;
+
+            if (canAction)
+            {
+                canAction = false;
+                fuir = true ;
+            }
+
+
+            Console.WriteLine(booleenDeLaFamille);
 
             base.Update(gameTime);
         }
