@@ -12,7 +12,7 @@ namespace TurkeySmash
         private SpriteFont spriteFont;
         private Color color = Color.Black;
         private Vector2 FontOrigin;
-        private float tailleText = 1.0f;
+        private float tailleText = 1.3f;
         private string police = "SuperMario";
         private string texte = "";
 
@@ -57,7 +57,6 @@ namespace TurkeySmash
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             FontOrigin = spriteFont.MeasureString(texte) / 2;
-            Resize();
             spriteBatch.DrawString(spriteFont, texte, position, color, 0, FontOrigin, tailleText, SpriteEffects.None, 0.5f);
         }
 
@@ -72,6 +71,5 @@ namespace TurkeySmash
             else
                 tailleText = 1.0f;
         }
-
     }
 }
