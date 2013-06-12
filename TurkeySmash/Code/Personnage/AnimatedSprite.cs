@@ -32,6 +32,7 @@ namespace TurkeySmash
         public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } }
         public Vector2 bodySize;
         protected SpriteEffects effects;
+        protected Color color = Color.White;
         protected World world;
 
         int frameRate = 60;
@@ -90,7 +91,7 @@ namespace TurkeySmash
         {
             spriteBatch.Draw(texture, new Vector2(ConvertUnits.ToDisplayUnits(bodyPosition.X) - (bodySize.X * scale), ConvertUnits.ToDisplayUnits(bodyPosition.Y) - (bodySize.Y * scale)),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
-                                    Color.White, 0, Vector2.Zero, scale, effects, 0);
+                                    color, 0, Vector2.Zero, scale, effects, 0);
         }
 
         public void Resize(float largeur, float longueur)
