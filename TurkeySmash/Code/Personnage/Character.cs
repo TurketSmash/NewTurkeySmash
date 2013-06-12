@@ -56,13 +56,16 @@ namespace TurkeySmash
             this.playerindex = playerindex;
             body.FixedRotation = true;
             body.Friction = 0.1f;
-            body.UserData = this.pourcent;
+            FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
+            userdata.pourcent = 0;
+            userdata.lastHit = 0;
         }
 
         public override void Update(GameTime gameTime)
         {
 
             newDrop = bodyPosition.Y;
+            FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
 
             if (FinishedAnimation)
             {
@@ -111,7 +114,7 @@ namespace TurkeySmash
 
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
-            pourcent = (int)body.UserData;
+            pourcent = userdata.pourcent;
             direction = Direction.Nodirection;
 
             base.Update(gameTime);
@@ -125,11 +128,12 @@ namespace TurkeySmash
 
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
+            FarseerBodyUserData fixBuserdata = (FarseerBodyUserData)fixB.Body.UserData;
             int pourcentB;
             if (fixB.Body.UserData != null)
             {
-                fixB.Body.UserData = (int)fixB.Body.UserData + 7;
-                pourcentB = (int)fixB.Body.UserData;
+                fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
+                pourcentB = fixBuserdata.pourcent;
             }
             else
                 pourcentB = 0;

@@ -193,7 +193,8 @@ namespace TurkeySmash
                 if (OptionsCombat.TypePartieSelect != "temps")
                     personnage.vie--;
             }
-            personnage.body.UserData = 0;
+            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
+            userData.pourcent = 0;
             personnage.body.ResetDynamics();
             Console.WriteLine(personnage.vie);
         }
