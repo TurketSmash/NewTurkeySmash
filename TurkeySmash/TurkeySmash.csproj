@@ -137,7 +137,6 @@
     <Compile Include="Code\Menu\SelectionPersonnages.cs" />
     <Compile Include="Code\Personnage\AnimatedSprite.cs" />
     <Compile Include="Code\Personnage\Character.cs" />
-    <Compile Include="Code\Personnage\IA.cs" />
     <Compile Include="Code\Personnage\Joueur.cs" />
     <Compile Include="Code\Personnage\PhysicsObject.cs" />
     <Compile Include="Code\Personnage\RectPhysicsObject.cs" />

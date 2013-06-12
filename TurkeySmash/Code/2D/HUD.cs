@@ -69,8 +69,7 @@ namespace TurkeySmash
             else
                 timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            timerFont.Texte = (Math.Round((timer / 1000),0)).ToString();
-
+            timerFont.Texte = (Math.Truncate((Math.Round((timer / 1000), 0)) / 60)).ToString() + " : " + (Math.Round((timer / 1000), 0) % 60).ToString();
 
             life.Texte = (players[0].vie).ToString();
         }

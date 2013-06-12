@@ -5,6 +5,7 @@ using System.Threading;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using System;
 #endregion
 
 
@@ -28,6 +29,10 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime, Input input)
         {
+
+            Console.Write("mode:"+OptionsCombat.TypePartieSelect+" // ");
+            Console.Write("vie "+OptionsCombat.NombreVies);
+            Console.WriteLine(" // temps " + OptionsCombat.TempsPartie);
 
             soundSelect = TurkeySmashGame.content.Load<SoundEffect>("Sons\\menuSelect");
             SoundEffectInstance instanceSelect = soundSelect.CreateInstance();

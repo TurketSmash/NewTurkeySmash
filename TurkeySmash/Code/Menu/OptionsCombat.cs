@@ -10,7 +10,7 @@ namespace TurkeySmash
         private BoutonTexte bouton2;
         private BoutonTexte bouton3;
         private BoutonTexte bouton4;
-        public static string TypePartieSelect = "temps";
+        public static string TypePartieSelect = "vie";
         public static int NombreVies = 5;
         public static int TempsPartie = 3;
 
@@ -29,6 +29,7 @@ namespace TurkeySmash
                 bouton1.Texte = "Type de Partie : Temps";
             else
                 bouton1.Texte = "Type de Partie : Vies";
+
             bouton2.Texte = "Nombre de Vies : 5";
             bouton3.Texte = "Temps de la Partie : 3 min";
             bouton4.Texte = "Retour";
@@ -50,12 +51,12 @@ namespace TurkeySmash
         {
             if (bouton1.Texte == "Type de Partie : Vies")
             {
-                TypePartieSelect = "vie";
+                TypePartieSelect = "temps";
                 bouton1.Texte = "Type de Partie : Temps";
             }
             else
             {
-                TypePartieSelect = "temps";
+                TypePartieSelect = "vie";
                 bouton1.Texte = "Type de Partie : Vies";
             }
         }
@@ -81,9 +82,9 @@ namespace TurkeySmash
                 TempsPartie = 5;
                 bouton3.Texte = "Temps de la Partie : 5 min";
             }
-            else if (NombreVies == 5)
+            else if (TempsPartie == 5)
             {
-                NombreVies = 3;
+                TempsPartie = 3;
                 bouton3.Texte = "Temps de la Partie : 3 min";
             }
         }

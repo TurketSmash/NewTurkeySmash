@@ -25,6 +25,8 @@ namespace TurkeySmash
         float Xwin = TurkeySmashGame.WindowSize.X;
         float Ywin = TurkeySmashGame.WindowSize.Y;
 
+        decimal timer;
+
         public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
             this.world = _world;
@@ -152,11 +154,13 @@ namespace TurkeySmash
 
         public void Update(GameTime gameTime)
         {
+            timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
             for (int i = 0; i < personnages.Length; i++)
             {
                 if (personnages[i] != null)
                 {
                     personnages[i].Update(gameTime);
+                    partieTerminee(personnages[i]);
 
                     if (!personnages[i].Mort & outOfScreen(personnages[i].bodyPosition))
                     {
@@ -182,7 +186,9 @@ namespace TurkeySmash
             if (!personnage.Mort)
             {
                 personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
-                personnage.vie--;
+
+                if (OptionsCombat.TypePartieSelect != "temps")
+                    personnage.vie--;
             }
             personnage.body.UserData = 0;
             personnage.body.ResetDynamics();
@@ -191,9 +197,23 @@ namespace TurkeySmash
 
         void partieTerminee(Character personnage)
         {
-
+            if (OptionsCombat.TypePartieSelect == "temps")
+            {
+                if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
+                {
+                    //Ecran de fin de partie
+                    Console.WriteLine("Fin de Partie");
+                }
+            }
+            if (OptionsCombat.TypePartieSelect == "vie")
+            {
+                if (personnages[0].Mort | personnages[1].Mort)
+                {
+                    //Ecran de fin de partie
+                    Console.WriteLine("Fin de Partie");
+                }
+            }
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
