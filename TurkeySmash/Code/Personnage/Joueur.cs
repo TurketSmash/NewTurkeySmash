@@ -26,16 +26,27 @@ namespace TurkeySmash
         {
             if (input.Left(playerindex))
             {
+                direction = Direction.Left;
                 lookingRight = false;
                 isMoving = true;
             }
             else if (input.Right(playerindex))
             {
+                direction = Direction.Right;
                 lookingRight = true;
                 isMoving = true;
             }
             else
                 isMoving = false;
+
+            if (input.Up(playerindex))
+            {
+                direction = Direction.Up;
+            }
+            else if (input.Down(playerindex))
+            {
+                direction = Direction.Down;
+            }
 
             action = input.Action(playerindex);
             jump = input.Jump(playerindex);

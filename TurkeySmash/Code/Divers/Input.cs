@@ -61,12 +61,12 @@ namespace TurkeySmash
 
         #region Mapping
 
-        public bool Up()
+        public bool Up(PlayerIndex player)
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Up) & player == PlayerIndex.Two) || (GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f & player == PlayerIndex.One));
         }
 
-        public bool Down()
+        public bool Down(PlayerIndex player)
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Down) & player == PlayerIndex.Two) || (GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f & player == PlayerIndex.One));
         }

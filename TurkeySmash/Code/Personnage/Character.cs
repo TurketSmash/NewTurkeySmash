@@ -11,9 +11,15 @@ using System;
 
 namespace TurkeySmash
 {
-
     class Character : AnimatedSprite
     {
+        protected enum Direction
+        {
+            Up,
+            Down,
+            Left,
+            Right
+        }
 
         public int vie = 5;
         public int pourcent = 0;
@@ -23,6 +29,7 @@ namespace TurkeySmash
         protected bool jump = false;
         protected bool action = false;
         protected bool isMoving = false;
+        protected Direction direction;
         int forcePower = 3;
         float oldDrop;
         float newDrop;
@@ -49,6 +56,7 @@ namespace TurkeySmash
             }
 
             #region Controls
+
             Vector2 force = Vector2.Zero;
             body.OnCollision += bodyOnCollision;
 
@@ -113,7 +121,6 @@ namespace TurkeySmash
             base.Update(gameTime);
         }
 
-
         private bool bodyOnCollision(Fixture fixA, Fixture fixB, Contact contact)
         {
             canJump = true;
@@ -139,6 +146,5 @@ namespace TurkeySmash
 
             return true;
         }
-
     }
 }
