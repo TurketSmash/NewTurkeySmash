@@ -50,7 +50,7 @@ namespace TurkeySmash
 
             action = input.Action(playerindex);
             jump = input.Jump(playerindex);
-
+            actionReleased = input.ActionReleased(playerindex);
 
             base.Update(gameTime);
         }

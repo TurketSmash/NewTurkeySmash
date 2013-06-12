@@ -23,20 +23,31 @@ namespace TurkeySmash
 
         public int vie = OptionsCombat.NombreVies;
         public int pourcent = 0;
+        public PlayerIndex playerindex;
+
         bool canJump;
-        protected PlayerIndex playerindex;
+        bool inAction = false;
+
         protected bool lookingRight = true;
         protected bool jump = false;
         protected bool action = false;
+        protected bool actionReleased = false;
         protected bool isMoving = false;
-        bool inAction = false;
         protected Direction direction;
-        int forcePower = 3;
-        float oldDrop;
-        float newDrop;
-        int oldPourcent;
-        int i = 0;
+        
+        int forcePower = 2; // force appliquée au personnage lors des déplacements droite/gauche
 
+        float oldDrop; // variable pour calcul la chute du personnage
+        float newDrop;
+
+        int oldPourcent;
+        int i = 0; // compteur nombre de frame filtre rouge
+
+        float j = 0f;
+
+        float forceItem = 1.0f;
+        float maxForceCharged = 2.0f;
+        float ForceItem { get { return forceItem; } set { forceItem = forceItem > maxForceCharged ? maxForceCharged : forceItem; } }
         public bool Mort { get { return vie < 1; } }
 
         public Character(World world, Vector2 position, float density, Vector2 bodySize, PlayerIndex playerindex, AnimatedSpriteDef definition)
@@ -71,6 +82,35 @@ namespace TurkeySmash
                 else
                     effects = SpriteEffects.FlipHorizontally;
 
+                //Attack
+                if (action)
+                {
+                    // animation attack
+                    if (action & actionReleased)
+                    {
+                        RectPhysicsObject hit;
+                        if (lookingRight)
+                            hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                        else
+                            hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                        hit.body.IsSensor = true;
+                        hit.body.OnCollision += hitOnColision;
+                        world.Step(1 / 3000f);
+                        world.RemoveBody(hit.body);
+                        inAction = true;
+                    }
+                    else
+                    {
+                        ForceItem += 0.1f;
+                    }
+                    Reset(new Point());
+                    definition.Loop = false;
+                    FinishedAnimation = false;
+                    TimeBetweenFrame = 50;
+                    CurrentFrame.Y = 3;
+                }
+                Console.WriteLine(actionReleased);
+
                 if (isMoving)
                 {
                     force.X = lookingRight ? forcePower : -forcePower;
@@ -85,32 +125,11 @@ namespace TurkeySmash
                 //Jump
                 if (jump & canJump)
                 {
-                    body.ApplyForce(-Vector2.UnitY * 100);
+                    body.ApplyForce(-Vector2.UnitY * 75);
                     canJump = false;
                     definition.Loop = false;
                     FinishedAnimation = false;
                     CurrentFrame.Y = 2;
-                }
-
-                //Attack
-                if (action)
-                {
-                    RectPhysicsObject hit;
-                    if (lookingRight)
-                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    else
-                        hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) - 18 - bodySize.X / 2, ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    hit.body.IsSensor = true;
-                    hit.body.OnCollision += hitOnColision;
-                    world.Step(1 / 3000f);
-                    world.RemoveBody(hit.body);
-
-                    Reset(new Point());
-                    definition.Loop = false;
-                    FinishedAnimation = false;
-                    TimeBetweenFrame = 50;
-                    CurrentFrame.Y = 3;
-                    inAction = true;
                 }
             }
 
@@ -151,11 +170,9 @@ namespace TurkeySmash
 
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
-            float forceItem = 2.0f;
             int pourcentB;
             if (fixB.Body.UserData != null)
             {
-                forceItem = 1.0f;
                 fixB.Body.UserData = (int)fixB.Body.UserData + 7;
                 pourcentB = (int)fixB.Body.UserData;
             }
