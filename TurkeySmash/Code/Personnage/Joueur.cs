@@ -24,17 +24,21 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             if (input.Left(playerindex))
             {
                 direction = Direction.Left;
                 lookingRight = false;
                 isMoving = true;
+                Moving();
             }
             else if (input.Right(playerindex))
             {
                 direction = Direction.Right;
                 lookingRight = true;
                 isMoving = true;
+                Moving();
             }
             else
                 isMoving = false;
@@ -48,10 +52,11 @@ namespace TurkeySmash
                 direction = Direction.Down;
             }
 
-            action = input.Action(playerindex);
-            jump = input.Jump(playerindex);
+            if (input.Action(playerindex))
+                Attack();
 
-            base.Update(gameTime);
+            if (input.Jump(playerindex))
+                Jump();
         }
     }
 }

@@ -166,9 +166,9 @@ namespace TurkeySmash
                     partieTerminee(personnages[i]);
 
                     if (!personnages[i].Mort & outOfScreen(personnages[i].bodyPosition))
-                    {
                         respawn(personnages[i]);
-                    }
+                    if (personnages[i].Mort)
+                        personnages[i] = null;
                 }
             }
         }
@@ -210,7 +210,7 @@ namespace TurkeySmash
             }
             if (OptionsCombat.TypePartieSelect == "vie")
             {
-                if (personnages[0].Mort | personnages[1].Mort)
+                if (personnages[0] == null | personnages[1] == null)
                 {
                     //Ecran de fin de partie
                     Console.WriteLine("Fin de Partie");

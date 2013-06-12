@@ -117,8 +117,6 @@ namespace TurkeySmash
             if ((bodyPosition.X <= positionXLaPlusProche + 0.6) && (bodyPosition.X >= positionXLaPlusProche - 0.6) && (fuir == false))
                 canAction = true ;
 
-            action = canAction;
-
             if (canAction)
             {
                 canAction = false;
