@@ -125,13 +125,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\narutosheet.png">
-      <Name>narutosheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Jeu\level1\background1.png">
       <Name>background1</Name>
       <Importer>TextureImporter</Importer>
@@ -181,13 +174,6 @@
     </Compile>
     <Compile Include="Jeu\level2\plateformeBlocRouge.png">
       <Name>plateformeBlocRouge</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jeu\sakura.png">
-      <Name>sakura</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -253,6 +239,20 @@
     </Compile>
     <Compile Include="Jeu\level2\football.png">
       <Name>football</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\sakura.png">
+      <Name>sakura</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\narutosheet.png">
+      <Name>narutosheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
