@@ -121,6 +121,7 @@
     <Compile Include="Code\2D\Particules\ParticleSettings.cs" />
     <Compile Include="Code\2D\Sprite.cs" />
     <Compile Include="Code\Divers\Input.cs" />
+    <Compile Include="Code\Divers\Winner.cs" />
     <Compile Include="Code\Level.cs" />
     <Compile Include="Code\Main\Basic.cs" />
     <Compile Include="Code\Main\Jeu.cs" />

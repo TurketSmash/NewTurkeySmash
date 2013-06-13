@@ -25,7 +25,7 @@ namespace TurkeySmash
             boutonRejouer.Texte = "Rejouer";
             boutonMainMenu.Texte = "Menu Principal";
             affichageGagnant = new Texte(TurkeySmashGame.WindowMid);
-            affichageGagnant.Texte = "PUTE";
+            affichageGagnant.Texte = "Gagnant : joueur " + Winner.winner[0].ToString();
             MediaPlayer.Resume();
         }
 

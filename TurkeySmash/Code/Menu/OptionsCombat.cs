@@ -12,7 +12,7 @@ namespace TurkeySmash
         private BoutonTexte bouton4;
         public static string TypePartieSelect = "vie";
         public static int NombreVies = 5;
-        public static int TempsPartie = 3;
+        public static int TempsPartie = 1;
 
         #endregion
 
