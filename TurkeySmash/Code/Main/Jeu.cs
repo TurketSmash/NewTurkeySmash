@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework.Input;
 #endregion
 
 namespace TurkeySmash
@@ -61,7 +62,10 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime, Input input)
         {
-
+            if(Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                Basic.SetScreen(new EndGameScreen());
+            }
             if (input.Escape())
             {
                 sonInstance.Pause();

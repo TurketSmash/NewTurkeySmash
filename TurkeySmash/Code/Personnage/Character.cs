@@ -46,7 +46,7 @@ namespace TurkeySmash
 
         int allongeCoup = 18;
         int forceJump = 70;
-        float forceItem = 0.3f;
+        float forceItem;
         float maxForceCharged = 1.0f;
         float ForceItem { get { return forceItem; } set { forceItem = forceItem > maxForceCharged ? maxForceCharged : value; } }
         public bool Mort { get { return vie < 1; } }
@@ -136,9 +136,13 @@ namespace TurkeySmash
                 fixBuserdata.lastHit = Convert.playerIndex(playerindex);
                 fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
                 pourcentB = fixBuserdata.pourcent;
+                forceItem = 0.3f;
             }
             else
+            {
+                forceItem = 1.5f;
                 pourcentB = 0;
+            }
             if (lookingRight)
                 fixB.Body.ApplyLinearImpulse(new Vector2(1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
             else

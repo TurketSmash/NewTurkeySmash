@@ -16,6 +16,7 @@ namespace TurkeySmash
         #region Fields
 
         protected List<IBouton> boutons = new List<IBouton>();
+        protected List<Texte> textes = new List<Texte>();
         protected Sprite backgroundMenu = new Sprite();
         private int selecty = 1;
         private KeyboardState oldStateK;
@@ -106,6 +107,10 @@ namespace TurkeySmash
             foreach (IBouton bouton in boutons)
             {
                 bouton.Draw(TurkeySmashGame.spriteBatch);
+            }
+            foreach (Texte texte in textes)
+            {
+                texte.Draw(TurkeySmashGame.spriteBatch);
             }
 
             TurkeySmashGame.spriteBatch.End();

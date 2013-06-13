@@ -12,8 +12,7 @@ namespace TurkeySmash
 
         private BoutonTexte boutonRejouer;
         private BoutonTexte boutonMainMenu;
-        private float xPos = 500;
-        private float yPos = 200;
+        private Texte affichageGagnant;
 
         #endregion
 
@@ -21,20 +20,21 @@ namespace TurkeySmash
 
         public EndGameScreen()
         {
-            xPos = TurkeySmashGame.manager.PreferredBackBufferWidth / 4;
-            yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
-            boutonRejouer = new BoutonTexte(xPos, yPos + 200);
-            boutonMainMenu = new BoutonTexte(xPos, yPos + 300);
-            boutonRejouer.Texte = "Selection des personnages";
+            boutonRejouer = new BoutonTexte(TurkeySmashGame.WindowSize.X / 4, 9 * TurkeySmashGame.WindowSize.Y / 10);
+            boutonMainMenu = new BoutonTexte(3 * TurkeySmashGame.WindowSize.X / 4, 9 * TurkeySmashGame.WindowSize.Y / 10);
+            boutonRejouer.Texte = "Rejouer";
             boutonMainMenu.Texte = "Menu Principal";
+            affichageGagnant = new Texte(TurkeySmashGame.WindowMid);
+            affichageGagnant.Texte = "PUTE";
             MediaPlayer.Resume();
         }
 
         public override void Init()
         {
-            backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuPause");
+            backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuGameOver");
             boutonRejouer.Load(TurkeySmashGame.content, boutons);
             boutonMainMenu.Load(TurkeySmashGame.content, boutons);
+            affichageGagnant.Load(TurkeySmashGame.content, textes);
         }
 
         #endregion

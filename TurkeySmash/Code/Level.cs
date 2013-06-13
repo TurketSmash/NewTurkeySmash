@@ -22,6 +22,8 @@ namespace TurkeySmash
 
         Character[] personnages;
         int[] tabScores = new int[4] { 0, 0, 0, 0 };
+        public PlayerIndex gagnant;
+
         World world;
         float Xwin = TurkeySmashGame.WindowSize.X;
         float Ywin = TurkeySmashGame.WindowSize.Y;
@@ -46,17 +48,17 @@ namespace TurkeySmash
                     spawnPoints[0] = new Vector2(Xwin * 0.331f,Ywin * 0.528f);
                     spawnPoints[1] = new Vector2(Xwin * 0.729f,Ywin * 0.444f);
 
-                    //items = new PhysicsObject[3];
-                    //itemsSprite = new Sprite[3];
+                    items = new PhysicsObject[3];
+                    itemsSprite = new Sprite[3];
                     bodylist = new StaticPhysicsObject[5];
 
                     #region Sprites Loading
 
                     Sprite caisseSprite = new Sprite();
                     caisseSprite.Load(TurkeySmashGame.content, "Jeu\\level1\\caisse");
-                    //itemsSprite[0] = caisseSprite;
-                    //itemsSprite[1] = caisseSprite;
-                    //itemsSprite[2] = caisseSprite;
+                    itemsSprite[0] = caisseSprite;
+                    itemsSprite[1] = caisseSprite;
+                    itemsSprite[2] = caisseSprite;
 
                     Sprite plateforme1Mid = new Sprite();
                     plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Mid");
@@ -82,12 +84,12 @@ namespace TurkeySmash
                     #endregion
 
                     #region Items
-                    //items[0] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.489f, Ywin * 0.452f), 2, caisseSprite);
-                    //items[1] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.530f, Ywin * 0.452f), 2, caisseSprite);
-                    //items[2] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.509f, Ywin * 0.392f), 2, caisseSprite);
-                    //items[0].body.Friction = 1f;
-                    //items[1].body.Friction = 1f;
-                    //items[2].body.Friction = 1f;
+                    items[0] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.489f, Ywin * 0.452f), 2, caisseSprite);
+                    items[1] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.530f, Ywin * 0.452f), 2, caisseSprite);
+                    items[2] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.509f, Ywin * 0.392f), 2, caisseSprite);
+                    items[0].body.Friction = 1f;
+                    items[1].body.Friction = 1f;
+                    items[2].body.Friction = 1f;
 
                     #endregion
 
@@ -194,6 +196,7 @@ namespace TurkeySmash
                 if (OptionsCombat.TypePartieSelect != "temps")
                     personnage.vie--;
             }
+            userData.lastHit = 0;
             userData.pourcent = 0;
             personnage.body.ResetDynamics();
         }
@@ -209,7 +212,9 @@ namespace TurkeySmash
             for (int i = 0; i < personnages.Length; i++)
             {
                 if (personnages[i] != null)
+                {
                     tabScores[i] = personnages[i].score;
+                }
             }
             Console.WriteLine(tabScores[0] + " / " + tabScores[1] + " / " + tabScores[2] + " / " + tabScores[3]);
         }
@@ -221,15 +226,18 @@ namespace TurkeySmash
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
                     Basic.SetScreen(new EndGameScreen());
-                    Console.WriteLine("Fin de Partie");
                 }
             }
             if (OptionsCombat.TypePartieSelect == "vie")
             {
                 if (personnages[0] == null ^ personnages[1] == null ^ personnages[2] == null ^ personnages[3] == null)
                 {
+                    for (int i = 0; i < personnages.Length; i++)
+                    {
+                        if (personnages[i] != null)
+                            gagnant = personnages[i].playerindex;
+                    }
                     Basic.SetScreen(new EndGameScreen());
-                    Console.WriteLine("Fin de Partie");
                 }
             }
         }
@@ -238,13 +246,13 @@ namespace TurkeySmash
         {
             background.DrawAsBackground(spriteBatch);
 
-            /*if (items != null)
+            if (items != null)
             {
                 for (int i = 0; i < items.Length; i++)
                 {
                     items[i].Draw(itemsSprite[i], spriteBatch);
                 }
-            }*/
+            }
             foreach (StaticPhysicsObject elements in bodylist)
             {
                 if (elements != null)
