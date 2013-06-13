@@ -220,7 +220,7 @@ namespace TurkeySmash
             {
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
-                    //Ecran de fin de partie
+                    Basic.SetScreen(new EndGameScreen());
                     Console.WriteLine("Fin de Partie");
                 }
             }
@@ -228,7 +228,7 @@ namespace TurkeySmash
             {
                 if (personnages[0] == null ^ personnages[1] == null ^ personnages[2] == null ^ personnages[3] == null)
                 {
-                    //Ecran de fin de partie
+                    Basic.SetScreen(new EndGameScreen());
                     Console.WriteLine("Fin de Partie");
                 }
             }

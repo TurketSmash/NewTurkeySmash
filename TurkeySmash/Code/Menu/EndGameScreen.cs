@@ -1,13 +1,16 @@
-﻿using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Audio;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework.Media;
+
 namespace TurkeySmash
 {
-    class Pause : Menu
+    class EndGameScreen : Menu
     {
         #region Fields
 
-        private BoutonTexte boutonRetour;
-        private BoutonTexte boutonSelectionPerso;
+        private BoutonTexte boutonRejouer;
         private BoutonTexte boutonMainMenu;
         private float xPos = 500;
         private float yPos = 200;
@@ -16,15 +19,13 @@ namespace TurkeySmash
 
         #region Construction and Initialization
 
-        public Pause()
+        public EndGameScreen()
         {
             xPos = TurkeySmashGame.manager.PreferredBackBufferWidth / 4;
             yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
-            boutonRetour = new BoutonTexte(xPos, yPos + 100);
-            boutonSelectionPerso = new BoutonTexte(xPos, yPos + 200);
+            boutonRejouer = new BoutonTexte(xPos, yPos + 200);
             boutonMainMenu = new BoutonTexte(xPos, yPos + 300);
-            boutonRetour.Texte = "Retour";
-            boutonSelectionPerso.Texte = "Selection des personnages";
+            boutonRejouer.Texte = "Selection des personnages";
             boutonMainMenu.Texte = "Menu Principal";
             MediaPlayer.Resume();
         }
@@ -32,8 +33,7 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuPause");
-            boutonRetour.Load(TurkeySmashGame.content, boutons);
-            boutonSelectionPerso.Load(TurkeySmashGame.content, boutons);
+            boutonRejouer.Load(TurkeySmashGame.content, boutons);
             boutonMainMenu.Load(TurkeySmashGame.content, boutons);
         }
 
@@ -41,19 +41,12 @@ namespace TurkeySmash
 
         public override void Bouton1()
         {
-            MediaPlayer.Pause();
             Basic.Quit();
-            MediaPlayer.Pause();
+            Basic.Quit();
+            Basic.Quit();
         }
 
         public override void Bouton2()
-        {
-            Basic.Quit();
-            Basic.Quit();
-            Basic.Quit();
-        }
-
-        public override void Bouton3()
         {
             Basic.Quit();
             Basic.Quit();
