@@ -53,7 +53,7 @@ namespace TurkeySmash
         public override void Bouton1()
         {
             modeDeJeu = "1j";
-            Basic.SetScreen(new SelectionPersonnage());
+            Basic.SetScreen(new ChoixNombrePersonnage());
         }
 
         public override void Bouton2()
