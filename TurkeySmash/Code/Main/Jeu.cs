@@ -33,7 +33,7 @@ namespace TurkeySmash
             else
                 level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
 
-            personnages[0] = new Joueur(world,level.spawnPoints[0], 1f, new Vector2(55, 55),PlayerIndex.One, new AnimatedSpriteDef()
+            personnages[0] = new Joueur(world,level.spawnPoints[0], 1f, new Vector2(42, 55),PlayerIndex.One, new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\narutosheet",
                 FrameRate = 60,
@@ -42,7 +42,7 @@ namespace TurkeySmash
                 NbFrames = new Point(5, 1),
             });
 
-            personnages[1] = new Joueur(world, level.spawnPoints[1], 1f, new Vector2(52, 52), PlayerIndex.Two, new AnimatedSpriteDef()
+            personnages[1] = new Joueur(world, level.spawnPoints[1], 1f, new Vector2(40, 50), PlayerIndex.Two, new AnimatedSpriteDef()
             {
                 AssetName = "Jeu\\sakura",
                 FrameRate = 60,
@@ -50,7 +50,7 @@ namespace TurkeySmash
                 Loop = true,
                 NbFrames = new Point(6, 1),
             });
-
+            personnages[1].lookingRight = false;
             
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;

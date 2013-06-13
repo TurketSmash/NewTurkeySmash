@@ -25,13 +25,15 @@ namespace TurkeySmash
         public int vie = OptionsCombat.NombreVies;
         public int pourcent = 0;
         public PlayerIndex playerindex;
+        public int score = 0;
 
         protected bool canJump;
-        bool inAction = false;
+        protected bool inAction = false;
 
-        protected bool lookingRight = true;
+        public bool lookingRight = true;
         protected bool jump = false;
         protected bool isMoving = false;
+        protected bool actionReleased = true;
         protected Direction direction;
         
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
@@ -42,12 +44,11 @@ namespace TurkeySmash
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
 
-        float j = 0f;
-
-        int forceJump = 80;
-        float forceItem = 1.0f;
-        float maxForceCharged = 2.0f;
-        float ForceItem { get { return forceItem; } set { forceItem = forceItem > maxForceCharged ? maxForceCharged : forceItem; } }
+        int allongeCoup = 18;
+        int forceJump = 70;
+        float forceItem = 0.3f;
+        float maxForceCharged = 1.0f;
+        float ForceItem { get { return forceItem; } set { forceItem = forceItem > maxForceCharged ? maxForceCharged : value; } }
         public bool Mort { get { return vie < 1; } }
 
         public Character(World world, Vector2 position, float density, Vector2 bodySize, PlayerIndex playerindex, AnimatedSpriteDef definition)
@@ -57,13 +58,13 @@ namespace TurkeySmash
             body.FixedRotation = true;
             body.Friction = 0.1f;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
+            userdata.associatedName = definition.AssetName;
             userdata.pourcent = 0;
             userdata.lastHit = 0;
         }
 
         public override void Update(GameTime gameTime)
         {
-
             newDrop = bodyPosition.Y;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
 
@@ -132,6 +133,7 @@ namespace TurkeySmash
             int pourcentB;
             if (fixB.Body.UserData != null)
             {
+                fixBuserdata.lastHit = Convert.playerIndex(playerindex);
                 fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
                 pourcentB = fixBuserdata.pourcent;
             }
@@ -147,46 +149,62 @@ namespace TurkeySmash
 
         protected void Attack()
         {
-            if (!inAction)
-            {
-                Reset(new Point());
-                definition.Loop = false;
-                FinishedAnimation = false;
-                RectPhysicsObject hit;
+            Reset(new Point());
+            definition.Loop = false;
+            int x = 0;
 
-                if (direction == Direction.Up)
+            RectPhysicsObject hit;
+
+            if (direction == Direction.Up)
+            {
+                TimeBetweenFrame = 75;
+                CurrentFrame.Y = 4;
+                allongeCoup = 20;
+            }
+            else if (direction == Direction.Down && !canJump)
+            {
+                TimeBetweenFrame = 100;
+                CurrentFrame.Y = 6;
+                allongeCoup = 20;
+            }
+            else
+            {
+                TimeBetweenFrame = 50;
+                if (canJump)
                 {
-                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2,
-                        ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    TimeBetweenFrame = 75;
-                    CurrentFrame.Y = 4;
-                }
-                else if (direction == Direction.Down && !canJump)
-                {
-                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 + bodySize.X / 2,
-                        ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    TimeBetweenFrame = 100;
-                    CurrentFrame.Y = 6;
+                    CurrentFrame.Y = 3;
+                    allongeCoup = 18;
                 }
                 else
                 {
-                    int x = lookingRight ? 1 : -1;
-                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + 18 * x + x * bodySize.X / 2,
-                        ConvertUnits.ToDisplayUnits(body.Position.Y)), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    
-                    TimeBetweenFrame = 50;
-                    if (canJump)
-                        CurrentFrame.Y = 3;
-                    else
-                        CurrentFrame.Y = 5;
+                    CurrentFrame.Y = 5;
+                    allongeCoup = 25;
                 }
-
-                hit.body.IsSensor = true;
-                hit.body.OnCollision += hitOnColision;
-                world.Step(1 / 3000f);
-                world.RemoveBody(hit.body);
-                inAction = true;
+                x = lookingRight ? 1 : -1;
             }
+
+            if (!actionReleased) // Si le bouton est appuyé
+            {
+                CurrentFrame.X = 0;
+                FinishedAnimation = true;
+                ForceItem += 0.1f;
+            }
+            else
+            {
+                int y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
+
+                if (CurrentFrame.X == 2)
+                {
+                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
+                        ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                    hit.body.IsSensor = true;
+                    hit.body.OnCollision += hitOnColision;
+                    world.Step(1 / 3000f);
+                    world.RemoveBody(hit.body);
+                }
+            }
+            
+            inAction = true;
         }
         protected void Jump()
         {
