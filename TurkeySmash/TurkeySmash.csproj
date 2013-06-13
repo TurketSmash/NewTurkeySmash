@@ -127,6 +127,7 @@
     <Compile Include="Code\Menu\Accueil.cs" />
     <Compile Include="Code\Menu\BoutonImage.cs" />
     <Compile Include="Code\Menu\BoutonTexte.cs" />
+    <Compile Include="Code\Menu\ChoixNombrePersonnage.cs" />
     <Compile Include="Code\Menu\EndGameScreen.cs" />
     <Compile Include="Code\Menu\IBouton.cs" />
     <Compile Include="Code\Menu\Menu.cs" />
