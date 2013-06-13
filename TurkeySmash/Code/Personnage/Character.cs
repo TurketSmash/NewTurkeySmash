@@ -193,15 +193,12 @@ namespace TurkeySmash
             {
                 int y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
 
-                if (CurrentFrame.X == 2)
-                {
-                    hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
-                        ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                    hit.body.IsSensor = true;
-                    hit.body.OnCollision += hitOnColision;
-                    world.Step(1 / 3000f);
-                    world.RemoveBody(hit.body);
-                }
+                hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
+                    ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                hit.body.IsSensor = true;
+                hit.body.OnCollision += hitOnColision;
+                world.Step(1 / 3000f);
+                world.RemoveBody(hit.body);
             }
             
             inAction = true;
