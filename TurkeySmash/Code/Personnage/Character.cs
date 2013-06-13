@@ -33,8 +33,8 @@ namespace TurkeySmash
         public bool lookingRight = true;
         protected bool jump = false;
         protected bool isMoving = false;
-        protected bool actionReleased = true;
         protected Direction direction;
+        RectPhysicsObject hit;
         
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
 
@@ -70,9 +70,8 @@ namespace TurkeySmash
 
             if (FinishedAnimation)
             {
-                if (canJump)
-                    Reset(new Point(0, 1));
                 inAction = false;
+                Reset(new Point(0, 1));
                 TimeBetweenFrame = 100;
             }
 
@@ -133,10 +132,9 @@ namespace TurkeySmash
             int pourcentB;
             if (fixB.Body.UserData != null)
             {
-                fixBuserdata.lastHit = Convert.playerIndex(playerindex);
+                fixBuserdata.lastHit = Convert.PlayerIndex2Int(playerindex);
                 fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
                 pourcentB = fixBuserdata.pourcent;
-                forceItem = 0.3f;
             }
             else
             {
@@ -153,50 +151,45 @@ namespace TurkeySmash
 
         protected void Attack()
         {
-            Reset(new Point());
-            definition.Loop = false;
             int x = 0;
-
-            RectPhysicsObject hit;
 
             if (direction == Direction.Up)
             {
                 TimeBetweenFrame = 75;
-                CurrentFrame.Y = 4;
+                Reset(new Point(0, 4));
                 allongeCoup = 20;
+                forceItem = 0.3f;
             }
             else if (direction == Direction.Down && !canJump)
             {
                 TimeBetweenFrame = 100;
-                CurrentFrame.Y = 6;
-                allongeCoup = 20;
+                Reset(new Point(0, 6));
+                allongeCoup = 15;
+                forceItem = 0.3f;
             }
             else
             {
                 TimeBetweenFrame = 50;
                 if (canJump)
                 {
-                    CurrentFrame.Y = 3;
-                    allongeCoup = 18;
+                    Reset(new Point(0, 3));
+                    allongeCoup = 15;
+                    forceItem = 0.3f;
                 }
                 else
                 {
-                    CurrentFrame.Y = 5;
+                    Reset(new Point(0, 5));
                     allongeCoup = 25;
+                    forceItem = 0.3f;
                 }
                 x = lookingRight ? 1 : -1;
             }
-
-            if (!actionReleased) // Si le bouton est appuyé
+            definition.Loop = false;
+            inAction = true;
+            
+            int y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
+            if (CurrentFrame.X == 2)
             {
-                CurrentFrame.X = 0;
-                FinishedAnimation = true;
-                ForceItem += 0.1f;
-            }
-            else
-            {
-                int y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
-
                 hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
                     ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                 hit.body.IsSensor = true;
@@ -204,18 +197,16 @@ namespace TurkeySmash
                 world.Step(1 / 3000f);
                 world.RemoveBody(hit.body);
             }
-            
-            inAction = true;
         }
+
         protected void Jump()
         {
-            if (canJump)
+            if (!inAction & canJump)
             {
                 body.ApplyForce(-Vector2.UnitY * forceJump);
                 canJump = false;
+                Reset(new Point(0, 2));
                 definition.Loop = false;
-                FinishedAnimation = false;
-                CurrentFrame.Y = 2;
             }
         }
         protected void Moving()
@@ -226,8 +217,8 @@ namespace TurkeySmash
                 force.X = lookingRight ? forcePower : -forcePower;
                 if (canJump) // Running
                 {
-                    definition.Loop = false;
                     CurrentFrame.Y = 0;
+                    definition.Loop = false;
                 }
                 body.ApplyForce(force, body.Position);
             }

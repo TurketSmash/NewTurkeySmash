@@ -26,38 +26,33 @@ namespace TurkeySmash
         {
             base.Update(gameTime);
 
-            if (actionReleased)
+            if (input.Left(playerindex))
             {
-                if (input.Left(playerindex))
-                {
-                    direction = Direction.Left;
-                    lookingRight = false;
-                    isMoving = true;
-                    Moving();
-                }
-                else if (input.Right(playerindex))
-                {
-                    direction = Direction.Right;
-                    lookingRight = true;
-                    isMoving = true;
-                    Moving();
-                }
-                else
-                    isMoving = false;
-
-                if (input.Up(playerindex))
-                    direction = Direction.Up;
-                else if (input.Down(playerindex))
-                    direction = Direction.Down;
-
-                if (input.Action(playerindex))
-                    Attack();
-
-                if (input.Jump(playerindex))
-                    Jump();
+                direction = Direction.Left;
+                lookingRight = false;
+                isMoving = true;
+                Moving();
             }
+            else if (input.Right(playerindex))
+            {
+                direction = Direction.Right;
+                lookingRight = true;
+                isMoving = true;
+                Moving();
+            }
+            else
+                isMoving = false;
 
-            actionReleased = input.ActionReleased(playerindex);
+            if (input.Up(playerindex))
+                direction = Direction.Up;
+            else if (input.Down(playerindex))
+                direction = Direction.Down;
+
+            if (input.Action(playerindex))
+                Attack();
+
+            if (input.Jump(playerindex))
+                Jump();
         }
     }
 }
