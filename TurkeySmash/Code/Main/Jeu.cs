@@ -35,7 +35,7 @@ namespace TurkeySmash
 
             personnages[0] = new Joueur(world,level.spawnPoints[0], 1f, new Vector2(42, 55),PlayerIndex.One, new AnimatedSpriteDef()
             {
-                AssetName = "Jeu\\narutosheet",
+                AssetName = "Jeu\\naruto",
                 FrameRate = 60,
                 FrameSize = new Point(88, 88),
                 Loop = true,

@@ -37,7 +37,7 @@ namespace TurkeySmash
                     pourcentages[i].Load(TurkeySmashGame.content);
                     pourcentages[i].SizeText = 1.3f;
 
-                    icone[i] = new Sprite((i + 1) * (TurkeySmashGame.manager.PreferredBackBufferWidth / 5) - 200,
+                    icone[i] = new Sprite((i + 1) * (TurkeySmashGame.manager.PreferredBackBufferWidth / 5) - 250,
                                         (7 * TurkeySmashGame.manager.PreferredBackBufferHeight / 8 - 120));
                     if (OptionsCombat.TypePartieSelect == "vie")
                     {
@@ -60,21 +60,33 @@ namespace TurkeySmash
                         scores[i].SizeText = 0.6f;
                     }
 
-                    if (players[i].definition.AssetName == "Jeu\\narutosheet")
+                    if (players[i].definition.AssetName == "Jeu\\naruto")
                     {
                         icone[i].Load(TurkeySmashGame.content, "HUD\\HUDnaruto");
                         if (OptionsCombat.TypePartieSelect == "vie")
                             iconeLife[i].Load(TurkeySmashGame.content, "HUD\\HUDnarutoLifeIcone");
                     }
+
                     if (players[i].definition.AssetName == "Jeu\\sakura")
                     {
                         icone[i].Load(TurkeySmashGame.content, "HUD\\HUDSakura");
                         if (OptionsCombat.TypePartieSelect == "vie")
                             iconeLife[i].Load(TurkeySmashGame.content, "HUD\\HUDsakuraLifeIcone");
                     }
-                    if (OptionsCombat.TypePartieSelect == "vie")
-                        iconeLife[i].Scale = 1.2f;
-                    icone[i].Scale = 0.7f;
+
+                    if (players[i].definition.AssetName == "Jeu\\sai")
+                    {
+                        icone[i].Load(TurkeySmashGame.content, "HUD\\HUDsai");
+                        if (OptionsCombat.TypePartieSelect == "vie")
+                            iconeLife[i].Load(TurkeySmashGame.content, "HUD\\HUDsaiLifeIcone");
+                    }
+
+                    if (players[i].definition.AssetName == "Jeu\\suigetsu")
+                    {
+                        icone[i].Load(TurkeySmashGame.content, "HUD\\HUDsuigetsu");
+                        if (OptionsCombat.TypePartieSelect == "vie")
+                            iconeLife[i].Load(TurkeySmashGame.content, "HUD\\HUDsuigetsuLifeIcone");
+                    }
                 }
             }
         }
