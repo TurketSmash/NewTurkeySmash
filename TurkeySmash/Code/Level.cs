@@ -47,6 +47,8 @@ namespace TurkeySmash
                     respawnPoint = new Vector2(Xwin * 0.510f, Ywin * 0.444f);
                     spawnPoints[0] = new Vector2(Xwin * 0.331f,Ywin * 0.528f);
                     spawnPoints[1] = new Vector2(Xwin * 0.729f,Ywin * 0.444f);
+                    spawnPoints[2] = new Vector2(Xwin * 0.106f,Ywin * 0.537f); 
+                    spawnPoints[3] = new Vector2(Xwin * 0.621f,Ywin * 0.557f);
 
                     items = new PhysicsObject[3];
                     itemsSprite = new Sprite[3];
@@ -102,6 +104,9 @@ namespace TurkeySmash
                     respawnPoint = new Vector2(Xwin * 0.427f, Ywin * 0.417f);
                     spawnPoints[0] = new Vector2(Xwin * 0.328f,Ywin * 0.602f);
                     spawnPoints[1] = new Vector2(Xwin * 0.620f, Ywin * 0.602f);
+                    spawnPoints[2] = new Vector2(Xwin * 0.463f,Ywin * 0.546f);
+                    spawnPoints[3] = new Vector2(Xwin * 0.941f, Ywin * 0.638f);
+
                     
                     items = new PhysicsObject[6];
                     itemsSprite = new Sprite[6];

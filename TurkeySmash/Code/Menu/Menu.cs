@@ -91,8 +91,16 @@ namespace TurkeySmash
                     case 4:
                         Bouton4();
                         break;
+                    case 5:
+                        Bouton5();
+                        break;
+                    case 6:
+                        Bouton6();
+                        break;
                 }
             }
+
+            Console.WriteLine(SelectionPersonnage.i);
 
             oldStateK = newStateK;
             oldStateG = newStateG;
@@ -120,5 +128,7 @@ namespace TurkeySmash
         public virtual void Bouton2() { }
         public virtual void Bouton3() { }
         public virtual void Bouton4() { }
+        public virtual void Bouton5() { }
+        public virtual void Bouton6() { }
     }
 }

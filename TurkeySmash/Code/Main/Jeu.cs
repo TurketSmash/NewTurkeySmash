@@ -20,6 +20,8 @@ namespace TurkeySmash
         Character[] personnages = new Character[4];
         Level level;
 
+        private int i = 0;
+
         public Jeu()
         {
             state = SceneState.Active;
@@ -34,24 +36,112 @@ namespace TurkeySmash
             else
                 level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
 
-            personnages[0] = new Joueur(world,level.spawnPoints[0], 1f, new Vector2(42, 55),PlayerIndex.One, new AnimatedSpriteDef()
+            foreach (string str in SelectionPersonnage.listPerso)
             {
-                AssetName = "Jeu\\naruto",
-                FrameRate = 60,
-                FrameSize = new Point(88, 88),
-                Loop = true,
-                NbFrames = new Point(5, 1),
-            });
+                if (str != null)
+                {
+                    if (i <= ChoixNombrePersonnage.nombreJoueur - 1)
+                    {
+                        #region CreationJoueur;
+                        if (str == "naruto")
+                        {
+                            personnages[i] = new Joueur(world, level.spawnPoints[i], 1f, new Vector2(42, 55), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\naruto",
+                                FrameRate = 60,
+                                FrameSize = new Point(88, 88),
+                                Loop = true,
+                                NbFrames = new Point(5, 1),
+                            });
+                        }
+                        if (str == "sakura")
+                        {
+                            personnages[i] = new Joueur(world, level.spawnPoints[i], 1f, new Vector2(40, 50), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\sakura",
+                                FrameRate = 60,
+                                FrameSize = new Point(80, 80),
+                                Loop = true,
+                                NbFrames = new Point(6, 1),
+                            });
+                        }
+                        if (str == "sai")
+                        {
+                            personnages[i] = new Joueur(world, level.spawnPoints[i], 1f, new Vector2(40, 50), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\sai",
+                                FrameRate = 60,
+                                FrameSize = new Point(80, 80),
+                                Loop = true,
+                                NbFrames = new Point(6, 1),
+                            });
+                        }
+                        if (str == "suigetsu")
+                        {
+                            personnages[i] = new Joueur(world, level.spawnPoints[i], 1f, new Vector2(45, 58), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\suigetsu",
+                                FrameRate = 60,
+                                FrameSize = new Point(92, 92),
+                                Loop = true,
+                                NbFrames = new Point(6, 1),
+                            });
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        #region CreationIA
+                        if (str == "naruto")
+                        {
+                            personnages[i] = new IA(world, level.spawnPoints[i], 1f, new Vector2(42, 55), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\naruto",
+                                FrameRate = 60,
+                                FrameSize = new Point(88, 88),
+                                Loop = true,
+                                NbFrames = new Point(5, 1),
+                            });
+                        }
+                        if (str == "sakura")
+                        {
+                            personnages[i] = new IA(world, level.spawnPoints[i], 1f, new Vector2(40, 50), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\sakura",
+                                FrameRate = 60,
+                                FrameSize = new Point(80, 80),
+                                Loop = true,
+                                NbFrames = new Point(6, 1),
+                            });
+                        }
+                        if (str == "sai")
+                        {
+                            personnages[i] = new IA(world, level.spawnPoints[i], 1f, new Vector2(40, 50), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\sai",
+                                FrameRate = 60,
+                                FrameSize = new Point(80, 80),
+                                Loop = true,
+                                NbFrames = new Point(6, 1),
+                            });
+                        }
+                        if (str == "suigetsu")
+                        {
+                            personnages[i] = new IA(world, level.spawnPoints[i], 1f, new Vector2(45, 58), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\suigetsu",
+                                FrameRate = 60,
+                                FrameSize = new Point(92, 92),
+                                Loop = true,
+                                NbFrames = new Point(6, 1),
+                            });
+                        }
+                        #endregion
+                    }
+                    i = i + 1;
+                }
+            }
 
-            personnages[1] = new Joueur(world, level.spawnPoints[1], 1f, new Vector2(40, 50), PlayerIndex.Two, new AnimatedSpriteDef()
-            {
-                AssetName = "Jeu\\sakura",
-                FrameRate = 60,
-                FrameSize = new Point(80, 80),
-                Loop = true,
-                NbFrames = new Point(6, 1),
-            });
-            personnages[1].lookingRight = false;
             
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
