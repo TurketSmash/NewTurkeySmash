@@ -7,5 +7,7 @@ namespace TurkeySmash
             public int pourcent { get; set; }
            
             public int lastHit { get; set; }
+
+            public string associatedName { get; set; }
     }
 }

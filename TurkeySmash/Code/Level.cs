@@ -21,6 +21,7 @@ namespace TurkeySmash
         Vector2 respawnPoint;
 
         Character[] personnages;
+        int[] tabScores = new int[4] { 0, 0, 0, 0 };
         World world;
         float Xwin = TurkeySmashGame.WindowSize.X;
         float Ywin = TurkeySmashGame.WindowSize.Y;
@@ -183,20 +184,34 @@ namespace TurkeySmash
 
         void respawn(Character personnage)
         {
+            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (personnage.vie == 1)
                 personnage.vie = 0;
-
             if (!personnage.Mort)
             {
                 personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
-
+                Scoring(personnage);
                 if (OptionsCombat.TypePartieSelect != "temps")
                     personnage.vie--;
             }
-            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             userData.pourcent = 0;
             personnage.body.ResetDynamics();
-            Console.WriteLine(personnage.vie);
+        }
+
+        private void Scoring(Character personnage)
+        {
+            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
+            if (userData.lastHit <= 0)
+                personnage.score -= 2;
+            else
+                personnages[userData.lastHit - 1].score += 1;
+
+            for (int i = 0; i < personnages.Length; i++)
+            {
+                if (personnages[i] != null)
+                    tabScores[i] = personnages[i].score;
+            }
+            Console.WriteLine(tabScores[0] + " / " + tabScores[1] + " / " + tabScores[2] + " / " + tabScores[3]);
         }
 
         void partieTerminee(Character personnage)
@@ -211,7 +226,7 @@ namespace TurkeySmash
             }
             if (OptionsCombat.TypePartieSelect == "vie")
             {
-                if (personnages[0] == null | personnages[1] == null)
+                if (personnages[0] == null ^ personnages[1] == null ^ personnages[2] == null ^ personnages[3] == null)
                 {
                     //Ecran de fin de partie
                     Console.WriteLine("Fin de Partie");

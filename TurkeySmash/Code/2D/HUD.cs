@@ -10,13 +10,13 @@ namespace TurkeySmash
         Sprite[] icone = new Sprite[4];
         Font[] xlife = new Font[4];
         Sprite[] iconeLife = new Sprite[4];
+        Font[] scores = new Font[4];
 
         Font timerFont;
         decimal timer;
 
         public void Load(Character[] players)
         {
-            
             timerFont = new Font(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y / 10);
             timerFont.NameFont = "Pourcent";
             timerFont.Load(TurkeySmashGame.content);
@@ -45,12 +45,19 @@ namespace TurkeySmash
                             4 * TurkeySmashGame.manager.PreferredBackBufferHeight / 5);
 
                         iconeLife[i] = new Sprite((i + 1) * (TurkeySmashGame.manager.PreferredBackBufferWidth / 5) - 50
-                            ,
-                            TurkeySmashGame.manager.PreferredBackBufferHeight * 0.78f);
+                            ,TurkeySmashGame.manager.PreferredBackBufferHeight * 0.78f);
 
                         xlife[i].NameFont = "Pourcent";
                         xlife[i].Load(TurkeySmashGame.content);
                         xlife[i].SizeText = 0.5f;
+                    }
+                    if (OptionsCombat.TypePartieSelect == "temps")
+                    {
+                        scores[i] = new Font((i + 1) * (TurkeySmashGame.manager.PreferredBackBufferWidth / 5),
+                            4 * TurkeySmashGame.manager.PreferredBackBufferHeight / 5);
+                        scores[i].NameFont = "Pourcent";
+                        scores[i].Load(TurkeySmashGame.content);
+                        scores[i].SizeText = 0.6f;
                     }
 
                     if (players[i].definition.AssetName == "Jeu\\narutosheet")
@@ -86,6 +93,11 @@ namespace TurkeySmash
                         xlife[i].Texte = "x" + (players[i].vie).ToString();
                         xlife[i].Color = Color.White;
                     }
+                    if (OptionsCombat.TypePartieSelect == "temps")
+                    {
+                        scores[i].Texte = players[i].score.ToString();
+                        scores[i].Color = Color.White;
+                    }
                 }
                 else
                 {
@@ -95,6 +107,10 @@ namespace TurkeySmash
                     {
                         iconeLife[i] = null;
                         xlife[i] = null;
+                    }
+                    if (OptionsCombat.TypePartieSelect == "temps")
+                    {
+                        scores[i] = null;
                     }
                 }
             }
@@ -123,6 +139,9 @@ namespace TurkeySmash
                     if (xlife[i] != null)
                         xlife[i].Draw(TurkeySmashGame.spriteBatch);
                 }
+                if (OptionsCombat.TypePartieSelect == "temps")
+                    if (scores[i] != null)
+                        scores[i].Draw(TurkeySmashGame.spriteBatch);
             }
         }
     }
