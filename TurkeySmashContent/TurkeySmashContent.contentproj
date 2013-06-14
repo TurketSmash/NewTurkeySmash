@@ -268,18 +268,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\sai.png">
-      <Name>sai</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Jeu\suigetsu.png">
-      <Name>suigetsu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="HUD\HUDsaiLifeIcone.png">
       <Name>HUDsaiLifeIcone</Name>
       <Importer>TextureImporter</Importer>
@@ -337,6 +325,20 @@
   <ItemGroup>
     <Compile Include="Jeu\sakura.png">
       <Name>sakura</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\suigetsu.png">
+      <Name>suigetsu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\sai.png">
+      <Name>sai</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
