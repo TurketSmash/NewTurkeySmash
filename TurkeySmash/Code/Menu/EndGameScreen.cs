@@ -67,6 +67,8 @@ namespace TurkeySmash
 
         public override void Bouton1()
         {
+            for (int i = 0; i < 4; i++)
+                SelectionPersonnage.listPerso[i] = null;
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
@@ -76,6 +78,8 @@ namespace TurkeySmash
 
         public override void Bouton2()
         {
+            for (int i = 0; i < 4; i++)
+                SelectionPersonnage.listPerso[i] = null;
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
