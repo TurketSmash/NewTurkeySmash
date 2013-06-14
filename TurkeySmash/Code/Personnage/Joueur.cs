@@ -53,6 +53,9 @@ namespace TurkeySmash
 
             if (input.Jump(playerindex))
                 Jump();
+
+            if (input.Roulade(playerindex))
+                Roulade();
         }
     }
 }

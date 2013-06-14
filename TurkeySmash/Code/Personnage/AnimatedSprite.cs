@@ -65,10 +65,10 @@ namespace TurkeySmash
             definition.Loop = true;
         }
 
-        public virtual void Update(GameTime time)
+        public virtual void Update(GameTime gameTime)
         {
             if (FinishedAnimation) return;
-            lastFrameUpdatedTime += time.ElapsedGameTime.Milliseconds;
+            lastFrameUpdatedTime += gameTime.ElapsedGameTime.Milliseconds;
             if (lastFrameUpdatedTime > TimeBetweenFrame)
             {
                 lastFrameUpdatedTime = 0;

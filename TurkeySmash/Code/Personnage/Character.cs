@@ -46,6 +46,7 @@ namespace TurkeySmash
 
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
+        int compteurRoulade = 0;
         int x = 0;
         int y = 0;
 
@@ -72,6 +73,11 @@ namespace TurkeySmash
         {
             newDrop = bodyPosition.Y;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
+
+            if (!inAction)
+                compteurRoulade += gameTime.ElapsedGameTime.Milliseconds;
+            else
+                compteurRoulade = 0;
 
             if (FinishedAnimation)
             {
@@ -237,7 +243,18 @@ namespace TurkeySmash
                 body.ApplyForce(force, body.Position);
             }
         }
-
+        protected void Roulade()
+        {
+            if (!inAction & compteurRoulade > 500)
+            {
+                Reset(new Point(0, 7));
+                definition.Loop = false;
+                inAction = true;
+                TimeBetweenFrame = 75;
+                x = lookingRight ? 1 : -1;
+                bodyPosition = new Vector2(bodyPosition.X + x, bodyPosition.Y);
+            }
+        }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
