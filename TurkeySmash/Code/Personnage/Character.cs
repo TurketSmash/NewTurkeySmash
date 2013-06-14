@@ -34,15 +34,20 @@ namespace TurkeySmash
         protected bool jump = false;
         protected bool isMoving = false;
         protected Direction direction;
-        RectPhysicsObject hit;
         
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
-
+        RectPhysicsObject hit;
+        bool canHit = true;
+        int frameHit = 0;
         float oldDrop; // variable pour calcul la chute du personnage
         float newDrop;
 
+        ParticleEngine[] particles = new ParticleEngine[4];
+
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
+        int x = 0;
+        int y = 0;
 
         int allongeCoup = 18;
         int forceJump = 70;
@@ -73,6 +78,7 @@ namespace TurkeySmash
                 inAction = false;
                 Reset(new Point(0, 1));
                 TimeBetweenFrame = 100;
+                canHit = true;
             }
 
             if (newDrop > (oldDrop + 0.1f))
@@ -111,6 +117,17 @@ namespace TurkeySmash
                 color = Color.White;
 
             #endregion
+
+            if (inAction & CurrentFrame.X == frameHit & canHit)
+            {
+                hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
+                    ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                hit.body.IsSensor = true;
+                hit.body.OnCollision += hitOnColision;
+                world.Step(1 / 3000f);
+                world.RemoveBody(hit.body);
+                canHit = false;
+            }
 
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
@@ -151,51 +168,48 @@ namespace TurkeySmash
 
         protected void Attack()
         {
-            int x = 0;
-
-            if (direction == Direction.Up)
+            if (!inAction)
             {
-                TimeBetweenFrame = 75;
-                Reset(new Point(0, 4));
-                allongeCoup = 20;
-                forceItem = 0.3f;
-            }
-            else if (direction == Direction.Down && !canJump)
-            {
-                TimeBetweenFrame = 100;
-                Reset(new Point(0, 6));
-                allongeCoup = 15;
-                forceItem = 0.3f;
-            }
-            else
-            {
-                TimeBetweenFrame = 50;
-                if (canJump)
+                x = 0;
+                if (direction == Direction.Up)
                 {
-                    Reset(new Point(0, 3));
+                    TimeBetweenFrame = 75;
+                    Reset(new Point(0, 4));
+                    allongeCoup = 20;
+                    forceItem = 0.3f;
+                    frameHit = 2;
+                }
+                else if (direction == Direction.Down && !canJump)
+                {
+                    TimeBetweenFrame = 100;
+                    Reset(new Point(0, 6));
                     allongeCoup = 15;
                     forceItem = 0.3f;
+                    frameHit = 2;
                 }
                 else
                 {
-                    Reset(new Point(0, 5));
-                    allongeCoup = 25;
-                    forceItem = 0.3f;
+                    TimeBetweenFrame = 50;
+                    if (canJump)
+                    {
+                        Reset(new Point(0, 3));
+                        allongeCoup = 15;
+                        forceItem = 0.3f;
+                        frameHit = 1;
+                    }
+                    else
+                    {
+                        Reset(new Point(0, 5));
+                        allongeCoup = 25;
+                        forceItem = 0.3f;
+                        frameHit = 2;
+                    }
+                    x = lookingRight ? 1 : -1;
                 }
-                x = lookingRight ? 1 : -1;
-            }
-            definition.Loop = false;
-            inAction = true;
-            
-            int y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
-            if (CurrentFrame.X == 2)
-            {
-                hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
-                    ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                hit.body.IsSensor = true;
-                hit.body.OnCollision += hitOnColision;
-                world.Step(1 / 3000f);
-                world.RemoveBody(hit.body);
+                definition.Loop = false;
+                inAction = true;
+
+                y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
             }
         }
 
@@ -222,6 +236,11 @@ namespace TurkeySmash
                 }
                 body.ApplyForce(force, body.Position);
             }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
         }
     }
 }

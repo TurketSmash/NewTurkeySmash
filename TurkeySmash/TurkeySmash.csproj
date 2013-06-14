@@ -111,14 +111,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\2D\Particules\Particule.cs" />
+    <Compile Include="Code\2D\Particules\ParticuleEngine.cs" />
     <Compile Include="Code\Divers\ConvertPlayerIndex.cs" />
     <Compile Include="Code\Divers\ConvertUnits.cs" />
     <Compile Include="Code\2D\Font.cs" />
     <Compile Include="Code\2D\HUD.cs" />
-    <Compile Include="Code\2D\Particules\Helper.cs" />
-    <Compile Include="Code\2D\Particules\ParticleManager.cs" />
-    <Compile Include="Code\2D\Particules\Particles.cs" />
-    <Compile Include="Code\2D\Particules\ParticleSettings.cs" />
     <Compile Include="Code\2D\Sprite.cs" />
     <Compile Include="Code\Divers\Input.cs" />
     <Compile Include="Code\Divers\Winner.cs" />

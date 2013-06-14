@@ -93,7 +93,7 @@ namespace TurkeySmash
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, new Vector2(ConvertUnits.ToDisplayUnits(bodyPosition.X) - (bodySize.X * scale), ConvertUnits.ToDisplayUnits(bodyPosition.Y) - (bodySize.Y * scale)),
                                     new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),

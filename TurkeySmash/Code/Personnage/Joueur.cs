@@ -21,7 +21,7 @@ namespace TurkeySmash
         {
             input = new Input(playerindex);
         }
-
+        
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
