@@ -63,6 +63,7 @@ namespace TurkeySmash
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
+            Basic.Quit();
         }
     }
 }
