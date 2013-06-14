@@ -119,7 +119,7 @@
     <Compile Include="Code\2D\HUD.cs" />
     <Compile Include="Code\2D\Sprite.cs" />
     <Compile Include="Code\Divers\Input.cs" />
-    <Compile Include="Code\Divers\Winner.cs" />
+    <Compile Include="Code\Divers\Results.cs" />
     <Compile Include="Code\Level.cs" />
     <Compile Include="Code\Main\Basic.cs" />
     <Compile Include="Code\Main\Jeu.cs" />
