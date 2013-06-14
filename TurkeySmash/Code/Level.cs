@@ -238,7 +238,7 @@ namespace TurkeySmash
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
                     timer = 0;
-                    Results.SaveResults(tabScores, "temps");
+                    Results.SaveResults(tabScores);
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
@@ -249,7 +249,7 @@ namespace TurkeySmash
                     personnages[0] == null & personnages[1] == null & personnages[2] != null & personnages[3] == null |
                     personnages[0] == null & personnages[1] == null & personnages[2] == null & personnages[3] != null )
                 {
-                    Results.SaveResults(tabScores, "temps");
+                    Results.SaveResults(tabScores);
                     Basic.SetScreen(new EndGameScreen());
                 }
             }

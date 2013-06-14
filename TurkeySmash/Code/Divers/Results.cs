@@ -10,10 +10,8 @@ namespace TurkeySmash
     {
         public static int[][] ResultsBoard { get; set; }
 
-        public static void SaveResults(int[][] scores, string TypeDePartie)
+        public static void SaveResults(int[][] scores)
         {
-            if (TypeDePartie == "temps")
-            {
                 int[] aux;
                 int i = 0;
                 while (i < 3)
@@ -29,12 +27,6 @@ namespace TurkeySmash
                         i++;
                 }
                 ResultsBoard = scores;
-            }
-
-            if (TypeDePartie == "vie")
-            {
-                //winner = lastStanding;
-            }
         }
     }
 }
