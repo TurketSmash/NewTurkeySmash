@@ -197,13 +197,13 @@ namespace TurkeySmash
 
         void respawn(Character personnage)
         {
+            Scoring(personnage);
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (personnage.vie == 1)
                 personnage.vie = 0;
             if (!personnage.Mort)
             {
                 personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
-                Scoring(personnage);
                 if (OptionsCombat.TypePartieSelect != "temps")
                     personnage.vie--;
             }
@@ -217,13 +217,14 @@ namespace TurkeySmash
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (userData.lastHit <= 0)
             {
-                personnage.score -= 2;
-                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2] ++;
+                personnage.score -= 2;//Suicide = -2 pts
+                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2] ++; //Ajout +1 suicide dans le compteur
             }
             else
             {
-                personnages[userData.lastHit - 1].score ++;
-                tabScores[userData.lastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++;
+                if (personnages[userData.lastHit - 1] != null)
+                    personnages[userData.lastHit - 1].score ++; //score ++ pour le dernier perso qui t'as tapé
+                tabScores[userData.lastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //Ajout +1 au score de kill pour le joueur qui t'as tué
             }
 
             for (int i = 0; i < personnages.Length; i++)

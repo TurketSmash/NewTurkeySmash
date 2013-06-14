@@ -152,10 +152,6 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime, Input input)
         {
-            if(Keyboard.GetState().IsKeyDown(Keys.Q))
-            {
-                Basic.SetScreen(new EndGameScreen());
-            }
             if (input.Escape())
             {
                 sonInstance.Pause();
