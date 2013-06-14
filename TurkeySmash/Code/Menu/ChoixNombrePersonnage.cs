@@ -10,8 +10,8 @@ namespace TurkeySmash
         private BoutonTexte bouton2;
         private BoutonTexte bouton3;
         private BoutonTexte bouton4;
-        public static int nombreJoueur = 1;
-        public static int nombreIA = 1;
+        public static int nombreJoueur;
+        public static int nombreIA;
         
 
         #endregion
@@ -20,6 +20,9 @@ namespace TurkeySmash
 
         public ChoixNombrePersonnage()
         {
+            nombreJoueur = 1;
+            nombreIA = 1;
+
             bouton1 = new BoutonTexte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y * 0.5f * 0.25f + TurkeySmashGame.WindowSize.Y / 4);
             bouton2 = new BoutonTexte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y * 0.5f * 0.5f + TurkeySmashGame.WindowSize.Y / 4);
             bouton3 = new BoutonTexte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y * 0.5f * 0.75f + TurkeySmashGame.WindowSize.Y / 4);

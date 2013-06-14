@@ -53,6 +53,8 @@ namespace TurkeySmash
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
+            Basic.Quit();
+            Basic.SetScreen(new SelectionPersonnage());
         }
 
         public override void Bouton3()

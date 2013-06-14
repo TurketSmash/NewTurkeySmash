@@ -67,6 +67,7 @@ namespace TurkeySmash
                 affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
             else
                 affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+            Basic.Quit();
             Basic.SetScreen(new OptionsCombat());
         }
 

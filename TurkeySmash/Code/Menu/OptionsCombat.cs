@@ -92,6 +92,7 @@ namespace TurkeySmash
         public override void Bouton4()
         {
             Basic.Quit();
+            Basic.SetScreen(new SelectionPersonnage());
         }
     }
 }

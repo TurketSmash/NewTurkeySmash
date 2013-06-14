@@ -52,6 +52,8 @@ namespace TurkeySmash
             for (int i = 0; i < 4; i++)
                 SelectionPersonnage.listPerso[i] = null;
             Basic.Quit();
+            Basic.Quit();
+            Basic.SetScreen(new SelectionPersonnage());
         }
 
         #endregion
