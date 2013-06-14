@@ -21,8 +21,14 @@ namespace TurkeySmash
         Vector2 respawnPoint;
 
         Character[] personnages;
-        int[] tabScores = new int[4] { 0, 0, 0, 0 };
-        public PlayerIndex gagnant;
+
+        int[][] tabScores = new int[4][]
+        {//{Index,Score,Suicide,J1Kills,J2Kills,J3Kills,J4Kills}
+            new int[] {1,-999,0,0,0,0,0},
+            new int[] {2,-999,0,0,0,0,0},
+            new int[] {3,-999,0,0,0,0,0},
+            new int[] {4,-999,0,0,0,0,0}
+        };
 
         World world;
         float Xwin = TurkeySmashGame.WindowSize.X;
@@ -173,7 +179,7 @@ namespace TurkeySmash
                     personnages[i].Update(gameTime);
                     partieTerminee(personnages[i]);
 
-                    if (!personnages[i].Mort & outOfScreen(personnages[i].bodyPosition))
+                    if (outOfScreen(personnages[i].bodyPosition))
                         respawn(personnages[i]);
                     if (personnages[i].Mort)
                         personnages[i] = null;
@@ -210,18 +216,19 @@ namespace TurkeySmash
         {
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (userData.lastHit <= 0)
+            {
                 personnage.score -= 2;
+                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2] ++;
+            }
             else
-                personnages[userData.lastHit - 1].score += 1;
+            {
+                personnages[userData.lastHit - 1].score ++;
+                tabScores[userData.lastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++;
+            }
 
             for (int i = 0; i < personnages.Length; i++)
-            {
                 if (personnages[i] != null)
-                {
-                    tabScores[i] = personnages[i].score;
-                }
-            }
-            Console.WriteLine(tabScores[0] + " / " + tabScores[1] + " / " + tabScores[2] + " / " + tabScores[3]);
+                    tabScores[i][1] = personnages[i].score;
         }
 
         void partieTerminee(Character personnage)
@@ -230,18 +237,19 @@ namespace TurkeySmash
             {
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
+                    timer = 0;
+                    Results.SaveResults(tabScores, "temps");
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
             if (OptionsCombat.TypePartieSelect == "vie")
             {
-                if (personnages[0] == null ^ personnages[1] == null ^ personnages[2] == null ^ personnages[3] == null)
+                if (personnages[0] != null & personnages[1] == null & personnages[2] == null & personnages[3] == null |
+                    personnages[0] == null & personnages[1] != null & personnages[2] == null & personnages[3] == null | //braaufganzuiafgnzfpuiazgfpauzfpaizfayi
+                    personnages[0] == null & personnages[1] == null & personnages[2] != null & personnages[3] == null |
+                    personnages[0] == null & personnages[1] == null & personnages[2] == null & personnages[3] != null )
                 {
-                    for (int i = 0; i < personnages.Length; i++)
-                    {
-                        if (personnages[i] != null)
-                            gagnant = personnages[i].playerindex;
-                    }
+                    Results.SaveResults(tabScores, "temps");
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
