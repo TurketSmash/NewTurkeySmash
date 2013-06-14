@@ -253,6 +253,7 @@ namespace TurkeySmash
                 TimeBetweenFrame = 75;
                 x = lookingRight ? 1 : -1;
                 bodyPosition = new Vector2(bodyPosition.X + x, bodyPosition.Y);
+                body.ApplyForce(new Vector2(0, 0.001f));
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
