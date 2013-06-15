@@ -67,18 +67,36 @@ namespace TurkeySmash
                 }
             }
 
+            if ((bodyPosition.X <= positionXLaPlusProche + 0.5) && (bodyPosition.X >= positionXLaPlusProche - 0.5) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
+            {
+                if ((bodyPosition.X <= positionXLaPlusProche) && (bodyPosition.X >= positionXLaPlusProche))
+                {
+                    lookingRight = false;
+                    Roulade();
+                    Attack();
+                }
+                else
+                {
+                    lookingRight = true;
+                    Roulade();
+                    Attack();
+                }
+            }
+
             if (fuir == false)
             {
                 if (positionXLaPlusProche < (bodyPosition.X) - 1)
                 {
                     lookingRight = false;
                     isMoving = true;
+                    Moving();
                 }
                 else
                     if (positionXLaPlusProche > (bodyPosition.X) + 1)
                     {
                         lookingRight = true;
                         isMoving = true;
+                        Moving();
                     }
                     else
                         isMoving = false;
@@ -91,12 +109,14 @@ namespace TurkeySmash
                 {
                     lookingRight = true;
                     isMoving = true;
+                    Moving();
                 }
                 else
                     if ((bodyPosition.X > positionXLaPlusProche - 1.7) && (bodyPosition.X < positionXLaPlusProche))
                     {
                         lookingRight = false;
                         isMoving = true;
+                        Moving();
                     }
                     else
                         isMoving = false;
@@ -109,22 +129,29 @@ namespace TurkeySmash
 
             //Jump
 
-            jump = ((positionYLaPlusProche < bodyPosition.Y - 1) && (booleenDeLaFamille));
+            if ((positionYLaPlusProche < bodyPosition.Y - 0.3) && (booleenDeLaFamille))
+                Jump();
+            if ((positionYLaPlusProche < bodyPosition.Y - 0.3) && (booleenDeLaFamille))
+                Jump();
+
+            if ((positionXLaPlusProche < (bodyPosition.X) - 2.5f) || (positionXLaPlusProche > (bodyPosition.X) + 2.5f))
+                Roulade();
 
 
             //Attack
 
-            if ((bodyPosition.X <= positionXLaPlusProche + 0.6) && (bodyPosition.X >= positionXLaPlusProche - 0.6) && (fuir == false))
-                canAction = true ;
+            if ((bodyPosition.X <= positionXLaPlusProche + 0.6) && (bodyPosition.X >= positionXLaPlusProche - 0.6) && (fuir == false) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
+                canAction = true;
+
+            if (canAction)
+                Attack();
 
             if (canAction)
             {
                 canAction = false;
-                fuir = true ;
+                fuir = true;
             }
             base.Update(gameTime);
         }
-
-
     }
 }
