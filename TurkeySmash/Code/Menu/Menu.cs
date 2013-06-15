@@ -16,7 +16,9 @@ namespace TurkeySmash
         #region Fields
 
         protected List<IBouton> boutons = new List<IBouton>();
+        protected List<Texte> texteBoutons = new List<Texte>();
         protected List<Texte> textes = new List<Texte>();
+        protected Sprite nomMenu = new Sprite();
         protected Sprite backgroundMenu = new Sprite();
         private int selecty = 1;
         private KeyboardState oldStateK;
@@ -63,6 +65,11 @@ namespace TurkeySmash
             }
             boutons[selecty - 1].Etat = true;
 
+            foreach (Texte txt in texteBoutons)
+                txt.Color = Color.DarkOrange;
+            if (texteBoutons[selecty - 1] != null)
+                texteBoutons[selecty - 1].Color = Color.Orange;
+
             if (input.Enter() || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
             {
                 Thread.Sleep(200);
@@ -104,6 +111,7 @@ namespace TurkeySmash
 
             backgroundMenu.Resize(TurkeySmashGame.manager.PreferredBackBufferWidth);
             backgroundMenu.Draw(TurkeySmashGame.spriteBatch);
+            nomMenu.Draw(TurkeySmashGame.spriteBatch);
             foreach (IBouton bouton in boutons)
             {
                 bouton.Draw(TurkeySmashGame.spriteBatch);

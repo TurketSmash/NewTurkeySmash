@@ -40,6 +40,7 @@ namespace TurkeySmash
 
         public void Load(ContentManager Content, List<IBouton> Boutons)
         {
+            NameFont = "MenuFont";
             base.Load(Content);
             Boutons.Add(this);
         }
@@ -47,15 +48,9 @@ namespace TurkeySmash
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (etat)
-            {
-                Color = Color.Red;
-                SizeText = 1.5f;
-            }
+                Color = Color.DarkViolet;
             else
-            {
-                Color = Color.Black;
-                SizeText = 1.0f;
-            }
+                Color = Color.Indigo;
 
             base.Draw(spriteBatch);
         }

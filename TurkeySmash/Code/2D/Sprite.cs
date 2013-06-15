@@ -11,6 +11,8 @@ namespace TurkeySmash
 
         Vector2 position;
         public Texture2D texture;
+        public Texture2D texture2 = null;
+        public Texture2D aux = null;
         Rectangle edge;
         private float scale = 1.0f;
         public int Width { get { return texture.Width; } }
@@ -78,6 +80,25 @@ namespace TurkeySmash
             {
                 texture = content.Load<Texture2D>("Defaut");
             }
+
+            edge = new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * Scale), (int)(texture.Height * Scale));
+        }
+
+        public void Load(ContentManager content, string assetName, string assetName2)
+        {
+            try
+            {
+                texture = content.Load<Texture2D>(assetName);
+                texture2 = content.Load<Texture2D>(assetName2);
+                aux = content.Load<Texture2D>(assetName);
+            }
+            catch
+            {
+                texture = content.Load<Texture2D>("Defaut");
+                texture2 = content.Load<Texture2D>("Defaut");
+                aux = content.Load<Texture2D>("Defaut");
+            }
+
             edge = new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * Scale), (int)(texture.Height * Scale));
         }
 
@@ -89,6 +110,17 @@ namespace TurkeySmash
         public void DrawAsBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)TurkeySmashGame.WindowSize.X, (int)TurkeySmashGame.WindowSize.Y), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+        }
+
+        public void Texture1toTexture2()
+        {
+            aux = texture;
+            texture = texture2;
+        }
+        public void Texture2toTexture1()
+        {
+            texture = aux;
+            aux = texture;
         }
 
         #endregion

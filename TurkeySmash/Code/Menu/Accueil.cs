@@ -9,10 +9,17 @@ namespace TurkeySmash
 
         private float xPos = 300;
         private float yPos = 200;
-        private BoutonTexte bouton1;
-        private BoutonTexte bouton2;
-        private BoutonTexte bouton3;
-        private BoutonTexte bouton4;
+
+
+        private BoutonImageMenu bouton1 = new BoutonImageMenu();
+        private BoutonImageMenu bouton2 = new BoutonImageMenu();
+        private BoutonImageMenu bouton3 = new BoutonImageMenu();
+        private BoutonImageMenu bouton4 = new BoutonImageMenu();
+        private Texte jouer;
+        private Texte options;
+        private Texte aides;
+        private Texte quitter;
+
         private SoundEffect soundByebye;
         public static string modeDeJeu;
 
@@ -24,14 +31,24 @@ namespace TurkeySmash
         {
             xPos = TurkeySmashGame.manager.PreferredBackBufferWidth / 4;
             yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
-            bouton1 = new BoutonTexte(xPos, yPos + 100);
-            bouton2 = new BoutonTexte(xPos, yPos + 200);
-            bouton3 = new BoutonTexte(xPos, yPos + 300);
-            bouton4 = new BoutonTexte(xPos, yPos + 450);
-            bouton1.Texte = "Jouer";
-            bouton2.Texte = "Multijoueur";
-            bouton3.Texte = "Options";
-            bouton4.Texte = "Quitter";
+
+            jouer = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+            jouer.Texte = "Jouer";
+            texteBoutons.Add(jouer);
+
+            options = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
+            options.Texte = "Options";
+            texteBoutons.Add(options);
+
+            aides = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
+            aides.Texte = "Aides";
+            texteBoutons.Add(aides);
+
+            quitter = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
+            quitter.Texte = "Quitter";
+            texteBoutons.Add(quitter);
+
+            jouer.NameFont = options.NameFont = aides.NameFont = quitter.NameFont = "MenuFont";
         }
 
         public override void Init()
@@ -40,11 +57,22 @@ namespace TurkeySmash
             MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
             //MediaPlayer.Play(song);
-            backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuPrincipal");
-            bouton1.Load(TurkeySmashGame.content, boutons);
-            bouton2.Load(TurkeySmashGame.content, boutons);
-            bouton3.Load(TurkeySmashGame.content, boutons);
-            bouton4.Load(TurkeySmashGame.content, boutons);
+            backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
+            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-MenuPrincipal");
+            nomMenu.Position = new Microsoft.Xna.Framework.Vector2(730, 120);
+
+            bouton1.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
+            bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+            bouton2.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
+            bouton2.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
+            bouton3.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
+            bouton3.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
+            bouton4.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
+            bouton4.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
+
+            foreach (Texte txt in texteBoutons)
+                txt.Load(TurkeySmashGame.content, textes);
+
             soundByebye = TurkeySmashGame.content.Load<SoundEffect>("Sons\\byebye");
         }
 
@@ -74,5 +102,6 @@ namespace TurkeySmash
             Thread.Sleep(620);
             Basic.Quit();
         }
+
     }
 }

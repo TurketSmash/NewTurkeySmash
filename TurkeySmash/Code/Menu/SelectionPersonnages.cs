@@ -9,12 +9,21 @@ namespace TurkeySmash
     {
         #region Fields
 
-        private BoutonTexte boutonOptions;
-        private BoutonImage boutonNaruto;
-        private BoutonImage boutonSakura;
-        private BoutonImage boutonSai;
-        private BoutonImage boutonSuigetsu;
-        private BoutonTexte boutonRetour;
+        private BoutonImageMenu bouton1 = new BoutonImageMenu(); // Options combats
+        private BoutonImageMenu bouton2 = new BoutonImageMenu(); // Naruto
+        private BoutonImageMenu bouton3 = new BoutonImageMenu(); // Sakura
+        private BoutonImageMenu bouton4 = new BoutonImageMenu(); // Sai
+        private BoutonImageMenu bouton5 = new BoutonImageMenu(); // Suigetsu
+        private BoutonImageMenu bouton6 = new BoutonImageMenu(); // Retour
+
+        private Texte bouton1txt;
+        private Texte bouton6txt;
+
+        private Texte antibug1 = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+        private Texte antibug2 = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+        private Texte antibug3 = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+        private Texte antibug4 = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+
         private Texte affichQuiChoisitSonPersonnage;
         public static string[] listPerso = new string[4];
         private int persoAChoisirRestant;
@@ -27,36 +36,49 @@ namespace TurkeySmash
         public SelectionPersonnage()
         {
             persoAChoisirRestant = ChoixNombrePersonnage.nombreJoueur + ChoixNombrePersonnage.nombreIA;
-            boutonOptions = new BoutonTexte(TurkeySmashGame.WindowSize.X * 0.5f, TurkeySmashGame.WindowSize.Y * 0.25f);
-            boutonOptions.Texte = "Options de Combat";
-            boutonNaruto = new BoutonImage();
-            boutonSakura = new BoutonImage();
-            boutonSai = new BoutonImage();
-            boutonSuigetsu = new BoutonImage();
-            boutonRetour = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.5f, TurkeySmashGame.WindowSize.Y * 0.85f);
-            boutonRetour.Texte = "Retour";
-            affichQuiChoisitSonPersonnage = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.5f, TurkeySmashGame.WindowSize.Y * 0.55f);
+
+            bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+            bouton1txt.Texte = "Options";
+            texteBoutons.Add(bouton1txt);
+
+            texteBoutons.Add(antibug1); texteBoutons.Add(antibug2); texteBoutons.Add(antibug3); texteBoutons.Add(antibug4);
+
+            bouton6txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
+            bouton6txt.Texte = "Retour";
+            texteBoutons.Add(bouton6txt);
+
+            affichQuiChoisitSonPersonnage = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.WindowSize.Y * 0.55f);
             if (ChoixNombrePersonnage.nombreJoueur != 0)
                 affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
             else
                 affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+
+
+            bouton1txt.NameFont = affichQuiChoisitSonPersonnage.NameFont = bouton6txt.NameFont = "MenuFont";
         }
 
         public override void Init()
         {
-            backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuPrincipal");
-            boutonOptions.Load(TurkeySmashGame.content, boutons);
+            backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
+            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-SelectionDesPersonnages");
+            nomMenu.Resize(TurkeySmashGame.manager.PreferredBackBufferWidth);
+            nomMenu.Position = new Microsoft.Xna.Framework.Vector2(1000, 100);
 
-            boutonNaruto.Load(TurkeySmashGame.content, "Menu\\BoutonNaruto", boutons);
-            boutonNaruto.Position = new Microsoft.Xna.Framework.Vector2(4 * TurkeySmashGame.manager.PreferredBackBufferWidth / 10, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.45f);            
-            boutonSakura.Load(TurkeySmashGame.content, "Menu\\BoutonSakura", boutons);
-            boutonSakura.Position = new Microsoft.Xna.Framework.Vector2(7 * TurkeySmashGame.manager.PreferredBackBufferWidth / 10, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.45f);            
-            boutonSai.Load(TurkeySmashGame.content, "Menu\\BoutonSai", boutons);
-            boutonSai.Position = new Microsoft.Xna.Framework.Vector2(4 * TurkeySmashGame.manager.PreferredBackBufferWidth / 10, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.75f);
-            boutonSuigetsu.Load(TurkeySmashGame.content, "Menu\\BoutonSuigetsu", boutons);
-            boutonSuigetsu.Position = new Microsoft.Xna.Framework.Vector2(7 * TurkeySmashGame.manager.PreferredBackBufferWidth / 10, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.75f);
-           
-            boutonRetour.Load(TurkeySmashGame.content, boutons);
+            bouton1.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
+            bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
+            bouton2.Load(TurkeySmashGame.content, "Menu1\\PersoLevel\\BoutonNarutoON", "Menu1\\PersoLevel\\BoutonNarutoOFF", boutons);
+            bouton2.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.55f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.4f);
+            bouton3.Load(TurkeySmashGame.content, "Menu1\\PersoLevel\\BoutonSakuraON", "Menu1\\PersoLevel\\BoutonSakuraOFF", boutons);
+            bouton3.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.85f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.4f);
+            bouton4.Load(TurkeySmashGame.content, "Menu1\\PersoLevel\\BoutonSaiON", "Menu1\\PersoLevel\\BoutonSaiOFF", boutons);
+            bouton4.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.55f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
+            bouton5.Load(TurkeySmashGame.content, "Menu1\\PersoLevel\\BoutonSuigetsuON", "Menu1\\PersoLevel\\BoutonSuigetsuOFF", boutons);
+            bouton5.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.85f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
+            bouton6.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
+            bouton6.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
+
+            bouton1txt.Load(TurkeySmashGame.content, textes); bouton6txt.Load(TurkeySmashGame.content, textes);
+
             affichQuiChoisitSonPersonnage.Load(TurkeySmashGame.content, textes);
         }
 

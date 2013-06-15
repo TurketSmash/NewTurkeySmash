@@ -6,11 +6,13 @@ namespace TurkeySmash
     {
         #region Fields
 
-        private BoutonTexte boutonRetour;
-        private BoutonTexte boutonSelectionPerso;
-        private BoutonTexte boutonMainMenu;
-        private float xPos = 500;
-        private float yPos = 200;
+        private BoutonImageMenu bouton1 = new BoutonImageMenu(); // Retour
+        private BoutonImageMenu bouton2 = new BoutonImageMenu(); // Selection Personnages
+        private BoutonImageMenu bouton3 = new BoutonImageMenu(); // Menu Principal
+
+        private Texte bouton1txt;
+        private Texte bouton2txt;
+        private Texte bouton3txt;
 
         #endregion
 
@@ -18,23 +20,36 @@ namespace TurkeySmash
 
         public Pause()
         {
-            xPos = TurkeySmashGame.manager.PreferredBackBufferWidth / 4;
-            yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
-            boutonRetour = new BoutonTexte(xPos, yPos + 100);
-            boutonSelectionPerso = new BoutonTexte(xPos, yPos + 200);
-            boutonMainMenu = new BoutonTexte(xPos, yPos + 300);
-            boutonRetour.Texte = "Retour";
-            boutonSelectionPerso.Texte = "Selection des personnages";
-            boutonMainMenu.Texte = "Menu Principal";
+            bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.4f);
+            bouton1txt.Texte = "Retour";
+
+            bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.6f);
+            bouton2txt.Texte = "Selection Personnages";
+
+            bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.8f);
+            bouton3txt.Texte = "Menu Principal";
+
+            bouton1txt.NameFont = bouton2txt.NameFont = bouton3txt.NameFont = "MenuFont";
+            texteBoutons.Add(bouton1txt); texteBoutons.Add(bouton2txt); texteBoutons.Add(bouton3txt);
+
             MediaPlayer.Resume();
         }
 
         public override void Init()
         {
-            backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuPause");
-            boutonRetour.Load(TurkeySmashGame.content, boutons);
-            boutonSelectionPerso.Load(TurkeySmashGame.content, boutons);
-            boutonMainMenu.Load(TurkeySmashGame.content, boutons);
+            backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenuPause");
+            nomMenu.Load(TurkeySmashGame.content, "Menu1\\Pause");
+            nomMenu.Position = new Microsoft.Xna.Framework.Vector2(350, 100);
+
+            bouton1.Load(TurkeySmashGame.content, "Menu1\\BoutonON Allongé 2", "Menu1\\BoutonOFF Allongé 2", boutons);
+            bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.4f);
+            bouton2.Load(TurkeySmashGame.content, "Menu1\\BoutonON Allongé 2", "Menu1\\BoutonOFF Allongé 2", boutons);
+            bouton2.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.6f);
+            bouton3.Load(TurkeySmashGame.content, "Menu1\\BoutonON Allongé 2", "Menu1\\BoutonOFF Allongé 2", boutons);
+            bouton3.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.8f);
+
+            foreach (Texte txt in texteBoutons)
+                txt.Load(TurkeySmashGame.content, textes);
         }
 
         #endregion
