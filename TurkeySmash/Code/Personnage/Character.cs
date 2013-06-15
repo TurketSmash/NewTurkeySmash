@@ -35,7 +35,6 @@ namespace TurkeySmash
         protected Direction direction;
         
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
-        RectPhysicsObject hit;
         bool canHit = true;
         bool isHit = false;
         int frameHit = 0;
@@ -77,6 +76,22 @@ namespace TurkeySmash
         {
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
+            pourcent = userdata.pourcent;
+
+            #region Hit
+
+            if (inAction & CurrentFrame.X == frameHit & canHit)
+            {
+                RectPhysicsObject hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
+                    ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
+                hit.body.IsSensor = true;
+                hit.body.OnCollision += hitOnColision;
+                world.Step(1 / 3000f);
+                world.RemoveBody(hit.body);
+                canHit = false;
+            }
+
+            #endregion
 
             if (pourcent > oldPourcent)
                 isHit = true;
@@ -126,61 +141,48 @@ namespace TurkeySmash
 
             #endregion
 
-            #region Filtre couleur + anim coup
+            #region Filtre couleur + Anim coup reçu
 
-            if (isHit & (newPosition.X < (oldPosition.X + 0.1f) || newPosition.X > (oldPosition.X - 0.1f)))
+            if (isHit)
             {
-                CurrentFrame = new Point(0, 10);
-                definition.Loop = false;
-                FinishedAnimation = true;
-                canHit = false;
                 color = Color.Red;
                 i = 5;
+                if (newPosition.X > (oldPosition.X + 0.1f) || newPosition.X < (oldPosition.X - 0.1f))
+                {
+                    if (!inAction)
+                    {
+                        Reset(new Point(0, 8));
+                        TimeBetweenFrame = 50;
+                        inAction = true;
+                    }
+                }
+                else
+                {
+                    CurrentFrame = new Point(0, 10);
+                    FinishedAnimation = true;
+                }
+                canHit = false;
+                definition.Loop = false;
             }
             else if (i > 0)
             {
-                CurrentFrame = new Point(0, 10);
-                definition.Loop = false;
-                FinishedAnimation = true;
-                canHit = false;
                 color = Color.Red;
                 i--;
+                if (FinishedAnimation)
+                {
+                    CurrentFrame = new Point(0, 10);
+                    definition.Loop = false;
+                    FinishedAnimation = true;
+                    canHit = false;
+                }
             }
             else
                 color = Color.White;
 
             #endregion
 
-            #region Anim ejection
-
-            if (isHit & (newPosition.X > (oldPosition.X + 0.1f) || newPosition.X < (oldPosition.X - 0.1f)))
-            {
-                Reset(new Point(0, 8));
-                definition.Loop = false;
-                TimeBetweenFrame = 50;
-                inAction = true;
-            }
-
-            #endregion
-
-            #region Hit 
-
-            if (inAction & CurrentFrame.X == frameHit & canHit)
-            {
-                hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
-                    ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
-                hit.body.IsSensor = true;
-                hit.body.OnCollision += hitOnColision;
-                world.Step(1 / 3000f);
-                world.RemoveBody(hit.body);
-                canHit = false;
-            }
-
-            #endregion
-
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
-            pourcent = userdata.pourcent;
             direction = Direction.Nodirection;
             oldPosition = newPosition;
 
