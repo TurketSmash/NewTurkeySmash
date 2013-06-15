@@ -8,6 +8,7 @@ using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Collision.Shapes;
 using System;
+using System.Collections.Generic;
 
 namespace TurkeySmash
 {
@@ -44,7 +45,8 @@ namespace TurkeySmash
         Vector2 oldPosition; // variable pour calcul la chute du personnage
         Vector2 newPosition;
 
-        ParticleEngine[] particles = new ParticleEngine[4];
+        ParticleEngine particles;
+        List<Texture2D> textures = new List<Texture2D>();
 
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
@@ -71,6 +73,9 @@ namespace TurkeySmash
             userdata.associatedName = definition.AssetName;
             userdata.pourcent = 0;
             userdata.lastHit = 0;
+
+            textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\star"));
+            textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\diamond"));
         }
 
         #endregion 
@@ -80,6 +85,9 @@ namespace TurkeySmash
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.protecting = isProtecting;
+
+            if (particles != null)
+                particles.Update(gameTime, ConvertUnits.ToDisplayUnits(bodyPosition));
 
             #region Hit
 
@@ -210,7 +218,6 @@ namespace TurkeySmash
             oldPosition = newPosition;
             isProtecting = false;
             //isCharging = false;
-            Console.WriteLine(forceItem);
 
             base.Update(gameTime);
         }
@@ -234,6 +241,7 @@ namespace TurkeySmash
                     fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
                     pourcentB = fixBuserdata.pourcent;
                     fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
+                    particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0,0), Color.White, 4, 500, 1.2f);
                 }
             }
             else
@@ -344,6 +352,8 @@ namespace TurkeySmash
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            if (particles != null)
+                particles.Draw(spriteBatch);
         }
     }
 }

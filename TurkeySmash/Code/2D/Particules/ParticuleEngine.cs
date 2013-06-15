@@ -11,8 +11,8 @@ namespace TurkeySmash
     {
         private Random random;
         public Vector2 Location { get; set; }
-        private Particle particle;
-        private Texture2D texture;
+        private List<Particle> particles;
+        private List<Texture2D> textures;
         private bool matchWithPlayer = false;
 
         /// <summary>
@@ -24,41 +24,61 @@ namespace TurkeySmash
         /// <param name="color">Couleur de la particule, mettre à null si randomColor = true</param>
         /// <param name="randomVelocity">Movement de la particule géré de façon aléatoire, ne rien mettre si vrai</param>
         /// <param name="randomColor">Couleur de la particule géré de façon aléatoire, ne rien mettre si vrai</param>
-        public ParticleEngine(Texture2D texture, Vector2 location, Vector2 velocity, Color color, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true)
+        public ParticleEngine(List<Texture2D> textures, Vector2 location, Vector2 velocity, Color color, int nomberParticles, 
+            int dureeDeVie, float size = 1.0f, bool randomSize = true, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true)
         {
             Location = location;
-            this.texture = texture;
+            this.textures = textures;
+            this.particles = new List<Particle>();
             random = new Random();
             this.matchWithPlayer = matchWithPlayer;
-            particle = GenerateNewParticle(velocity, color, randomVelocity, randomColor);
+            
+            for (int i = 0; i < nomberParticles; i++)
+            {
+                particles.Add(GenerateNewParticle(velocity, color, dureeDeVie, size, randomVelocity, randomColor, randomSize));
+            }
         }
 
-        public void Update(Vector2 position)
+        public void Update(GameTime gameTime, Vector2 position)
         {
-            if (particle.TTL < 1)
-                particle.Alive = false;
-            else
-                particle.Update(position, matchWithPlayer);
+            for (int index = 0; index < particles.Count; index++)
+            {
+                if (particles[index].TTL < 0)
+                {
+                    particles.RemoveAt(index);
+                    index--;
+                }
+                else
+                {
+                    particles[index].Update(position, matchWithPlayer);
+                    particles[index].TTL -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+            }
         }
 
-        private Particle GenerateNewParticle(Vector2 velocity, Color color, bool randomVelocity, bool randomColor)
+        private Particle GenerateNewParticle(Vector2 velocity, Color color, int dureeDeVie, float size, bool randomVelocity, bool randomColor, bool randomSize)
         {
+            Texture2D texture = textures[random.Next(textures.Count)];
             if (randomVelocity)
-                velocity = new Vector2(1f * (float)(random.NextDouble() * 2 - 1), 1f * (float)(random.NextDouble() * 2 - 1));
+                velocity = new Vector2((float)random.NextDouble() * random.Next(-1, 1), (float)random.NextDouble() * random.Next(-1, 1));
             if (randomColor)
                 color = new Color((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
+            if (randomSize)
+                size = (float)random.NextDouble() * 2;
             float angle = 0;
             float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
-            float size = (float)random.NextDouble();
-            int ttl = 20 + random.Next(40);
 
-            return new Particle(texture, Location, velocity, angle, angularVelocity, color, size, ttl);
+            return new Particle(texture, Location, velocity, angle, angularVelocity, color, size, dureeDeVie);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (particle.Alive)
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+            foreach (Particle particle in particles)
                 particle.Draw(spriteBatch);
+            spriteBatch.End();
+            spriteBatch.Begin();
         }
     }
 }
