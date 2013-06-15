@@ -122,10 +122,6 @@ namespace TurkeySmash
                 canAction = false;
                 fuir = true ;
             }
-
-
-            Console.WriteLine(booleenDeLaFamille);
-
             base.Update(gameTime);
         }
 

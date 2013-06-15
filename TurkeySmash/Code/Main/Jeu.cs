@@ -19,6 +19,7 @@ namespace TurkeySmash
         public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
         Character[] personnages = new Character[4];
         Level level;
+        float fixedMass = 0.22f;
 
         private int i = 0;
 
@@ -138,6 +139,7 @@ namespace TurkeySmash
                         }
                         #endregion
                     }
+                    personnages[i].body.Mass = fixedMass;
                     i = i + 1;
                 }
             }

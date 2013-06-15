@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
-using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace TurkeySmash
 {
     class Level
     {
+        World world;
         Sprite background;
         StaticPhysicsObject[] bodylist;
-        PhysicsObject[] items;
-        Sprite[] itemsSprite;
-
+        List<PhysicsObject> items = new List<PhysicsObject>();
+        List<Sprite> itemsSprite = new List<Sprite>();
+        decimal timer;
+        float Xwin = TurkeySmashGame.WindowSize.X;
+        float Ywin = TurkeySmashGame.WindowSize.Y;
         public Vector2[] spawnPoints = new Vector2[4];
         Vector2 respawnPoint;
-
         Character[] personnages;
-
         int[][] tabScores = new int[4][]
         {//{Index,Score,Suicide,J1Kills,J2Kills,J3Kills,J4Kills}
             new int[] {1,-999,0,0,0,0,0},
@@ -29,20 +28,29 @@ namespace TurkeySmash
             new int[] {3,-999,0,0,0,0,0},
             new int[] {4,-999,0,0,0,0,0}
         };
-
-        World world;
-        float Xwin = TurkeySmashGame.WindowSize.X;
-        float Ywin = TurkeySmashGame.WindowSize.Y;
-
-        decimal timer;
+            #region Items
+            Sprite caisseSprite = new Sprite(); //items.Add(new RectPhysicsObject(world, TurkeySmashGame.WindowMid, 3.0f, caisseSprite));
+            Sprite blocSwag = new Sprite();
+            Sprite football = new Sprite(); //items.Add(new RoundPhysicsObject(world, TurkeySmashGame.WindowMid, 4, 0.7f, football));
+            Sprite pingpong = new Sprite();
+            #endregion
+            int nextItemSpawn=0;
+            int itemSpawnMin = 10;
+            int itemSpawnMax = 15;
 
         public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
+            nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000;
             this.world = _world;
             this.personnages = personnages;
 
             background = new Sprite();
             background.Load(content, backgroundName);
+
+            football.Load(TurkeySmashGame.content, "Jeu\\level2\\football");
+            caisseSprite.Load(TurkeySmashGame.content, "Jeu\\level1\\caisse");
+            blocSwag.Load(TurkeySmashGame.content, "Jeu\\level2\\blocSwag");
+            pingpong.Load(TurkeySmashGame.content, "Jeu\\PinGPong");
 
 
             switch (backgroundName)
@@ -56,24 +64,16 @@ namespace TurkeySmash
                     spawnPoints[2] = new Vector2(Xwin * 0.106f,Ywin * 0.537f); 
                     spawnPoints[3] = new Vector2(Xwin * 0.621f,Ywin * 0.557f);
 
-                    items = new PhysicsObject[3];
-                    itemsSprite = new Sprite[3];
                     bodylist = new StaticPhysicsObject[5];
 
                     #region Sprites Loading
-
-                    Sprite caisseSprite = new Sprite();
-                    caisseSprite.Load(TurkeySmashGame.content, "Jeu\\level1\\caisse");
-                    itemsSprite[0] = caisseSprite;
-                    itemsSprite[1] = caisseSprite;
-                    itemsSprite[2] = caisseSprite;
 
                     Sprite plateforme1Mid = new Sprite();
                     plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Mid");
                     Sprite plateforme1Left = new Sprite();
                     plateforme1Left.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Left");
                     //Sprite plateforme1Right = new Sprite();
-                    //plateforme1Right.Load(TurkeySmashGame.content, "Jeu\\plateforme1Right");   /créé un bug CHELOU
+                    //plateforme1Right.Load(TurkeySmashGame.content, "Jeu\\plateforme1Right");   //créé un bug CHELOU
                     Sprite plateforme2 = new Sprite();
                     plateforme2.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme2");
 
@@ -92,12 +92,6 @@ namespace TurkeySmash
                     #endregion
 
                     #region Items
-                    items[0] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.489f, Ywin * 0.452f), 2, caisseSprite);
-                    items[1] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.530f, Ywin * 0.452f), 2, caisseSprite);
-                    items[2] =  new RectPhysicsObject(world, new Vector2(Xwin * 0.509f, Ywin * 0.392f), 2, caisseSprite);
-                    items[0].body.Friction = 1f;
-                    items[1].body.Friction = 1f;
-                    items[2].body.Friction = 1f;
 
                     #endregion
 
@@ -114,22 +108,9 @@ namespace TurkeySmash
                     spawnPoints[3] = new Vector2(Xwin * 0.941f, Ywin * 0.638f);
 
                     
-                    items = new PhysicsObject[6];
-                    itemsSprite = new Sprite[6];
                     bodylist = new StaticPhysicsObject[4];
                     
                     #region Sprites Loading
-
-                    Sprite football = new Sprite();
-                    football.Load(TurkeySmashGame.content, "Jeu\\level2\\football");
-                    itemsSprite[0] = football;
-                    Sprite blocSwag = new Sprite();
-                    blocSwag.Load(TurkeySmashGame.content, "Jeu\\level2\\blocSwag");
-                    itemsSprite[1] = blocSwag;
-                    itemsSprite[2] = blocSwag;
-                    itemsSprite[3] = blocSwag;
-                    itemsSprite[4] = blocSwag;
-                    itemsSprite[5] = blocSwag;
 
                     Sprite plateforme3 = new Sprite();
                     plateforme3.Load(TurkeySmashGame.content, "Jeu\\level2\\plateforme3");
@@ -153,12 +134,6 @@ namespace TurkeySmash
                     #endregion
 
                     #region Items
-                    items[0] = new RoundPhysicsObject(world, new Vector2(Xwin * 0.270f, Ywin * 0.417f), 4.0f, 0.7f, football);
-                    items[1] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.648f), 3.0f, blocSwag);
-                    items[2] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.581f), 3.0f, blocSwag);
-                    items[3] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.516f), 3.0f, blocSwag);
-                    items[4] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.451f), 3.0f, blocSwag);
-                    items[5] = new RectPhysicsObject(world, new Vector2(Xwin * 0.729f, Ywin * 0.386f), 3.0f, blocSwag);
                     #endregion
 
                     #endregion
@@ -168,6 +143,15 @@ namespace TurkeySmash
 
         public void Update(GameTime gameTime)
         {
+            if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad1))
+                spawnObject();
+            nextItemSpawn -= gameTime.ElapsedGameTime.Milliseconds;
+            if (nextItemSpawn < 0)
+            {
+                spawnObject();
+                resetSpawnTimer();
+            }
+
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
             for (int i = 0; i < personnages.Length; i++)
             {
@@ -185,6 +169,16 @@ namespace TurkeySmash
                         personnages[i] = null;
                 }
             }
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (outOfScreen(items[i].bodyPosition))
+                {
+                    items.RemoveAt(i);
+                    itemsSprite.RemoveAt(i);
+                }
+            }
+            //System.Console.WriteLine(items.Count);
         }
 
         bool outOfScreen(Vector2 position)
@@ -262,7 +256,7 @@ namespace TurkeySmash
 
             if (items != null)
             {
-                for (int i = 0; i < items.Length; i++)
+                for (int i = 0; i < items.Count; i++)
                 {
                     items[i].Draw(itemsSprite[i], spriteBatch);
                 }
@@ -277,6 +271,38 @@ namespace TurkeySmash
                 if (personnages[i] != null)
                     personnages[i].Draw(spriteBatch);
             }
+        }
+
+        void spawnObject()
+        {
+            int rnd = new System.Random().Next(1, 5);
+            System.Console.WriteLine(rnd);
+            int Xrand = new System.Random().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
+            switch (rnd)
+            {
+                case 1:
+                    itemsSprite.Add(football);
+                    items.Add(new RoundPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 4, 0.7f, football));
+                    break;
+                case 2:
+                    itemsSprite.Add(caisseSprite);
+                    items.Add(new RectPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 2.0f, caisseSprite));
+                    break;
+                case 3:
+                    itemsSprite.Add(blocSwag);
+                    items.Add(new RectPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 3.0f, blocSwag));
+                    break;
+                case 4:
+                    itemsSprite.Add(pingpong);
+                    items.Add(new RoundPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 2, 0.90f, pingpong));
+                    break;
+            }
+        }
+
+        void resetSpawnTimer()
+        {
+            nextItemSpawn = new System.Random().Next(itemSpawnMin, itemSpawnMax);
+            nextItemSpawn = nextItemSpawn * 1000;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace TurkeySmash
         private Texte affichQuiChoisitSonPersonnage;
         public static string[] listPerso = new string[4];
         private int persoAChoisirRestant;
-        public static int i = 0;
+        int i = 0;
 
         #endregion
 

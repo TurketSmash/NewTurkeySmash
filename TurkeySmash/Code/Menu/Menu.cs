@@ -30,11 +30,6 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime, Input input)
         {
-
-            Console.Write("mode:"+OptionsCombat.TypePartieSelect+" // ");
-            Console.Write("vie "+OptionsCombat.NombreVies);
-            Console.WriteLine(" // temps " + OptionsCombat.TempsPartie);
-
             soundSelect = TurkeySmashGame.content.Load<SoundEffect>("Sons\\menuSelect");
             SoundEffectInstance instanceSelect = soundSelect.CreateInstance();
             instanceSelect.Volume = 0.3f;
@@ -99,9 +94,6 @@ namespace TurkeySmash
                         break;
                 }
             }
-
-            Console.WriteLine(SelectionPersonnage.i);
-
             oldStateK = newStateK;
             oldStateG = newStateG;
         }
