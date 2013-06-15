@@ -15,7 +15,8 @@ namespace TurkeySmash
 
         public static void SetUp()
         {
-            screens.Add(new Accueil()); // première image lors de l'ouverture du programme
+            //screens.Add(new Jeu()); // debug
+            screens.Add(new Accueil()); // normal
             screens[0].Init();
         }
 
