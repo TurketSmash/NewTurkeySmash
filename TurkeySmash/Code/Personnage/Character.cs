@@ -121,7 +121,7 @@ namespace TurkeySmash
 
             #region Chute
 
-            if (newPosition.Y > (oldPosition.Y + 0.1f))
+            if (newPosition.Y > (oldPosition.Y + 0.1f) & !inAction)
             {
                 CurrentFrame = new Point(4, 2);
                 definition.Loop = false;
