@@ -48,8 +48,12 @@ namespace TurkeySmash
             Rectangle sourceRectangle = new Rectangle(0, 0, Texture.Width, Texture.Height);
             Vector2 origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             spriteBatch.Draw(Texture, Position, sourceRectangle, Color,
                 Angle, origin, Size, SpriteEffects.None, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin();
         }
     }
 }

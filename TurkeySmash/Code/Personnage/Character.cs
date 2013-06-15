@@ -27,7 +27,7 @@ namespace TurkeySmash
         public PlayerIndex playerindex;
         public int score = 0;
 
-        protected bool canJump;
+        protected bool canJump = false;
         protected bool inAction = false;
         public bool lookingRight = true;
         protected bool jump = false;
@@ -38,6 +38,8 @@ namespace TurkeySmash
         bool canHit = true;
         bool isHit = false;
         bool isProtecting = false;
+        //bool isCharging = false;
+        //int chargedAttack = 1;
         int frameHit = 0;
         Vector2 oldPosition; // variable pour calcul la chute du personnage
         Vector2 newPosition;
@@ -169,16 +171,35 @@ namespace TurkeySmash
             {
                 color = Color.Red;
                 i--;
-                if (FinishedAnimation)
-                {
-                    CurrentFrame = new Point(0, 10);
-                    definition.Loop = false;
-                    FinishedAnimation = true;
-                    canHit = false;
-                }
+                CurrentFrame = new Point(0, 10);
+                definition.Loop = false;
+                FinishedAnimation = true;
+                canHit = false;
             }
             else
                 color = Color.White;
+
+            #endregion
+
+            #region Charging
+
+            /* if (isCharging)
+            {
+                inAction = true;
+                CurrentFrame.X = 0;
+                definition.Loop = false;
+                FinishedAnimation = true;
+            }
+            else
+            {
+                if (true)
+                {
+                    CurrentFrame.Y = chargedAttack;
+                    FinishedAnimation = false;
+                    definition.Loop = false;
+                    inAction = true;
+                }
+            } */
 
             #endregion
 
@@ -188,6 +209,8 @@ namespace TurkeySmash
             pourcent = userdata.pourcent;
             oldPosition = newPosition;
             isProtecting = false;
+            //isCharging = false;
+            Console.WriteLine(forceItem);
 
             base.Update(gameTime);
         }
@@ -210,13 +233,12 @@ namespace TurkeySmash
                     fixBuserdata.lastHit = Convert.PlayerIndex2Int(playerindex);
                     fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
                     pourcentB = fixBuserdata.pourcent;
-                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 0) * (1 + (pourcentB / 50)) * forceItem);
+                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
                 }
             }
             else
             {
-                forceItem = 1.5f;
-                fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 0) * (1 + (pourcentB / 50)) * forceItem);
+                fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
             }
 
             return true;
@@ -258,11 +280,16 @@ namespace TurkeySmash
                     }
                     x = lookingRight ? 1 : -1;
                 }
+                //chargedAttack = CurrentFrame.Y;
                 definition.Loop = false;
                 inAction = true;
 
-                y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
+                y = direction == Direction.Up ? -1 : direction == Direction.Down ? canJump ? 0 : 1 : 0;
+                // Si la direction est vers le haut y = -1, si la direction est vers le bas et le personnage est au sol y = 0
+                // Si la direction est vers le bas et le personnage est en l'air y = 1
+                // Si c'est aucune des deux directions y = 0;
             }
+            //isCharging = true;
         }
         protected void Jump()
         {
