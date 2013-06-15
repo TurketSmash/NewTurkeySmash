@@ -10,6 +10,7 @@ namespace TurkeySmash
 {
     class Level
     {
+        #region Fields
         World world;
         Sprite background;
         StaticPhysicsObject[] bodylist;
@@ -37,10 +38,11 @@ namespace TurkeySmash
             int nextItemSpawn=0;
             int itemSpawnMin = 10;
             int itemSpawnMax = 15;
+        #endregion
 
         public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
-            nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000;
+            nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000; //init du premier spawn
             this.world = _world;
             this.personnages = personnages;
 
@@ -140,7 +142,6 @@ namespace TurkeySmash
                     break;
             }
         }
-
         public void Update(GameTime gameTime)
         {
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad1))
@@ -149,7 +150,7 @@ namespace TurkeySmash
             if (nextItemSpawn < 0)
             {
                 spawnObject();
-                resetSpawnTimer();
+                resetItemSpawnTimer();
             }
 
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -161,7 +162,7 @@ namespace TurkeySmash
                         bolo.UpdatePosition(personnages);
 
                     personnages[i].Update(gameTime);
-                    partieTerminee(personnages[i]);
+                    gameFinished(personnages[i]);
 
                     if (outOfScreen(personnages[i].bodyPosition))
                         respawn(personnages[i]);
@@ -180,18 +181,39 @@ namespace TurkeySmash
             }
             //System.Console.WriteLine(items.Count);
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            background.DrawAsBackground(spriteBatch);
+
+            if (items != null)
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    items[i].Draw(itemsSprite[i], spriteBatch);
+                }
+            }
+            foreach (StaticPhysicsObject elements in bodylist)
+            {
+                if (elements != null)
+                    elements.Draw(elements.sprite, spriteBatch);
+            }
+            for (int i = 0; i < personnages.Length; i++)
+            {
+                if (personnages[i] != null)
+                    personnages[i].Draw(spriteBatch);
+            }
+        }
 
         bool outOfScreen(Vector2 position)
         {
-            return (position.X < ConvertUnits.ToSimUnits(-100)
-                   || position.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + 100)
-                   || position.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + 100)
-                   || position.Y < ConvertUnits.ToSimUnits(-100));
+            return (position.X < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X * -0.1f)
+                   || position.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + TurkeySmashGame.WindowSize.X * 0.1f)
+                   || position.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + TurkeySmashGame.WindowSize.Y * 0.1f)
+                   || position.Y < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y * -0.1f));
         }
-
         void respawn(Character personnage)
         {
-            Scoring(personnage);
+            scoring(personnage);
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (personnage.vie == 1)
                 personnage.vie = 0;
@@ -205,8 +227,7 @@ namespace TurkeySmash
             userData.pourcent = 0;
             personnage.body.ResetDynamics();
         }
-
-        private void Scoring(Character personnage)
+        private void scoring(Character personnage)
         {
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (userData.lastHit <= 0)
@@ -225,8 +246,7 @@ namespace TurkeySmash
                 if (personnages[i] != null)
                     tabScores[i][1] = personnages[i].score;
         }
-
-        void partieTerminee(Character personnage)
+        void gameFinished(Character personnage)
         {
             if (OptionsCombat.TypePartieSelect == "temps")
             {
@@ -249,35 +269,10 @@ namespace TurkeySmash
                 }
             }
         }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            background.DrawAsBackground(spriteBatch);
-
-            if (items != null)
-            {
-                for (int i = 0; i < items.Count; i++)
-                {
-                    items[i].Draw(itemsSprite[i], spriteBatch);
-                }
-            }
-            foreach (StaticPhysicsObject elements in bodylist)
-            {
-                if (elements != null)
-                elements.Draw(elements.sprite, spriteBatch);
-            }
-            for (int i = 0; i < personnages.Length; i++)
-            {
-                if (personnages[i] != null)
-                    personnages[i].Draw(spriteBatch);
-            }
-        }
-
         void spawnObject()
         {
-            int rnd = new System.Random().Next(1, 5);
-            System.Console.WriteLine(rnd);
-            int Xrand = new System.Random().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
+            int rnd = new Random().Next(1, 5);
+            int Xrand = new Random().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)((5/6) * TurkeySmashGame.WindowSize.X));
             switch (rnd)
             {
                 case 1:
@@ -298,8 +293,7 @@ namespace TurkeySmash
                     break;
             }
         }
-
-        void resetSpawnTimer()
+        void resetItemSpawnTimer()
         {
             nextItemSpawn = new System.Random().Next(itemSpawnMin, itemSpawnMax);
             nextItemSpawn = nextItemSpawn * 1000;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework;
 
 namespace TurkeySmash
 {
@@ -16,6 +17,8 @@ namespace TurkeySmash
         private Texte affichagejoueur2;
         private Texte affichagejoueur3;
         private Texte affichagejoueur4;
+        private Texte[] affichagejoueurs = new Texte[4];
+        private Color colorTexte;
 
         #endregion
 
@@ -27,6 +30,12 @@ namespace TurkeySmash
             boutonMainMenu = new BoutonTexte(3 * TurkeySmashGame.WindowSize.X / 4, 9 * TurkeySmashGame.WindowSize.Y / 10);
             boutonRejouer.Texte = "Rejouer";
             boutonMainMenu.Texte = "Menu Principal";
+
+
+            if (SelectionNiveau.niveauSelect == "level2")
+                colorTexte = Color.White;
+            else
+                colorTexte = Color.White;
 
             if (Results.ResultsBoard[0][1] != -999)
             {
@@ -52,15 +61,15 @@ namespace TurkeySmash
                 affichagejoueur4.Texte = "J" + Results.ResultsBoard[3][0] + " / score : " + Results.ResultsBoard[3][1] + " / suicides : " + Results.ResultsBoard[3][2] +
                     " / details : (" + Results.ResultsBoard[3][3] + "/" + Results.ResultsBoard[3][4] + "/" + Results.ResultsBoard[3][5] + "/" + Results.ResultsBoard[3][6] + ")";
             }
-            if (Results.ResultsBoard[0][1] != -999)
-                affichagejoueur1.Color = Microsoft.Xna.Framework.Color.White;
-            if (Results.ResultsBoard[1][1] != -999)
-             affichagejoueur2.Color = Microsoft.Xna.Framework.Color.White;
-            if (Results.ResultsBoard[2][1] != -999)
-                affichagejoueur3.Color = Microsoft.Xna.Framework.Color.White;
-            if (Results.ResultsBoard[3][1] != -999)
-                affichagejoueur4.Color = Microsoft.Xna.Framework.Color.White;
-
+            affichagejoueurs[0] = affichagejoueur1;
+            affichagejoueurs[1] = affichagejoueur2;
+            affichagejoueurs[2] = affichagejoueur3;
+            affichagejoueurs[3] = affichagejoueur4;
+            for (int i = 0; i < Results.ResultsBoard.Length; i++)
+            {
+                if (Results.ResultsBoard[i][1] != -999)
+                    affichagejoueurs[i].Color = colorTexte;
+            }
             MediaPlayer.Resume();
         }
 
@@ -69,14 +78,13 @@ namespace TurkeySmash
             backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuGameOver");
             boutonRejouer.Load(TurkeySmashGame.content, boutons);
             boutonMainMenu.Load(TurkeySmashGame.content, boutons);
-            if (Results.ResultsBoard[0][1] != -999)
-                affichagejoueur1.Load(TurkeySmashGame.content, textes);
-            if (Results.ResultsBoard[1][1] != -999)
-                affichagejoueur2.Load(TurkeySmashGame.content, textes);
-            if (Results.ResultsBoard[2][1] != -999)
-                affichagejoueur3.Load(TurkeySmashGame.content, textes);
-            if (Results.ResultsBoard[3][1] != -999)
-            affichagejoueur4.Load(TurkeySmashGame.content, textes);
+
+            for (int i = 0; i < Results.ResultsBoard.Length; i++)
+            {
+
+                if (Results.ResultsBoard[i][1] != -999)
+                    affichagejoueurs[i].Load(TurkeySmashGame.content, textes);
+            }
         }
 
         #endregion
