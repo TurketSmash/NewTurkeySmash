@@ -34,7 +34,6 @@ namespace TurkeySmash
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-                Color = Color.Black;
                 SizeText = 1.0f;
 
             base.Draw(spriteBatch);
