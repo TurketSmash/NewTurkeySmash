@@ -1,13 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using FarseerPhysics;
 using FarseerPhysics.Dynamics;
-using FarseerPhysics.Factories;
-using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics.Contacts;
-using FarseerPhysics.Collision.Shapes;
-using System;
 using System.Collections.Generic;
 
 namespace TurkeySmash

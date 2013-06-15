@@ -1,13 +1,7 @@
-﻿#region Using Statement
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using FarseerPhysics.Dynamics;
-using Microsoft.Xna.Framework.Input;
-#endregion
 
 namespace TurkeySmash
 {
@@ -37,7 +31,7 @@ namespace TurkeySmash
             else
                 level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
 
-            /*
+            
             #region Debug
 
             personnages[0] = new Joueur(world, level.spawnPoints[0], 1f, new Vector2(42, 55), PlayerIndex.Three, new AnimatedSpriteDef()
@@ -58,10 +52,11 @@ namespace TurkeySmash
             });
 
             #endregion
-            */
+            
+
+            /*
             #region Selection persoonage
 
-            
             foreach (string str in SelectionPersonnage.listPerso)
             {
                 if (str != null)
@@ -169,6 +164,7 @@ namespace TurkeySmash
                 }
             }
             #endregion
+            */
 
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;

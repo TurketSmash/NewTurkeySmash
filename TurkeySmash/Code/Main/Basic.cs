@@ -1,11 +1,6 @@
-﻿#region Using
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
-
-#endregion
 
 namespace TurkeySmash
 {
@@ -15,8 +10,8 @@ namespace TurkeySmash
 
         public static void SetUp()
         {
-            //screens.Add(new Jeu()); // debug
-            screens.Add(new Accueil()); // normal
+            screens.Add(new Jeu()); // debug
+            //screens.Add(new Accueil()); // normal
             screens[0].Init();
         }
 
