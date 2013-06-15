@@ -29,7 +29,6 @@ namespace TurkeySmash
 
         protected bool canJump;
         protected bool inAction = false;
-
         public bool lookingRight = true;
         protected bool jump = false;
         protected bool isMoving = false;
@@ -259,7 +258,6 @@ namespace TurkeySmash
                 y = direction == Direction.Down ? 1 : direction == Direction.Up ? -1 : 0;
             }
         }
-
         protected void Jump()
         {
             if (!inAction & canJump)
@@ -291,10 +289,22 @@ namespace TurkeySmash
                 Reset(new Point(0, 7));
                 definition.Loop = false;
                 inAction = true;
+                canHit = false;
                 TimeBetweenFrame = 75;
                 x = lookingRight ? 1 : -1;
                 bodyPosition = new Vector2(bodyPosition.X + x, bodyPosition.Y);
                 body.ApplyForce(new Vector2(0, 0.001f));
+            }
+        }
+        protected void Protection()
+        {
+            if (!inAction)
+            {
+                CurrentFrame = new Point(0, 9);
+                FinishedAnimation = true;
+                definition.Loop = false;
+                inAction = true;
+                canHit = false;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

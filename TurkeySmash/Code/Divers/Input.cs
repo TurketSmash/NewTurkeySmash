@@ -117,6 +117,14 @@ namespace TurkeySmash
                 );
         }
 
+        public bool Protection(PlayerIndex player)
+        {
+            return ((Keyboard.GetState().IsKeyDown(Keys.Z) & player == PlayerIndex.Three) ||
+                (GamePad.GetState(player).Buttons.X == ButtonState.Pressed & player == PlayerIndex.One) ||
+                (GamePad.GetState(player).Buttons.X == ButtonState.Pressed & player == PlayerIndex.Two)
+                );
+        }
+
         public bool ActionReleased(PlayerIndex player)
         {
             return ((Keyboard.GetState().IsKeyUp(Keys.A) & player == PlayerIndex.Three) ||

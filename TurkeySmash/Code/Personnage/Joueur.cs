@@ -26,6 +26,9 @@ namespace TurkeySmash
         {
             base.Update(gameTime);
 
+            if (input.Protection(playerindex))
+                Protection();
+
             if (input.Left(playerindex))
             {
                 direction = Direction.Left;
