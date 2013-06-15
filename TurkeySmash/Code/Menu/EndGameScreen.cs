@@ -27,11 +27,12 @@ namespace TurkeySmash
             boutonMainMenu = new BoutonTexte(3 * TurkeySmashGame.WindowSize.X / 4, 9 * TurkeySmashGame.WindowSize.Y / 10);
             boutonRejouer.Texte = "Rejouer";
             boutonMainMenu.Texte = "Menu Principal";
+
             if (Results.ResultsBoard[0][1] != -999)
             {
                 affichagejoueur1 = new Texte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y / 2);
                 affichagejoueur1.Texte = "J" + Results.ResultsBoard[0][0] + " / score : " + Results.ResultsBoard[0][1] + " / suicides : " + Results.ResultsBoard[0][2] +
-                    " / details : (" + Results.ResultsBoard[1][3] + "/" + Results.ResultsBoard[0][4] + "/" + Results.ResultsBoard[0][5] + "/" + Results.ResultsBoard[0][6] + ")";
+                    " / details : (" + Results.ResultsBoard[0][3] + "/" + Results.ResultsBoard[0][4] + "/" + Results.ResultsBoard[0][5] + "/" + Results.ResultsBoard[0][6] + ")";
             }
             if (Results.ResultsBoard[1][1] != -999)
             {
@@ -43,13 +44,13 @@ namespace TurkeySmash
             {
                 affichagejoueur3 = new Texte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y / 2 + 100);
                 affichagejoueur3.Texte = "J" + Results.ResultsBoard[2][0] + " / score : " + Results.ResultsBoard[2][1] + " / suicides : " + Results.ResultsBoard[2][2] +
-                    " / details : (" + Results.ResultsBoard[1][3] + "/" + Results.ResultsBoard[1][4] + "/" + Results.ResultsBoard[1][5] + "/" + Results.ResultsBoard[1][6] + ")";
+                    " / details : (" + Results.ResultsBoard[2][3] + "/" + Results.ResultsBoard[2][4] + "/" + Results.ResultsBoard[2][5] + "/" + Results.ResultsBoard[2][6] + ")";
             }
             if (Results.ResultsBoard[3][1] != -999)
             {
                 affichagejoueur4 = new Texte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y / 2 + 150);
                 affichagejoueur4.Texte = "J" + Results.ResultsBoard[3][0] + " / score : " + Results.ResultsBoard[3][1] + " / suicides : " + Results.ResultsBoard[3][2] +
-                    " / details : (" + Results.ResultsBoard[1][3] + "/" + Results.ResultsBoard[1][4] + "/" + Results.ResultsBoard[1][5] + "/" + Results.ResultsBoard[1][6] + ")";
+                    " / details : (" + Results.ResultsBoard[3][3] + "/" + Results.ResultsBoard[3][4] + "/" + Results.ResultsBoard[3][5] + "/" + Results.ResultsBoard[3][6] + ")";
             }
             if (Results.ResultsBoard[0][1] != -999)
                 affichagejoueur1.Color = Microsoft.Xna.Framework.Color.White;
