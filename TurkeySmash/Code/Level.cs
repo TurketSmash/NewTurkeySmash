@@ -179,7 +179,6 @@ namespace TurkeySmash
                     itemsSprite.RemoveAt(i);
                 }
             }
-            //System.Console.WriteLine(items.Count);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -215,8 +214,9 @@ namespace TurkeySmash
         {
             scoring(personnage);
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
-            if (personnage.vie == 1)
+            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect != "vie")
                 personnage.vie = 0;
+                personnage.vie = 1;
             if (!personnage.Mort)
             {
                 personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
@@ -272,7 +272,7 @@ namespace TurkeySmash
         void spawnObject()
         {
             int rnd = new Random().Next(1, 5);
-            int Xrand = new Random().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)((5/6) * TurkeySmashGame.WindowSize.X));
+            int Xrand = new Random().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
             switch (rnd)
             {
                 case 1:
