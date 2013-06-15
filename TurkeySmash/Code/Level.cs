@@ -14,8 +14,13 @@ namespace TurkeySmash
         World world;
         Sprite background;
         StaticPhysicsObject[] bodylist;
+
         List<PhysicsObject> items = new List<PhysicsObject>();
         List<Sprite> itemsSprite = new List<Sprite>();
+
+        List<PhysicsObject> bonus = new List<PhysicsObject>();
+        List<Sprite> bonusSprite = new List<Sprite>();
+
         decimal timer;
         float Xwin = TurkeySmashGame.WindowSize.X;
         float Ywin = TurkeySmashGame.WindowSize.Y;
@@ -35,14 +40,25 @@ namespace TurkeySmash
             Sprite football = new Sprite(); //items.Add(new RoundPhysicsObject(world, TurkeySmashGame.WindowMid, 4, 0.7f, football));
             Sprite pingpong = new Sprite();
             #endregion
-            int nextItemSpawn=0;
-            int itemSpawnMin = 10;
-            int itemSpawnMax = 15;
+            #region Bonus
+            Sprite bonusTest = new Sprite();
+            Sprite hamburger = new Sprite();
+            #endregion
+            int nextItemSpawn;
+            int itemSpawnMin = 2;
+            int itemSpawnMax = 5;
+
+            int nextBonusSpawn;
+            int bonusSpawnMin;
+            int bonusSpawnMax;
         #endregion
 
         public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
-            nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000; //init du premier spawn
+            nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000; //init des premier spawn
+            bonusSpawnMax = (int)(itemSpawnMax * 1.5f);
+            bonusSpawnMin = (int)(itemSpawnMin * 1.5f);
+            nextBonusSpawn = ((bonusSpawnMax + bonusSpawnMin) / 2) * 1000;
             this.world = _world;
             this.personnages = personnages;
 
@@ -52,8 +68,10 @@ namespace TurkeySmash
             football.Load(TurkeySmashGame.content, "Jeu\\level2\\football");
             caisseSprite.Load(TurkeySmashGame.content, "Jeu\\level1\\caisse");
             blocSwag.Load(TurkeySmashGame.content, "Jeu\\level2\\blocSwag");
-            pingpong.Load(TurkeySmashGame.content, "Jeu\\PinGPong");
+            pingpong.Load(TurkeySmashGame.content, "Jeu\\Objets\\PingPong");
 
+            bonusTest.Load(TurkeySmashGame.content, "Jeu\\Objets\\BonusTest");
+            hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
 
             switch (backgroundName)
             {
@@ -144,22 +162,25 @@ namespace TurkeySmash
         }
         public void Update(GameTime gameTime)
         {
-            if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad1))
-                spawnObject();
             nextItemSpawn -= gameTime.ElapsedGameTime.Milliseconds;
+            nextBonusSpawn -= gameTime.ElapsedGameTime.Milliseconds;
+            timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if (nextItemSpawn < 0)
             {
-                spawnObject();
+                spawnItem();
                 resetItemSpawnTimer();
+            } if (nextBonusSpawn < 0)
+            {
+                spawnBonus();
+                resetBonusSpawnTimer();
             }
 
-            timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
             for (int i = 0; i < personnages.Length; i++)
-            {
                 if (personnages[i] != null)
                 {
-                    foreach (IA bolo in personnages.OfType<IA>())
-                        bolo.UpdatePosition(personnages);
+                    foreach (IA ia in personnages.OfType<IA>())
+                        ia.UpdatePosition(personnages);
 
                     personnages[i].Update(gameTime);
                     gameFinished(personnages[i]);
@@ -169,14 +190,25 @@ namespace TurkeySmash
                     if (personnages[i].Mort)
                         personnages[i] = null;
                 }
-            }
 
             for (int i = 0; i < items.Count; i++)
-            {
                 if (outOfScreen(items[i].bodyPosition))
                 {
+                    world.RemoveBody(items[i].body);
                     items.RemoveAt(i);
+                    itemsSprite[i] = null;
                     itemsSprite.RemoveAt(i);
+                }
+
+            for (int i = 0; i < bonus.Count; i++)
+            {
+            FarseerBodyUserData userData = (FarseerBodyUserData)bonus[i].body.UserData;
+            if (outOfScreen(bonus[i].bodyPosition) | userData.IsUsed == true)
+                {
+                    world.RemoveBody(bonus[i].body);
+                    bonus.RemoveAt(i);
+                    bonusSprite[i] = null;
+                    bonusSprite.RemoveAt(i);
                 }
             }
         }
@@ -184,13 +216,14 @@ namespace TurkeySmash
         {
             background.DrawAsBackground(spriteBatch);
 
-            if (items != null)
-            {
-                for (int i = 0; i < items.Count; i++)
-                {
+            for (int i = 0; i < items.Count; i++)
+                if (items[i] != null)
                     items[i].Draw(itemsSprite[i], spriteBatch);
-                }
-            }
+
+            for (int i = 0; i < bonus.Count; i++)
+                if (bonus[i] != null)
+                    bonus[i].Draw(bonusSprite[i], spriteBatch);
+
             foreach (StaticPhysicsObject elements in bodylist)
             {
                 if (elements != null)
@@ -208,38 +241,37 @@ namespace TurkeySmash
             return (position.X < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X * -0.1f)
                    || position.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + TurkeySmashGame.WindowSize.X * 0.1f)
                    || position.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + TurkeySmashGame.WindowSize.Y * 0.1f)
-                   || position.Y < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y * -0.1f));
+                   || position.Y < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y * -0.5f));
         }
         void respawn(Character personnage)
         {
-            scoring(personnage);
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
+            scoring(personnage);
             if (personnage.vie == 1 & OptionsCombat.TypePartieSelect != "vie")
                 personnage.vie = 0;
-                personnage.vie = 1;
             if (!personnage.Mort)
             {
                 personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
                 if (OptionsCombat.TypePartieSelect != "temps")
                     personnage.vie--;
             }
-            userData.lastHit = 0;
-            userData.pourcent = 0;
+            userData.LastHit = 0;
+            userData.Pourcent = 0;
             personnage.body.ResetDynamics();
         }
         private void scoring(Character personnage)
         {
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
-            if (userData.lastHit <= 0)
+            if (userData.LastHit <= 0)
             {
                 personnage.score -= 2;//Suicide = -2 pts
                 tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2] ++; //Ajout +1 suicide dans le compteur
             }
             else
             {
-                if (personnages[userData.lastHit - 1] != null)
-                    personnages[userData.lastHit - 1].score ++; //score ++ pour le dernier perso qui t'as tapé
-                tabScores[userData.lastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //Ajout +1 au score de kill pour le joueur qui t'as tué
+                if (personnages[userData.LastHit - 1] != null)
+                    personnages[userData.LastHit - 1].score ++; //score ++ pour le dernier perso qui t'as tapé
+                tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //Ajout +1 au score de kill pour le joueur qui t'as tué
             }
 
             for (int i = 0; i < personnages.Length; i++)
@@ -253,7 +285,7 @@ namespace TurkeySmash
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
                     timer = 0;
-                    Results.SaveResults(tabScores);
+                    Results.SaveResults(tabScores,-1);
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
@@ -264,39 +296,89 @@ namespace TurkeySmash
                     personnages[0] == null & personnages[1] == null & personnages[2] != null & personnages[3] == null |
                     personnages[0] == null & personnages[1] == null & personnages[2] == null & personnages[3] != null )
                 {
-                    Results.SaveResults(tabScores);
+                    for (int i = 0; i < personnages.Length; i++)
+                        if (personnages[i] != null)
+                            Results.SaveResults(tabScores,i+1);
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
         }
-        void spawnObject()
+        void spawnItem()
+
         {
-            int rnd = new Random().Next(1, 5);
-            int Xrand = new Random().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
-            switch (rnd)
+            PhysicsObject item = null;
+            int rand = RandomProvider.GetRandom().Next(1, 5);
+            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
+            Vector2 randposition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
+            switch (rand)
             {
                 case 1:
                     itemsSprite.Add(football);
-                    items.Add(new RoundPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 4, 0.7f, football));
+                    item = new RoundPhysicsObject(world, randposition, 4, 0.7f, football);
                     break;
                 case 2:
                     itemsSprite.Add(caisseSprite);
-                    items.Add(new RectPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 2.0f, caisseSprite));
+                    item = new RectPhysicsObject(world, randposition, 2.0f, caisseSprite);
                     break;
                 case 3:
                     itemsSprite.Add(blocSwag);
-                    items.Add(new RectPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 3.0f, blocSwag));
+                    item = new RectPhysicsObject(world, randposition, 3.0f, blocSwag);
                     break;
                 case 4:
                     itemsSprite.Add(pingpong);
-                    items.Add(new RoundPhysicsObject(world, new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6), 2, 0.90f, pingpong));
+                    item = new RoundPhysicsObject(world, randposition, 5, 0.90f, pingpong);
                     break;
             }
+            items.Add(item);
+        }
+        void spawnBonus()
+        {
+            PhysicsObject thisBonus = null;
+            int rand = RandomProvider.GetRandom().Next(1, 3);
+            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
+            Vector2 randPosition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
+            FarseerBodyUserData userData = new FarseerBodyUserData();
+            switch (rand)
+            {
+                case 1:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, bonusTest);
+                    bonusSprite.Add(bonusTest);
+                    FarseerBodyUserData userData1 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        bonusType = "vie"
+                    };
+                    thisBonus.body.UserData = userData1;
+                    break;
+                case 2:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, hamburger);
+                    FarseerBodyUserData userData2 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        bonusType = "pourcent"
+                    };
+                    thisBonus.body.UserData = userData2;
+                    bonusSprite.Add(hamburger);
+                    break;
+            }
+            bonus.Add(thisBonus);
         }
         void resetItemSpawnTimer()
         {
-            nextItemSpawn = new System.Random().Next(itemSpawnMin, itemSpawnMax);
-            nextItemSpawn = nextItemSpawn * 1000;
+            nextItemSpawn = RandomProvider.GetRandom().Next(itemSpawnMin, itemSpawnMax);
+            Console.WriteLine(timer / 1000 + nextItemSpawn);
+            nextItemSpawn *= 1000;
         }
+        void resetBonusSpawnTimer()
+        {
+            nextBonusSpawn = RandomProvider.GetRandom().Next(bonusSpawnMin, bonusSpawnMax);
+            Console.WriteLine(timer / 1000 + nextBonusSpawn);
+            nextBonusSpawn *= 1000;
+        }
+        
     }
 }

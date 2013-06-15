@@ -49,14 +49,7 @@ namespace TurkeySmash
             body.Restitution = 0.3f;
             texture = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
             this.world = world;
-            FarseerBodyUserData userData = new FarseerBodyUserData
-            {
-                pourcent = 0,
-                lastHit = 0
-            };
-            body.UserData = userData;
         }
-
         public void Reset(Point point)
         {
             CurrentFrame = point;

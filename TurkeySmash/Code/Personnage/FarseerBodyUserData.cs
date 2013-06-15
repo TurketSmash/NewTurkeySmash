@@ -4,10 +4,15 @@ namespace TurkeySmash
 {
     class FarseerBodyUserData
     {
-        public int pourcent { get; set; }
-        public int lastHit { get; set; }
-        public string associatedName { get; set; }
-        public bool protecting { get; set; }
+        public int Pourcent { get; set; }
+        public int LastHit { get; set; }
+        public string AssociatedName { get; set; }
+        public bool Protecting { get; set; }
+        public bool IsCharacter { get; set; }
+        public bool IsBonus { get; set; }
+        public bool IsUsed { get; set; }
+
+        public string bonusType { get; set; }
             
     }
 }

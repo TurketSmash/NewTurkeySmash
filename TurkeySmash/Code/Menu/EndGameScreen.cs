@@ -18,6 +18,7 @@ namespace TurkeySmash
         private Texte affichagejoueur3;
         private Texte affichagejoueur4;
         private Texte[] affichagejoueurs = new Texte[4];
+        private Texte lastOneStanding;
         private Color colorTexte;
 
         #endregion
@@ -31,11 +32,18 @@ namespace TurkeySmash
             boutonRejouer.Texte = "Rejouer";
             boutonMainMenu.Texte = "Menu Principal";
 
-
             if (SelectionNiveau.niveauSelect == "level2")
                 colorTexte = Color.White;
             else
                 colorTexte = Color.White;
+
+            #region Bukake de resultats
+            if (OptionsCombat.TypePartieSelect == "vie")
+            {
+                lastOneStanding = new Texte(TurkeySmashGame.WindowSize.X / 2, TurkeySmashGame.WindowSize.Y / 2 -150);
+                lastOneStanding.Texte = "Dernier debout : Joueur " + Results.LastOneStanding;
+                lastOneStanding.Color = colorTexte;
+            }
 
             if (Results.ResultsBoard[0][1] != -999)
             {
@@ -61,10 +69,12 @@ namespace TurkeySmash
                 affichagejoueur4.Texte = "J" + Results.ResultsBoard[3][0] + " / score : " + Results.ResultsBoard[3][1] + " / suicides : " + Results.ResultsBoard[3][2] +
                     " / details : (" + Results.ResultsBoard[3][3] + "/" + Results.ResultsBoard[3][4] + "/" + Results.ResultsBoard[3][5] + "/" + Results.ResultsBoard[3][6] + ")";
             }
+            #endregion
             affichagejoueurs[0] = affichagejoueur1;
             affichagejoueurs[1] = affichagejoueur2;
             affichagejoueurs[2] = affichagejoueur3;
             affichagejoueurs[3] = affichagejoueur4;
+
             for (int i = 0; i < Results.ResultsBoard.Length; i++)
             {
                 if (Results.ResultsBoard[i][1] != -999)
@@ -78,6 +88,8 @@ namespace TurkeySmash
             backgroundMenu.Load(TurkeySmashGame.content, "Menu\\MenuGameOver");
             boutonRejouer.Load(TurkeySmashGame.content, boutons);
             boutonMainMenu.Load(TurkeySmashGame.content, boutons);
+            if (OptionsCombat.TypePartieSelect == "vie")
+                lastOneStanding.Load(TurkeySmashGame.content, textes);
 
             for (int i = 0; i < Results.ResultsBoard.Length; i++)
             {
