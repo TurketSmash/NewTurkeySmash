@@ -12,7 +12,7 @@ namespace TurkeySmash
         private BoutonTexte bouton4;
         public static string TypePartieSelect = "vie";
         public static int NombreVies = 5;
-        public static int TempsPartie = 1;
+        public static int TempsPartie = 3;
 
         #endregion
 
@@ -30,8 +30,8 @@ namespace TurkeySmash
             else
                 bouton1.Texte = "Type de Partie : Vies";
 
-            bouton2.Texte = "Nombre de Vies : 5";
-            bouton3.Texte = "Temps de la Partie : 3 min";
+            bouton2.Texte = "Nombre de Vies : " + NombreVies;
+            bouton3.Texte = "Temps de la Partie : " + TempsPartie + " min";
             bouton4.Texte = "Retour";
         }
 
@@ -63,29 +63,63 @@ namespace TurkeySmash
 
         public override void Bouton2()
         {
-            if (NombreVies == 5)
+            switch (NombreVies)
             {
-                NombreVies = 10;
-                bouton2.Texte = "Nombre de Vies : 10";
-            }
-            else if (NombreVies == 10)
-            {
-                NombreVies = 5;
-                bouton2.Texte = "Nombre de Vies : 5";
+                case 1:
+                    NombreVies = 2;
+                    bouton2.Texte = "Nombre de Vies : 2";
+                    break;
+
+                case 2:
+                    NombreVies = 3;
+                    bouton2.Texte = "Nombre de Vies : 3";
+                    break;
+
+                case 3:
+                    NombreVies = 5;
+                    bouton2.Texte = "Nombre de Vies : 5";
+                    break;
+
+                case 5:
+                    NombreVies = 10;
+                    bouton2.Texte = "Nombre de Vies : 10";
+                    break;
+
+                case 10:
+                    NombreVies = 1;
+                    bouton2.Texte = "Nombre de Vies : 1";
+                    break;
             }
         }
 
         public override void Bouton3()
         {
-            if (TempsPartie == 3)
+            switch (TempsPartie)
             {
-                TempsPartie = 5;
-                bouton3.Texte = "Temps de la Partie : 5 min";
-            }
-            else if (TempsPartie == 5)
-            {
-                TempsPartie = 3;
-                bouton3.Texte = "Temps de la Partie : 3 min";
+                case 1:
+                    TempsPartie = 2;
+                    bouton3.Texte = "Temps de la Partie : 2 min";
+                    break;
+
+                case 2:
+                    TempsPartie = 3;
+                    bouton3.Texte = "Temps de la Partie : 3 min";
+                    break;
+
+                case 3:
+                    TempsPartie = 5;
+                    bouton3.Texte = "Temps de la Partie : 5 min";
+                    break;
+
+                case 5:
+                    TempsPartie = 10;
+                    bouton3.Texte = "Temps de la Partie : 10 min";
+                    break;
+
+                case 10:
+                    TempsPartie = 1;
+                    bouton3.Texte = "Temps de la Partie : 1 min";
+                    break;
             }
         }
 
