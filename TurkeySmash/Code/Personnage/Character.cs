@@ -38,9 +38,10 @@ namespace TurkeySmash
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
         RectPhysicsObject hit;
         bool canHit = true;
+        bool isHit = false;
         int frameHit = 0;
-        float oldDrop; // variable pour calcul la chute du personnage
-        float newDrop;
+        Vector2 oldPosition; // variable pour calcul la chute du personnage
+        Vector2 newPosition;
 
         ParticleEngine[] particles = new ParticleEngine[4];
 
@@ -52,10 +53,12 @@ namespace TurkeySmash
 
         int allongeCoup = 18;
         int forceJump = 70;
-        float forceItem;
+        float forceItem = 0.3f;
         float maxForceCharged = 1.0f;
         float ForceItem { get { return forceItem; } set { forceItem = forceItem > maxForceCharged ? maxForceCharged : value; } }
         public bool Mort { get { return vie < 1; } }
+
+        #region Constructeur
 
         public Character(World world, Vector2 position, float density, Vector2 bodySize, PlayerIndex playerindex, AnimatedSpriteDef definition)
             : base(world, position, density, bodySize, definition)
@@ -69,15 +72,26 @@ namespace TurkeySmash
             userdata.lastHit = 0;
         }
 
+        #endregion 
+
         public override void Update(GameTime gameTime)
         {
-            newDrop = bodyPosition.Y;
+            newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
+
+            if (pourcent > oldPourcent)
+                isHit = true;
+
+            #region compteurRoulage
 
             if (!inAction)
                 compteurRoulade += gameTime.ElapsedGameTime.Milliseconds;
             else
                 compteurRoulade = 0;
+
+            #endregion
+
+            #region Reset Anim
 
             if (FinishedAnimation)
             {
@@ -85,15 +99,21 @@ namespace TurkeySmash
                 Reset(new Point(0, 1));
                 TimeBetweenFrame = 100;
                 canHit = true;
+                isHit = false;
             }
 
-            if (newDrop > (oldDrop + 0.1f))
+            #endregion
+
+            #region Chute
+
+            if (newPosition.Y > (oldPosition.Y + 0.1f))
             {
                 CurrentFrame = new Point(4, 2);
                 definition.Loop = false;
                 FinishedAnimation = true;
             }
-            oldDrop = newDrop;
+
+            #endregion
 
             #region Flip Droite/Gauche
 
@@ -107,15 +127,23 @@ namespace TurkeySmash
 
             #endregion
 
-            #region Filtre couleur
+            #region Filtre couleur + anim coup
 
-            if (pourcent > oldPourcent)
+            if (isHit & (newPosition.X < (oldPosition.X + 0.1f) || newPosition.X > (oldPosition.X - 0.1f)))
             {
+                CurrentFrame = new Point(0, 10);
+                definition.Loop = false;
+                FinishedAnimation = true;
+                canHit = false;
                 color = Color.Red;
                 i = 5;
             }
             else if (i > 0)
             {
+                CurrentFrame = new Point(0, 10);
+                definition.Loop = false;
+                FinishedAnimation = true;
+                canHit = false;
                 color = Color.Red;
                 i--;
             }
@@ -123,6 +151,20 @@ namespace TurkeySmash
                 color = Color.White;
 
             #endregion
+
+            #region Anim ejection
+
+            if (isHit & (newPosition.X > (oldPosition.X + 0.1f) || newPosition.X < (oldPosition.X - 0.1f)))
+            {
+                Reset(new Point(0, 8));
+                definition.Loop = false;
+                TimeBetweenFrame = 50;
+                inAction = true;
+            }
+
+            #endregion
+
+            #region Hit 
 
             if (inAction & CurrentFrame.X == frameHit & canHit)
             {
@@ -135,10 +177,13 @@ namespace TurkeySmash
                 canHit = false;
             }
 
+            #endregion
+
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
             pourcent = userdata.pourcent;
             direction = Direction.Nodirection;
+            oldPosition = newPosition;
 
             base.Update(gameTime);
         }
@@ -174,7 +219,7 @@ namespace TurkeySmash
 
         protected void Attack()
         {
-            if (!inAction)
+            if (!inAction & canHit)
             {
                 x = 0;
                 if (direction == Direction.Up)
@@ -182,7 +227,6 @@ namespace TurkeySmash
                     TimeBetweenFrame = 75;
                     Reset(new Point(0, 4));
                     allongeCoup = 20;
-                    forceItem = 0.3f;
                     frameHit = 2;
                 }
                 else if (direction == Direction.Down && !canJump)
@@ -190,7 +234,6 @@ namespace TurkeySmash
                     TimeBetweenFrame = 100;
                     Reset(new Point(0, 6));
                     allongeCoup = 15;
-                    forceItem = 0.3f;
                     frameHit = 2;
                 }
                 else
@@ -200,14 +243,12 @@ namespace TurkeySmash
                     {
                         Reset(new Point(0, 3));
                         allongeCoup = 15;
-                        forceItem = 0.3f;
                         frameHit = 1;
                     }
                     else
                     {
                         Reset(new Point(0, 5));
                         allongeCoup = 25;
-                        forceItem = 0.3f;
                         frameHit = 2;
                     }
                     x = lookingRight ? 1 : -1;
