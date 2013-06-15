@@ -37,6 +37,7 @@ namespace TurkeySmash
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
         bool canHit = true;
         bool isHit = false;
+        bool isProtecting = false;
         int frameHit = 0;
         Vector2 oldPosition; // variable pour calcul la chute du personnage
         Vector2 newPosition;
@@ -76,7 +77,7 @@ namespace TurkeySmash
         {
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
-            pourcent = userdata.pourcent;
+            userdata.protecting = isProtecting;
 
             #region Hit
 
@@ -184,7 +185,9 @@ namespace TurkeySmash
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
             direction = Direction.Nodirection;
+            pourcent = userdata.pourcent;
             oldPosition = newPosition;
+            isProtecting = false;
 
             base.Update(gameTime);
         }
@@ -198,22 +201,23 @@ namespace TurkeySmash
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
             FarseerBodyUserData fixBuserdata = (FarseerBodyUserData)fixB.Body.UserData;
-            int pourcentB;
+            int pourcentB = 0;
+
             if (fixB.Body.UserData != null)
             {
-                fixBuserdata.lastHit = Convert.PlayerIndex2Int(playerindex);
-                fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
-                pourcentB = fixBuserdata.pourcent;
+                if (!fixBuserdata.protecting)
+                {
+                    fixBuserdata.lastHit = Convert.PlayerIndex2Int(playerindex);
+                    fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
+                    pourcentB = fixBuserdata.pourcent;
+                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 0) * (1 + (pourcentB / 50)) * forceItem);
+                }
             }
             else
             {
                 forceItem = 1.5f;
-                pourcentB = 0;
+                fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 0) * (1 + (pourcentB / 50)) * forceItem);
             }
-            if (lookingRight)
-                fixB.Body.ApplyLinearImpulse(new Vector2(1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
-            else
-                fixB.Body.ApplyLinearImpulse(new Vector2(-1.8f, -.8f) * (1 + (pourcentB / 50)) * forceItem);
 
             return true;
         }
@@ -307,6 +311,7 @@ namespace TurkeySmash
                 definition.Loop = false;
                 inAction = true;
                 canHit = false;
+                isProtecting = true;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

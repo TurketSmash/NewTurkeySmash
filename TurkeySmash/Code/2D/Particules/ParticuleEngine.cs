@@ -13,7 +13,7 @@ namespace TurkeySmash
         public Vector2 Location { get; set; }
         private Particle particle;
         private Texture2D texture;
-        private bool matchWithPlayer; 
+        private bool matchWithPlayer = false;
 
         /// <summary>
         /// Classe créant et gérant une particule
@@ -29,6 +29,7 @@ namespace TurkeySmash
             Location = location;
             this.texture = texture;
             random = new Random();
+            this.matchWithPlayer = matchWithPlayer;
             particle = GenerateNewParticle(velocity, color, randomVelocity, randomColor);
         }
 
