@@ -29,6 +29,7 @@ namespace TurkeySmash
         protected bool jump = false;
         protected bool isMoving = false;
         protected Direction direction;
+        private Direction oldDirection;
         
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
         bool canHit = true;
@@ -46,9 +47,12 @@ namespace TurkeySmash
 
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
-        int compteurRoulade = 0;
+        int compteur = 0;
+        int compteurProtection = 0;
+        const int tempsProtection = 5000; // en ms
         int x = 0;
         int y = 0;
+        int pourcentageInflige = 3;
 
         int allongeCoup = 18;
         int forceJump = 70;
@@ -109,6 +113,8 @@ namespace TurkeySmash
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.Protecting = isProtecting;
 
+            #region animatedEffects & particules update
+
             if (animatedEffects.Count > 0)
             {
                 for (int k = 0; k < animatedEffects.Count; k++)
@@ -121,6 +127,8 @@ namespace TurkeySmash
 
             if (particles != null)
                 particles.Update(gameTime, ConvertUnits.ToDisplayUnits(bodyPosition));
+
+            #endregion
 
             #region Hit
 
@@ -140,12 +148,35 @@ namespace TurkeySmash
             if (pourcent > oldPourcent)
                 isHit = true;
 
-            #region compteurRoulage
+            #region Update Compteurs
 
             if (!inAction)
-                compteurRoulade += gameTime.ElapsedGameTime.Milliseconds;
+                compteur += gameTime.ElapsedGameTime.Milliseconds;
             else
-                compteurRoulade = 0;
+                compteur = 0;
+
+            if (isProtecting)
+                compteurProtection += gameTime.ElapsedGameTime.Milliseconds;
+            else
+                compteurProtection -= compteurProtection > 0 ? gameTime.ElapsedGameTime.Milliseconds : 0;
+
+            #endregion
+
+            #region Protection
+
+            if (compteurProtection > tempsProtection)
+            {
+                isProtecting = false;
+                userdata.Protecting = false;
+            }
+            else
+            {
+                if (isProtecting)
+                {
+                    particles = new ParticleEngine(TurkeySmashGame.content.Load<Texture2D>("Jeu\\effets\\bulleProtectrice"), ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X, bodyPosition.Y - 0.1f)),
+                        Vector2.Zero, Color.Red, 1, BlendState.Additive, 0, 1.0f, false, false, false, false, false, false);
+                }
+            }
 
             #endregion
 
@@ -246,9 +277,11 @@ namespace TurkeySmash
 
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
+            oldDirection = direction;
             direction = Direction.Nodirection;
             pourcent = userdata.Pourcent;
             oldPosition = newPosition;
+            isMoving = false;
             isProtecting = false;
             //isCharging = false;
 
@@ -284,7 +317,7 @@ namespace TurkeySmash
                 if (!dataB.Protecting)
                 {
                     dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
-                    dataB.Pourcent = dataB.Pourcent + 7;
+                    dataB.Pourcent = dataB.Pourcent + pourcentageInflige;
                     pourcentB = dataB.Pourcent;
                     fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
                     particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0,0), Color.White, 4, 500, 1.2f);
@@ -366,12 +399,13 @@ namespace TurkeySmash
                     CurrentFrame.Y = 0;
                     definition.Loop = false;
                 }
+                isMoving = true;
                 body.ApplyForce(force, body.Position);
             }
         }
         protected void Roulade()
         {
-            if (!inAction & compteurRoulade > 1000)
+            if (!inAction & compteur > 1000)
             {
                 Reset(new Point(0, 7));
                 definition.Loop = false;

@@ -33,7 +33,6 @@ Content\Jeu\sai.xnb
 Content\Jeu\suigetsu.xnb
 Content\HUD\HUDsaiLifeIcone.xnb
 Content\HUD\HUDsuigetsuLifeIcone.xnb
-Content\Jeu\particules\circle.xnb
 Content\Jeu\particules\diamond.xnb
 Content\Jeu\particules\star.xnb
 Content\MenuFont.xnb
@@ -87,6 +86,9 @@ Content\Sons\effets\bonus.xnb
 Content\Sons\effets\PUNCH.xnb
 Content\Sons\effets\punchboite.xnb
 Content\Sons\effets\whoosh.xnb
+Content\Jeu\particules\poussiere.xnb
+Content\Jeu\particules\circle.xnb
+Content\Jeu\effets\bulleProtectrice.xnb
 Content\Sons\musique1.wma
 Content\Sons\musique2.wma
 Content\Sons\Halo.wma

@@ -13,13 +13,13 @@ namespace TurkeySmash
             : base(world, position, 1, sprite)
         {
             body.BodyType = BodyType.Static;
-            body.Friction = 1.0f;
+            body.Friction = 2.5f;
         }
         public StaticPhysicsObject(World world, Vector2 position, float density,Vector2 bodySize)
             : base(world, position, 1, bodySize)
         {
             body.BodyType = BodyType.Static;
-            body.Friction = 1.0f;
+            body.Friction = 2.5f;
         }
     }
 }

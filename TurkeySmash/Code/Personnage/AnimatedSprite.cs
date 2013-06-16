@@ -22,7 +22,7 @@ namespace TurkeySmash
         protected double TimeBetweenFrame = 100;
         protected double lastFrameUpdatedTime = 0;
         protected float scale = 1.0f;
-        protected SpriteEffects spriteEffects;
+        public SpriteEffects spriteEffects;
         protected Color color = Color.White;
         int frameRate = 60;
 

@@ -15,6 +15,7 @@ namespace TurkeySmash
         private List<Texture2D> textures;
         private bool matchWithPlayer = false;
         private BlendState blending;
+        private bool compteur = true;
 
         /// <summary>
         /// Classe créant et gérant une particule
@@ -42,7 +43,7 @@ namespace TurkeySmash
         }
 
         public ParticleEngine(Texture2D texture, Vector2 location, Vector2 velocity, Color color, int nomberParticles, BlendState blendState,
-            int dureeDeVie, float size = 1.0f, bool randomSize = true, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true, bool randomAngle = true)
+            int dureeDeVie, float size = 1.0f, bool compteur = true, bool randomSize = true, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true, bool randomAngle = true)
         {
             Location = location;
             blending = blendState;
@@ -51,6 +52,7 @@ namespace TurkeySmash
             this.particles = new List<Particle>();
             random = new Random();
             this.matchWithPlayer = matchWithPlayer;
+            this.compteur = compteur;
 
             for (int i = 0; i < nomberParticles; i++)
             {
@@ -70,7 +72,14 @@ namespace TurkeySmash
                 else
                 {
                     particles[index].Update(position, matchWithPlayer);
-                    particles[index].TTL -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (compteur)
+                        particles[index].TTL -= gameTime.ElapsedGameTime.Milliseconds;
+                    else
+                    {
+                        particles.RemoveAt(index);
+                        index--;
+                    }
+
                 }
             }
         }
