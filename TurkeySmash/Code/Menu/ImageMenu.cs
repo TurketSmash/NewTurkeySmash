@@ -8,28 +8,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TurkeySmash
 {
-    class Texte : Font
+    class ImageMenu : Sprite
     {
         #region Construction 
 
-        public Texte(float x = 0, float y = 0)
-        {
-            Position = new Vector2(x, y);
-        }
 
-        public Texte(Vector2 position)
-        {
-            Position = position;
-        }
+        public ImageMenu(float x, float y)
+            : base(x, y) { }
 
         #endregion
 
         #region Load and Draw 
 
-        public void Load(ContentManager Content, List<Texte> Textes)
+        public void Load(ContentManager Content,string assetName, List<Sprite> sprites)
         {
-            base.Load(Content);
-            Textes.Add(this);
+            base.Load(Content, assetName);
+            sprites.Add(this);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

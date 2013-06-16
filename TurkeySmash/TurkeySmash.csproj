@@ -132,6 +132,7 @@
     <Compile Include="Code\Menu\ChoixNombrePersonnage.cs" />
     <Compile Include="Code\Menu\EndGameScreen.cs" />
     <Compile Include="Code\Menu\IBouton.cs" />
+    <Compile Include="Code\Menu\ImageMenu.cs" />
     <Compile Include="Code\Menu\Menu.cs" />
     <Compile Include="Code\Menu\Options.cs" />
     <Compile Include="Code\Menu\OptionsCombat.cs" />

@@ -31,7 +31,7 @@ namespace TurkeySmash
             texteBoutons.Add(bouton1txt);
 
             bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.42f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
-            bouton2txt.Texte = "Nombre de vies: 5";
+            bouton2txt.Texte = "Nombre de vies: " + NombreVies;
             texteBoutons.Add(bouton2txt);
 
             bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.37f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);

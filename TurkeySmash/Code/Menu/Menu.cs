@@ -18,6 +18,7 @@ namespace TurkeySmash
         protected List<IBouton> boutons = new List<IBouton>();
         protected List<Texte> texteBoutons = new List<Texte>();
         protected List<Texte> textes = new List<Texte>();
+        protected List<Sprite> ImagesMenu = new List<Sprite>();
         protected Sprite nomMenu = new Sprite();
         protected Sprite backgroundMenu = new Sprite();
         protected Sprite aidesImages = null;
@@ -118,6 +119,10 @@ namespace TurkeySmash
             foreach (IBouton bouton in boutons)
             {
                 bouton.Draw(TurkeySmashGame.spriteBatch);
+            }
+            foreach (Sprite sprite in ImagesMenu)
+            {
+                sprite.Draw(TurkeySmashGame.spriteBatch);
             }
             foreach (Texte texte in textes)
             {
