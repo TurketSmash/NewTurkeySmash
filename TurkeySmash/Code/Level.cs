@@ -41,6 +41,7 @@ namespace TurkeySmash
         #region Bonus
         Sprite bonusTest = new Sprite();
         Sprite hamburger = new Sprite();
+        Sprite raquette = new Sprite();
         #endregion
         int nextItemSpawn;
         int itemSpawnMin = 10;
@@ -70,6 +71,7 @@ namespace TurkeySmash
 
             bonusTest.Load(TurkeySmashGame.content, "Jeu\\Objets\\BonusTest");
             hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
+            raquette.Load(TurkeySmashGame.content, "Jeu\\Objets\\raquette");
 
             Init(backgroundName);
         }
@@ -82,7 +84,7 @@ namespace TurkeySmash
 
             if (nextItemSpawn < 0)
             {
-                spawnItem();
+                spawnItem(0,Vector2.Zero);
                 resetItemSpawnTimer();
             } if (nextBonusSpawn < 0)
             {
@@ -119,6 +121,11 @@ namespace TurkeySmash
                 FarseerBodyUserData userData = (FarseerBodyUserData)bonus[i].body.UserData;
                 if (outOfScreen(bonus[i].bodyPosition) | userData.IsUsed == true)
                 {
+                    if (userData.IsUsed == true & userData.BonusType == "raquette")
+                    {
+                        for (int k = 0; k < 25; k++)
+                            spawnItem(4, ConvertUnits.ToDisplayUnits(bonus[i].bodyPosition));
+                    }
                     world.RemoveBody(bonus[i].body);
                     bonus.RemoveAt(i);
                     bonusSprite[i] = null;
@@ -148,148 +155,6 @@ namespace TurkeySmash
                 if (personnages[i] != null)
                     personnages[i].Draw(spriteBatch);
             }
-        }
-        bool outOfScreen(Vector2 position)
-        {
-            return (position.X < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X * -0.1f)
-                   || position.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + TurkeySmashGame.WindowSize.X * 0.1f)
-                   || position.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + TurkeySmashGame.WindowSize.Y * 0.1f)
-                   || position.Y < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y * -0.5f));
-        }
-        void respawn(Character personnage)
-        {
-            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
-            scoring(personnage);
-            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect == "vie")
-                personnage.vie = 0;
-            if (!personnage.Mort)
-            {
-                personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
-                if (OptionsCombat.TypePartieSelect != "temps")
-                    personnage.vie--;
-            }
-            userData.LastHit = 0;
-            userData.Pourcent = 0;
-            personnage.body.ResetDynamics();
-        }
-        private void scoring(Character personnage)
-        {
-            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
-            if (userData.LastHit <= 0)
-            {
-                personnage.score -= 2;//Suicide = -2 pts
-                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++; //Ajout +1 suicide dans le compteur
-            }
-            else
-            {
-                if (personnages[userData.LastHit - 1] != null)
-                    personnages[userData.LastHit - 1].score++; //score ++ pour le dernier perso qui t'as tapé
-                tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //Ajout +1 au score de kill pour le joueur qui t'as tué
-            }
-
-            for (int i = 0; i < personnages.Length; i++)
-                if (personnages[i] != null)
-                    tabScores[i][1] = personnages[i].score;
-        }
-        void gameFinished(Character personnage)
-        {
-            if (OptionsCombat.TypePartieSelect == "temps")
-            {
-                if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
-                {
-                    timer = 0;
-                    Results.SaveResults(tabScores, -1);
-                    Basic.SetScreen(new EndGameScreen());
-                }
-            }
-            if (OptionsCombat.TypePartieSelect == "vie")
-            {
-                if (personnages[0] != null & personnages[1] == null & personnages[2] == null & personnages[3] == null |
-                    personnages[0] == null & personnages[1] != null & personnages[2] == null & personnages[3] == null | //braaufganzuiafgnzfpuiazgfpauzfpaizfayi
-                    personnages[0] == null & personnages[1] == null & personnages[2] != null & personnages[3] == null |
-                    personnages[0] == null & personnages[1] == null & personnages[2] == null & personnages[3] != null)
-                {
-                    for (int i = 0; i < personnages.Length; i++)
-                        if (personnages[i] != null)
-                            Results.SaveResults(tabScores, i + 1);
-                    Basic.SetScreen(new EndGameScreen());
-                }
-            }
-        }
-        void spawnItem()
-        {
-            PhysicsObject item = null;
-            int rand = RandomProvider.GetRandom().Next(1, 5);
-            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
-            Vector2 randposition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
-            switch (rand)
-            {
-                case 1:
-                    itemsSprite.Add(football);
-                    item = new RoundPhysicsObject(world, randposition, 4, 0.7f, football);
-                    break;
-                case 2:
-                    itemsSprite.Add(caisseSprite);
-                    item = new RectPhysicsObject(world, randposition, 2.0f, caisseSprite);
-                    break;
-                case 3:
-                    itemsSprite.Add(blocSwag);
-                    item = new RectPhysicsObject(world, randposition, 3.0f, blocSwag);
-                    break;
-                case 4:
-                    itemsSprite.Add(pingpong);
-                    item = new RoundPhysicsObject(world, randposition, 5, 0.90f, pingpong);
-                    break;
-            }
-            items.Add(item);
-        }
-        void spawnBonus()
-        {
-            PhysicsObject thisBonus = null;
-            int rand = RandomProvider.GetRandom().Next(1, 3);
-            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
-            Vector2 randPosition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
-            FarseerBodyUserData userData = new FarseerBodyUserData();
-            switch (rand)
-            {
-                case 1:
-                    thisBonus = new RectPhysicsObject(world, randPosition, 1, bonusTest);
-                    bonusSprite.Add(bonusTest);
-                    FarseerBodyUserData userData1 = new FarseerBodyUserData
-                    {
-                        IsCharacter = false,
-                        IsBonus = true,
-                        IsUsed = false,
-                        BonusType = "vie"
-                    };
-                    thisBonus.body.UserData = userData1;
-                    break;
-                case 2:
-                    thisBonus = new RectPhysicsObject(world, randPosition, 1, hamburger);
-                    FarseerBodyUserData userData2 = new FarseerBodyUserData
-                    {
-                        IsCharacter = false,
-                        IsBonus = true,
-                        IsUsed = false,
-                        BonusType = "pourcent"
-                    };
-                    thisBonus.body.UserData = userData2;
-                    bonusSprite.Add(hamburger);
-                    break;
-            }
-            bonus.Add(thisBonus);
-        }
-        void resetItemSpawnTimer()
-        {
-            nextItemSpawn = RandomProvider.GetRandom().Next(itemSpawnMin, itemSpawnMax);
-            Console.WriteLine(timer / 1000 + nextItemSpawn);
-            nextItemSpawn *= 1000;
-        }
-        void resetBonusSpawnTimer()
-        {
-            nextBonusSpawn = RandomProvider.GetRandom().Next(bonusSpawnMin, bonusSpawnMax);
-            Console.WriteLine(timer / 1000 + nextBonusSpawn);
-            nextBonusSpawn *= 1000;
         }
         void Init(string backgroundName)
         {
@@ -382,6 +247,166 @@ namespace TurkeySmash
                     #endregion
                     break;
             }
+        }
+        bool outOfScreen(Vector2 position)
+        {
+            return (position.X < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X * -0.1f)
+                   || position.X > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X + TurkeySmashGame.WindowSize.X * 0.1f)
+                   || position.Y > ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y + TurkeySmashGame.WindowSize.Y * 0.1f)
+                   || position.Y < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.Y * -0.5f));
+        }
+        void respawn(Character personnage)
+        {
+            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
+            scoring(personnage);
+            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect == "vie")
+                personnage.vie = 0;
+            if (!personnage.Mort)
+            {
+                personnage.bodyPosition = ConvertUnits.ToSimUnits(respawnPoint);
+                if (OptionsCombat.TypePartieSelect != "temps")
+                    personnage.vie--;
+            }
+            userData.LastHit = 0;
+            userData.Pourcent = 0;
+            personnage.body.ResetDynamics();
+        }
+        private void scoring(Character personnage)
+        {
+            FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
+            if (userData.LastHit <= 0)
+            {
+                personnage.score -= 2;//Suicide = -2 pts
+                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++; //Ajout +1 suicide dans le compteur
+            }
+            else
+            {
+                if (personnages[userData.LastHit - 1] != null)
+                    personnages[userData.LastHit - 1].score++; //score ++ pour le dernier perso qui t'as tapé
+                tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //Ajout +1 au score de kill pour le joueur qui t'as tué
+            }
+
+            for (int i = 0; i < personnages.Length; i++)
+                if (personnages[i] != null)
+                    tabScores[i][1] = personnages[i].score;
+        }
+        void gameFinished(Character personnage)
+        {
+            if (OptionsCombat.TypePartieSelect == "temps")
+            {
+                if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
+                {
+                    timer = 0;
+                    Results.SaveResults(tabScores, -1);
+                    Basic.SetScreen(new EndGameScreen());
+                }
+            }
+            if (OptionsCombat.TypePartieSelect == "vie")
+            {
+                if (personnages[0] != null & personnages[1] == null & personnages[2] == null & personnages[3] == null |
+                    personnages[0] == null & personnages[1] != null & personnages[2] == null & personnages[3] == null | //braaufganzuiafgnzfpuiazgfpauzfpaizfayi
+                    personnages[0] == null & personnages[1] == null & personnages[2] != null & personnages[3] == null |
+                    personnages[0] == null & personnages[1] == null & personnages[2] == null & personnages[3] != null)
+                {
+                    for (int i = 0; i < personnages.Length; i++)
+                        if (personnages[i] != null)
+                            Results.SaveResults(tabScores, i + 1);
+                    Basic.SetScreen(new EndGameScreen());
+                }
+            }
+        }
+        void spawnItem(int i, Vector2 position)
+        {
+            int num = i;
+            Vector2 pos = position;
+
+            if (i == 0)
+                num = RandomProvider.GetRandom().Next(1, 5);
+
+            if (position == Vector2.Zero)
+                pos = new Vector2(RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6)), TurkeySmashGame.WindowSize.Y / 6);
+
+            PhysicsObject item = null;
+            switch (num)
+            {
+                case 1:
+                    itemsSprite.Add(football);
+                    item = new RoundPhysicsObject(world, pos, 4, 0.7f, football);
+                    break;
+                case 2:
+                    itemsSprite.Add(caisseSprite);
+                    item = new RectPhysicsObject(world, pos, 2.0f, caisseSprite);
+                    break;
+                case 3:
+                    itemsSprite.Add(blocSwag);
+                    item = new RectPhysicsObject(world, pos, 3.0f, blocSwag);
+                    break;
+                case 4:
+                    itemsSprite.Add(pingpong);
+                    item = new RoundPhysicsObject(world, pos, 5, 0.90f, pingpong);
+                    break;
+            }
+            items.Add(item);
+        }
+        void spawnBonus()
+        {
+            PhysicsObject thisBonus = null;
+            int rand = RandomProvider.GetRandom().Next(1, 4);
+            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
+            Vector2 randPosition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
+            FarseerBodyUserData userData = new FarseerBodyUserData();
+            switch (rand)
+            {
+                case 1:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, bonusTest);
+                    bonusSprite.Add(bonusTest);
+                    FarseerBodyUserData userData1 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        BonusType = "vie"
+                    };
+                    thisBonus.body.UserData = userData1;
+                    break;
+                case 2:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, hamburger);
+                    FarseerBodyUserData userData2 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        BonusType = "pourcent"
+                    };
+                    thisBonus.body.UserData = userData2;
+                    bonusSprite.Add(hamburger);
+                    break;
+                case 3:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, raquette);
+                    FarseerBodyUserData userData3 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        BonusType = "raquette"
+                    };
+                    thisBonus.body.UserData = userData3;
+                    bonusSprite.Add(raquette);
+                    break;
+            }
+            bonus.Add(thisBonus);
+        }
+        void resetItemSpawnTimer()
+        {
+            nextItemSpawn = RandomProvider.GetRandom().Next(itemSpawnMin, itemSpawnMax);
+            Console.WriteLine(timer / 1000 + nextItemSpawn);
+            nextItemSpawn *= 1000;
+        }
+        void resetBonusSpawnTimer()
+        {
+            nextBonusSpawn = RandomProvider.GetRandom().Next(bonusSpawnMin, bonusSpawnMax);
+            Console.WriteLine(timer / 1000 + nextBonusSpawn);
+            nextBonusSpawn *= 1000;
         }
     }
 }
