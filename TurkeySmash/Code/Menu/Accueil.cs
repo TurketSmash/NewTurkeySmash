@@ -70,7 +70,10 @@ namespace TurkeySmash
             bouton4.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
 
             foreach (Texte txt in texteBoutons)
+            {
+                txt.SizeText = 1.0f;
                 txt.Load(TurkeySmashGame.content, textes);
+            }
 
             soundByebye = TurkeySmashGame.content.Load<SoundEffect>("Sons\\byebye");
         }

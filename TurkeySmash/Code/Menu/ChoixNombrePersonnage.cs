@@ -65,7 +65,10 @@ namespace TurkeySmash
             bouton4.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
 
             foreach (Texte txt in texteBoutons)
+            {
+                txt.SizeText = 1;
                 txt.Load(TurkeySmashGame.content, textes);
+            }
         }
 
         #endregion
@@ -74,29 +77,19 @@ namespace TurkeySmash
         public override void Bouton1()
         {
             if (nombreJoueur + nombreIA < 4)
-            {
                 nombreJoueur = nombreJoueur + 1;
-                bouton1txt.Texte = "Nombre de Joueur : " + nombreJoueur;
-            }
             else
-            {
                 nombreJoueur = 0;
-                bouton1txt.Texte = "Nombre de Joueur : " + nombreJoueur;
-            }
+            bouton1txt.Texte = "Nombre de Joueur : " + nombreJoueur;
         }
 
         public override void Bouton2()
         {
             if (nombreJoueur + nombreIA < 4)
-            {
                 nombreIA = nombreIA + 1;
-                bouton2txt.Texte = "Nombre d'IA : " + nombreIA;
-            }
             else
-            {
                 nombreIA = 0;
-                bouton2txt.Texte = "Nombre d'IA : " + nombreIA;
-            }
+            bouton2txt.Texte = "Nombre d'IA : " + nombreIA;
         }
 
         public override void Bouton3()

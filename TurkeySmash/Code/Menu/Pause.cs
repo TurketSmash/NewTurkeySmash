@@ -49,7 +49,10 @@ namespace TurkeySmash
             bouton3.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.8f);
 
             foreach (Texte txt in texteBoutons)
+            {
+                txt.SizeText = 1;
                 txt.Load(TurkeySmashGame.content, textes);
+            }
         }
 
         #endregion

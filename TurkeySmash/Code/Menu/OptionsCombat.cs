@@ -28,14 +28,17 @@ namespace TurkeySmash
 
             bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.37f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
             bouton1txt.Texte = "Type de partie : Vies";
+            bouton1txt.SizeText = 1;
             texteBoutons.Add(bouton1txt);
 
             bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.42f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
             bouton2txt.Texte = "Nombre de vies: " + NombreVies;
+            bouton2txt.SizeText = 1;
             texteBoutons.Add(bouton2txt);
 
             bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.37f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
             bouton3txt.Texte = "Retour";
+            bouton3txt.SizeText = 1;
             texteBoutons.Add(bouton3txt);
 
             bouton1txt.NameFont = bouton2txt.NameFont = bouton3txt.NameFont = "MenuFont";

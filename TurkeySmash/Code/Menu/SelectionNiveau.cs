@@ -28,6 +28,7 @@ namespace TurkeySmash
             bouton4txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
             bouton4txt.Texte = "Retour";
             bouton4txt.NameFont = "MenuFont";
+            bouton4txt.SizeText = 1;
             texteBoutons.Add(bouton4txt);
         }
 

@@ -39,12 +39,14 @@ namespace TurkeySmash
 
             bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
             bouton1txt.Texte = "Options";
+            bouton1txt.SizeText = 1;
             texteBoutons.Add(bouton1txt);
 
             texteBoutons.Add(antibug1); texteBoutons.Add(antibug2); texteBoutons.Add(antibug3); texteBoutons.Add(antibug4);
 
             bouton6txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
             bouton6txt.Texte = "Retour";
+            bouton6txt.SizeText = 1;
             texteBoutons.Add(bouton6txt);
 
             affichQuiChoisitSonPersonnage = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.WindowSize.Y * 0.55f);
@@ -55,6 +57,7 @@ namespace TurkeySmash
 
 
             bouton1txt.NameFont = affichQuiChoisitSonPersonnage.NameFont = bouton6txt.NameFont = "MenuFont";
+            affichQuiChoisitSonPersonnage.SizeText = 1;
         }
 
         public override void Init()

@@ -38,6 +38,7 @@ namespace TurkeySmash
             bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
 
             continuRetour.Load(TurkeySmashGame.content, textes);
+            continuRetour.SizeText = 1.0f;
 
         }
 
