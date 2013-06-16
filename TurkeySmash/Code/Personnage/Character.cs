@@ -4,6 +4,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using System.Collections.Generic;
 using FarseerPhysics.Factories;
+using Microsoft.Xna.Framework.Audio;
 
 namespace TurkeySmash
 {
@@ -30,6 +31,12 @@ namespace TurkeySmash
         protected bool isMoving = false;
         protected Direction direction;
         private Direction oldDirection;
+
+        SoundEffect punchCharacter;
+        SoundEffect punchMiss;
+        SoundEffect punchObjet;
+        SoundEffect punchBonus;
+        SoundEffect teleportation;
         
         int forcePower = 3; // force appliquée au personnage lors des déplacements droite/gauche
         bool canHit = true;
@@ -103,6 +110,13 @@ namespace TurkeySmash
             textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\star"));
             textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\diamond"));
             CurrentFrame = new Point(0, 1);
+
+            punchCharacter = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\PUNCH");
+            punchMiss = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\whoosh");
+            punchObjet = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\punchboite");
+            punchBonus = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\bonus");
+            teleportation = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\Teleportation");
+
         }
 
         #endregion 
@@ -305,6 +319,7 @@ namespace TurkeySmash
             {
                 if (dataB.IsBonus)
                 {
+                    punchBonus.Play();
                     if (dataB.BonusType == "vie")
                         vie++;
                     if (dataB.BonusType == "pourcent")
@@ -315,17 +330,26 @@ namespace TurkeySmash
                     }
                     dataB.IsUsed = true;
                 }
-                if (!dataB.Protecting)
+                if (dataB.IsCharacter)
                 {
-                    dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
-                    dataB.Pourcent = dataB.Pourcent + pourcentageInflige;
-                    pourcentB = dataB.Pourcent;
-                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
-                    particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0,0), Color.White, 4, 500, 1.2f);
+                    if (!dataB.Protecting)
+                    {
+                        punchCharacter.Play();
+                        dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
+                        dataB.Pourcent = dataB.Pourcent + pourcentageInflige;
+                        pourcentB = dataB.Pourcent;
+                        fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
+                        particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0, 0), Color.White, 4, 500, 1.2f);
+                    }
+                    else
+                    {
+                        punchMiss.Play();
+                    }
                 }
             }
             else
             {
+                punchObjet.Play();
                 fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 12 : -12, 2 * 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
             }
 
@@ -336,6 +360,7 @@ namespace TurkeySmash
         {
             if (!inAction & canHit)
             {
+                punchMiss.Play();
                 x = 0;
                 if (direction == Direction.Up)
                 {
@@ -408,6 +433,7 @@ namespace TurkeySmash
         {
             if (!inAction & compteur > 1000)
             {
+                teleportation.Play();
                 Reset(new Point(0, 7));
                 definition.Loop = false;
                 inAction = true;

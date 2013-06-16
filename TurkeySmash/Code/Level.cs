@@ -246,6 +246,43 @@ namespace TurkeySmash
 
                     #endregion
                     break;
+
+                case "Jeu\\level3\\background3":
+                    #region Level 3
+
+                    respawnPoint = new Vector2(Xwin * 0.670f, Ywin * 0.400f);
+                    spawnPoints[0] = new Vector2(Xwin * 0.176f, Ywin * 0.737f);
+                    spawnPoints[1] = new Vector2(Xwin * 0.744f, Ywin * 0.400f);
+                    spawnPoints[2] = new Vector2(Xwin * 0.677f, Ywin * 0.737f);
+                    spawnPoints[3] = new Vector2(Xwin * 0.431f, Ywin * 0.742f);
+
+
+                    bodylist = new StaticPhysicsObject[4];
+
+                    #region Sprites Loading
+
+                    Sprite plateformePrincipale = new Sprite();
+                    plateformePrincipale.Load(TurkeySmashGame.content, "Jeu\\level3\\plateforme1");
+                    Sprite plateformes = new Sprite();
+                    plateformes.Load(TurkeySmashGame.content, "Jeu\\level3\\plateforme2");
+
+
+                    #endregion
+
+                    #region Bodies
+                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.484f, Ywin * 0.860f), 1, plateformePrincipale);
+                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.810f + (plateformes.Width / 2), Ywin * 0.465f + plateformes.Height / 2), 1, plateformes);
+                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.578f + (plateformes.Width / 2), Ywin * 0.495f + plateformes.Height / 2), 1, plateformes);
+                    bodylist[3] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.330f + plateformes.Width / 2, Ywin * 0.350f + plateformes.Height / 2), 1, plateformes);
+                    bodylist[1].body.Rotation = MathHelper.ToRadians(90);
+                    bodylist[3].body.Rotation = MathHelper.ToRadians(45);
+                    #endregion
+
+                    #region Items
+                    #endregion
+
+                    #endregion
+                    break;
             }
         }
         bool outOfScreen(Vector2 position)
