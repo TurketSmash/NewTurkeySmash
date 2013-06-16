@@ -50,37 +50,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu\MenuOption.jpg">
-      <Name>MenuOption</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\MenuPrincipal.jpg">
-      <Name>MenuPrincipal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Menu\MenuResolution.jpg">
-      <Name>MenuResolution</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Pourcent.spritefont">
       <Name>Pourcent</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Menu\MenuPause.png">
-      <Name>MenuPause</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -180,28 +154,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu\BoutonLevel1.png">
-      <Name>BoutonLevel1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\BoutonLevel2.png">
-      <Name>BoutonLevel2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\BoutonNaruto.png">
-      <Name>BoutonNaruto</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\BoutonSakura.png">
-      <Name>BoutonSakura</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="HUD\HUDnaruto.png">
       <Name>HUDnaruto</Name>
       <Importer>TextureImporter</Importer>
@@ -281,25 +233,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu\MenuGameOver.png">
-      <Name>MenuGameOver</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Menu\BoutonSai.png">
-      <Name>BoutonSai</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\BoutonSuigetsu.png">
-      <Name>BoutonSuigetsu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Jeu\particules\circle.png">
       <Name>circle</Name>
       <Importer>TextureImporter</Importer>
@@ -312,34 +245,6 @@
     </Compile>
     <Compile Include="Jeu\particules\star.png">
       <Name>star</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jeu\naruto.png">
-      <Name>naruto</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jeu\sakura.png">
-      <Name>sakura</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jeu\suigetsu.png">
-      <Name>suigetsu</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jeu\sai.png">
-      <Name>sai</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -549,6 +454,34 @@
     </Compile>
     <Compile Include="Jeu\Objets\PingPong.png">
       <Name>PingPong</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\naruto.png">
+      <Name>naruto</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\sai.png">
+      <Name>sai</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\sakura.png">
+      <Name>sakura</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\suigetsu.png">
+      <Name>suigetsu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

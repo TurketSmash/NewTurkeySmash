@@ -1,7 +1,3 @@
-Content\Menu\MenuOption.xnb
-Content\Menu\MenuPrincipal.xnb
-Content\Menu\MenuResolution.xnb
-Content\Menu\MenuPause.xnb
 Content\Defaut.xnb
 Content\SuperMario.xnb
 Content\Pourcent.xnb
@@ -11,6 +7,7 @@ Content\Sons\menuSelect.xnb
 Content\Sons\sonEspace.xnb
 Content\Sons\musique1.xnb
 Content\Jeu\level1\background1.xnb
+Content\Jeu\level1\plateforme1Left.xnb
 Content\Jeu\level1\plateforme1Mid.xnb
 Content\Jeu\level1\plateforme1Right.xnb
 Content\Jeu\level1\plateforme2.xnb
@@ -19,14 +16,9 @@ Content\Jeu\level2\plateforme3.xnb
 Content\Jeu\level2\plateformeBlocBleu.xnb
 Content\Jeu\level2\plateformeBlocJaune.xnb
 Content\Jeu\level2\plateformeBlocRouge.xnb
-Content\Jeu\level1\plateforme1Left.xnb
 Content\Jeu\sakura.xnb
 Content\HUD\HUDnaruto.xnb
 Content\HUD\HUDSakura.xnb
-Content\Menu\BoutonLevel1.xnb
-Content\Menu\BoutonLevel2.xnb
-Content\Menu\BoutonNaruto.xnb
-Content\Menu\BoutonSakura.xnb
 Content\Sons\musique2.xnb
 Content\Sons\Halo.xnb
 Content\Jeu\level1\caisse.xnb
@@ -36,21 +28,14 @@ Content\HUD\HUDnarutoLifeIcone.xnb
 Content\HUD\HUDsakuraLifeIcone.xnb
 Content\HUD\HUDsai.xnb
 Content\HUD\HUDsuigetsu.xnb
+Content\Jeu\naruto.xnb
 Content\Jeu\sai.xnb
 Content\Jeu\suigetsu.xnb
-Content\Jeu\naruto.xnb
 Content\HUD\HUDsaiLifeIcone.xnb
 Content\HUD\HUDsuigetsuLifeIcone.xnb
-Content\Menu\MenuGameOver.xnb
-Content\Menu\BoutonSai.xnb
-Content\Menu\BoutonSuigetsu.xnb
 Content\Jeu\particules\circle.xnb
 Content\Jeu\particules\diamond.xnb
 Content\Jeu\particules\star.xnb
-Content\Jeu\Objets\PingPong.xnb
-Content\Jeu\Objets\BonusTest.xnb
-Content\Jeu\Objets\Hamburger.xnb
-Content\MenuFont.xnb
 Content\Menu1\BoutonOFF.xnb
 Content\Menu1\BoutonON.xnb
 Content\Menu1\EN-CharactersSelection.xnb
@@ -66,6 +51,7 @@ Content\Menu1\FR-SelectionDesPersonnages.xnb
 Content\Menu1\FR-SelectionDuNiveau.xnb
 Content\Menu1\Options.xnb
 Content\Menu1\Pause.xnb
+Content\MenuFont.xnb
 Content\Menu1\BoutonOFF Allongé 2.xnb
 Content\Menu1\BoutonON Allongé 2.xnb
 Content\Menu1\PersoLevel\BoutonLevel1OFF.xnb
@@ -85,6 +71,9 @@ Content\Menu1\FR-OptionsDeJeu.xnb
 Content\Menu1\BoutonOFF Allongé 3.xnb
 Content\Menu1\BoutonON Allongé 3.xnb
 Content\Menu1\fondMenuPause.xnb
+Content\Jeu\Objets\BonusTest.xnb
+Content\Jeu\Objets\hamburger.xnb
+Content\Jeu\Objets\PingPong.xnb
 Content\Sons\musique1.wma
 Content\Sons\musique2.wma
 Content\Sons\Halo.wma

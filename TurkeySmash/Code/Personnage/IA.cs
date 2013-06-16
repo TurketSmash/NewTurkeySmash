@@ -67,32 +67,50 @@ namespace TurkeySmash
                 }
             }
 
+            if ((bodyPosition.X <= positionXLaPlusProche + 0.7) && (bodyPosition.X >= positionXLaPlusProche - 0.7) && (fuir == false) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
+                canAction = true;
+
+            if (canAction)
+            {
+                if ((fuir == false) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
+                    Attack();
+                else
+                {
+                    direction = Direction.Up;
+                    Attack();
+                }
+            }
+
             if ((bodyPosition.X <= positionXLaPlusProche + 0.5) && (bodyPosition.X >= positionXLaPlusProche - 0.5) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
             {
                 if ((bodyPosition.X <= positionXLaPlusProche) && (bodyPosition.X >= positionXLaPlusProche))
                 {
                     lookingRight = false;
                     Roulade();
+                    lookingRight = false;
                     Attack();
+                    lookingRight = false;
                 }
                 else
                 {
                     lookingRight = true;
                     Roulade();
+                    lookingRight = true;
                     Attack();
+                    lookingRight = true;
                 }
             }
 
             if (fuir == false)
             {
-                if (positionXLaPlusProche < (bodyPosition.X) - 1)
+                if (positionXLaPlusProche < (bodyPosition.X) - 0.7)
                 {
                     lookingRight = false;
                     isMoving = true;
                     Moving();
                 }
                 else
-                    if (positionXLaPlusProche > (bodyPosition.X) + 1)
+                    if (positionXLaPlusProche > (bodyPosition.X) + 0.7)
                     {
                         lookingRight = true;
                         isMoving = true;
@@ -140,11 +158,21 @@ namespace TurkeySmash
 
             //Attack
 
-            if ((bodyPosition.X <= positionXLaPlusProche + 0.6) && (bodyPosition.X >= positionXLaPlusProche - 0.6) && (fuir == false) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
+            if ((bodyPosition.X <= positionXLaPlusProche + 0.7) && (bodyPosition.X >= positionXLaPlusProche - 0.7) && (fuir == false) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
                 canAction = true;
 
             if (canAction)
-                Attack();
+            {
+                if ((fuir == false) && (bodyPosition.Y <= positionYLaPlusProche + 0.1) && (bodyPosition.Y >= positionYLaPlusProche - 0.1))
+                    Attack();
+                else
+                {
+                    direction = Direction.Up;
+                    Attack();
+                }
+                
+            }
+            
 
             if (canAction)
             {
