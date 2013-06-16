@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using System.Collections.Generic;
+using FarseerPhysics.Factories;
 
 namespace TurkeySmash
 {
@@ -55,12 +56,35 @@ namespace TurkeySmash
         float ForceItem { get { return forceItem; } set { forceItem = forceItem > maxForceCharged ? maxForceCharged : value; } }
         public bool Mort { get { return vie < 1; } }
 
-        #region Constructeur
+        #region Bodie
 
+        public Body body;
+        public Vector2 bodyPosition { get { return body.Position; } set { body.Position = value; } } // EN SimUnits
+        public Vector2 bodySize; // EN PIXEL
+        World world;
+
+        #endregion
+
+        #region Constructeur
+        /// <summary>
+        /// Classe Character animée et possédant un body
+        /// </summary>
+        /// <param name="world">Monde dans le lequel ce trouve le character</param>
+        /// <param name="position">En DisplayUnits(pixels)</param>
+        /// <param name="density">Calcule du poids en fonction de la taille</param>
+        /// <param name="bodySize">En DisplayUnits(pixels)</param>
+        /// <param name="playerindex"></param>
+        /// <param name="definition">Propriétés de l'image animée</param>
         public Character(World world, Vector2 position, float density, Vector2 bodySize, PlayerIndex playerindex, AnimatedSpriteDef definition)
-            : base(world, position, density, bodySize, definition)
+            : base(position, definition)
         {
             this.playerindex = playerindex;
+            this.world = world;
+            this.bodySize = bodySize;
+            body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(bodySize.X * scale), ConvertUnits.ToSimUnits(bodySize.Y * scale), density);
+            body.BodyType = BodyType.Dynamic;
+            body.Position = ConvertUnits.ToSimUnits(position);
+            body.Restitution = 0.3f;
             body.FixedRotation = true;
             body.Friction = 0.1f;
             FarseerBodyUserData userData = new FarseerBodyUserData
@@ -79,6 +103,7 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime)
         {
+            position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize;
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.Protecting = isProtecting;
@@ -231,7 +256,7 @@ namespace TurkeySmash
             FarseerBodyUserData dataA = (FarseerBodyUserData)body.UserData;
             int pourcentB = 0;
 
-            if (fixB.Body.UserData != null)
+            if (fixB.Body.UserData != null) 
             {
                 if (dataB.IsBonus)
                 {
