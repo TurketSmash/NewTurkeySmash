@@ -23,7 +23,7 @@ namespace TurkeySmash
         public PlayerIndex playerindex;
         public int score = 0;
 
-        protected bool canJump = false;
+        protected bool canJump = true;
         protected bool inAction = false;
         public bool lookingRight = true;
         protected bool jump = false;
@@ -102,6 +102,7 @@ namespace TurkeySmash
             body.UserData = userData;
             textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\star"));
             textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\diamond"));
+            CurrentFrame = new Point(0, 1);
         }
 
         #endregion 

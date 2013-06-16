@@ -19,11 +19,11 @@ namespace TurkeySmash
         protected Vector2 position; // position en haut à gauche en DisplayUnits
         protected Point CurrentFrame;
         public bool FinishedAnimation = false;
-        protected double TimeBetweenFrame = 100;
+        public double TimeBetweenFrame = 100;
         protected double lastFrameUpdatedTime = 0;
         protected float scale = 1.0f;
         public SpriteEffects spriteEffects;
-        protected Color color = Color.White;
+        public Color color = Color.White;
         int frameRate = 60;
 
         public AnimatedSprite(Vector2 position, AnimatedSpriteDef definition)
