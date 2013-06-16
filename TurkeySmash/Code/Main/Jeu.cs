@@ -14,6 +14,9 @@ namespace TurkeySmash
         Character[] personnages = new Character[4];
         Level level;
         float fixedMass = 0.22f;
+        bool gameStarted = false;
+        int compteurDebutDePartie = 0;
+        AnimatedSprite compteur;
 
         private int i = 0;
 
@@ -30,6 +33,8 @@ namespace TurkeySmash
                 level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
             else
                 level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
+
+            #region loadPersonnage
 
             /*
             #region Debug
@@ -52,7 +57,6 @@ namespace TurkeySmash
             });
 
             #endregion
-            
             */
             
             #region Selection persoonage
@@ -166,6 +170,23 @@ namespace TurkeySmash
             #endregion
             
 
+            #endregion
+
+            #region initCompteur
+
+            compteur = new AnimatedSprite(TurkeySmashGame.WindowMid - new Vector2(256, 256), new AnimatedSpriteDef()
+            {
+                AssetName = "Jeu\\compteurDebutDePartie",
+                FrameRate = 60,
+                FrameSize = new Point(512, 512),
+                Loop = false,
+                NbFrames = new Point(3, 0),
+            });
+            compteur.TimeBetweenFrame = 1000;
+            compteur.color = Color.Orange;
+
+            #endregion
+
             sonInstance.Volume = 0.5f;
             sonInstance.IsLooped = true;
             sonInstance.Resume();
@@ -180,14 +201,24 @@ namespace TurkeySmash
                 sonInstance.Pause();
                 Basic.SetScreen(new Pause());
             }
-            level.Update(gameTime);
-            hud.Update(gameTime, personnages);
 
-            //Mise a jour du world en 30 FPS
-            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
+            if (gameStarted)
+            {
+                compteur = null;
+                level.Update(gameTime);
+                hud.Update(gameTime, personnages);
+
+                //Mise a jour du world en 30 FPS
+                world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 60.0f))); 
+            }
+            else
+            {
+                compteur.Update(gameTime);
+                if (compteurDebutDePartie > 3000)
+                    gameStarted = true;
+                compteurDebutDePartie += gameTime.ElapsedGameTime.Milliseconds;
+            }
         }
-
-
         public override void Render()
         {
             if (state == SceneState.Active)
@@ -196,12 +227,11 @@ namespace TurkeySmash
 
                 level.Draw(TurkeySmashGame.spriteBatch);
                 hud.Draw();
+                if (compteur != null)
+                    compteur.Draw(TurkeySmashGame.spriteBatch);
 
                 TurkeySmashGame.spriteBatch.End();
             }
         }
-        
-    
-    
     }
 }
