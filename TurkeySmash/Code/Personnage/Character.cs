@@ -41,6 +41,7 @@ namespace TurkeySmash
         Vector2 newPosition;
 
         ParticleEngine particles;
+        List<AnimatedSprite> animatedEffects = new List<AnimatedSprite>();
         List<Texture2D> textures = new List<Texture2D>();
 
         int oldPourcent;
@@ -103,10 +104,20 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime)
         {
-            position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize;
+            position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize; // update de la position de l'image
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.Protecting = isProtecting;
+
+            if (animatedEffects.Count > 0)
+            {
+                for (int k = 0; k < animatedEffects.Count; k++)
+                {
+                    animatedEffects[k].Update(gameTime);
+                    if (animatedEffects[k].FinishedAnimation)
+                        animatedEffects.RemoveAt(k);
+                }
+            }
 
             if (particles != null)
                 particles.Update(gameTime, ConvertUnits.ToDisplayUnits(bodyPosition));
@@ -167,9 +178,9 @@ namespace TurkeySmash
             if (!inAction)
             {
                 if (lookingRight)
-                    effects = SpriteEffects.None;
+                    spriteEffects = SpriteEffects.None;
                 else
-                    effects = SpriteEffects.FlipHorizontally;
+                    spriteEffects = SpriteEffects.FlipHorizontally;
             }
 
             #endregion
@@ -281,7 +292,7 @@ namespace TurkeySmash
             }
             else
             {
-                fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
+                fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 12 : -12, 2 * 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
             }
 
             return true;
@@ -360,16 +371,25 @@ namespace TurkeySmash
         }
         protected void Roulade()
         {
-            if (!inAction & compteurRoulade > 500)
+            if (!inAction & compteurRoulade > 1000)
             {
                 Reset(new Point(0, 7));
                 definition.Loop = false;
                 inAction = true;
                 canHit = false;
-                TimeBetweenFrame = 75;
-                x = lookingRight ? 1 : -1;
+                TimeBetweenFrame = 125;
+                x = lookingRight ? 2 : -2;
                 bodyPosition = new Vector2(bodyPosition.X + x, bodyPosition.Y);
                 body.ApplyForce(new Vector2(0, 0.001f));
+
+                animatedEffects.Add(new AnimatedSprite(new Vector2(ConvertUnits.ToDisplayUnits(oldPosition.X) - 55, ConvertUnits.ToDisplayUnits(oldPosition.Y) - 75), new AnimatedSpriteDef()
+                {
+                    AssetName = "Jeu\\effets\\fumeeTp",
+                    FrameRate = 60,
+                    FrameSize = new Point(110, 110),
+                    Loop = false,
+                    NbFrames = new Point(5, 0),
+                }));
             }
         }
         protected void Protection()
@@ -387,6 +407,8 @@ namespace TurkeySmash
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            foreach (AnimatedSprite effect in animatedEffects)
+                effect.Draw(spriteBatch);
             if (particles != null)
                 particles.Draw(spriteBatch);
         }

@@ -14,6 +14,7 @@ namespace TurkeySmash
         private List<Particle> particles;
         private List<Texture2D> textures;
         private bool matchWithPlayer = false;
+        private BlendState blending;
 
         /// <summary>
         /// Classe créant et gérant une particule
@@ -24,10 +25,11 @@ namespace TurkeySmash
         /// <param name="color">Couleur de la particule, mettre à null si randomColor = true</param>
         /// <param name="randomVelocity">Movement de la particule géré de façon aléatoire, ne rien mettre si vrai</param>
         /// <param name="randomColor">Couleur de la particule géré de façon aléatoire, ne rien mettre si vrai</param>
-        public ParticleEngine(List<Texture2D> textures, Vector2 location, Vector2 velocity, Color color, int nomberParticles, 
-            int dureeDeVie, float size = 1.0f, bool randomSize = true, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true)
+        public ParticleEngine(List<Texture2D> textures, Vector2 location, Vector2 velocity, Color color, int nomberParticles,
+            int dureeDeVie, float size = 1.0f, bool randomSize = true, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true, bool randomAngle = true)
         {
             Location = location;
+            blending = BlendState.Additive;
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
@@ -35,7 +37,24 @@ namespace TurkeySmash
             
             for (int i = 0; i < nomberParticles; i++)
             {
-                particles.Add(GenerateNewParticle(velocity, color, dureeDeVie, size, randomVelocity, randomColor, randomSize));
+                particles.Add(GenerateNewParticle(velocity, color, dureeDeVie, size, randomVelocity, randomColor, randomSize, randomAngle));
+            }
+        }
+
+        public ParticleEngine(Texture2D texture, Vector2 location, Vector2 velocity, Color color, int nomberParticles, BlendState blendState,
+            int dureeDeVie, float size = 1.0f, bool randomSize = true, bool randomVelocity = true, bool matchWithPlayer = false, bool randomColor = true, bool randomAngle = true)
+        {
+            Location = location;
+            blending = blendState;
+            textures = new List<Texture2D>();
+            textures.Add(texture);
+            this.particles = new List<Particle>();
+            random = new Random();
+            this.matchWithPlayer = matchWithPlayer;
+
+            for (int i = 0; i < nomberParticles; i++)
+            {
+                particles.Add(GenerateNewParticle(velocity, color, dureeDeVie, size, randomVelocity, randomColor, randomSize, randomAngle));
             }
         }
 
@@ -56,7 +75,7 @@ namespace TurkeySmash
             }
         }
 
-        private Particle GenerateNewParticle(Vector2 velocity, Color color, int dureeDeVie, float size, bool randomVelocity, bool randomColor, bool randomSize)
+        private Particle GenerateNewParticle(Vector2 velocity, Color color, int dureeDeVie, float size, bool randomVelocity, bool randomColor, bool randomSize, bool randomAngle)
         {
             Texture2D texture = textures[random.Next(textures.Count)];
             if (randomVelocity)
@@ -66,7 +85,9 @@ namespace TurkeySmash
             if (randomSize)
                 size = (float)random.NextDouble() * 2;
             float angle = 0;
-            float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
+            float angularVelocity = 0.0f;
+            if (randomAngle)
+                angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
 
             return new Particle(texture, Location, velocity, angle, angularVelocity, color, size, dureeDeVie);
         }
@@ -74,7 +95,7 @@ namespace TurkeySmash
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+            spriteBatch.Begin(SpriteSortMode.Immediate, blending);
             foreach (Particle particle in particles)
                 particle.Draw(spriteBatch);
             spriteBatch.End();

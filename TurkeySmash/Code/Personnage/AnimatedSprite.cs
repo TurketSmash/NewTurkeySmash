@@ -18,11 +18,11 @@ namespace TurkeySmash
         private Texture2D texture;
         protected Vector2 position; // position en haut à gauche en DisplayUnits
         protected Point CurrentFrame;
-        protected bool FinishedAnimation = false;
+        public bool FinishedAnimation = false;
         protected double TimeBetweenFrame = 100;
         protected double lastFrameUpdatedTime = 0;
         protected float scale = 1.0f;
-        protected SpriteEffects effects;
+        protected SpriteEffects spriteEffects;
         protected Color color = Color.White;
         int frameRate = 60;
 
@@ -71,7 +71,7 @@ namespace TurkeySmash
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
-                                    color, 0, Vector2.Zero, scale, effects, 0);
+                                    color, 0, Vector2.Zero, scale, spriteEffects, 0);
         }
         public void Resize(float largeur, float longueur)
         {
