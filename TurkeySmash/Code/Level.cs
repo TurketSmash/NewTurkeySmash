@@ -43,6 +43,7 @@ namespace TurkeySmash
             #region Bonus
             Sprite bonusTest = new Sprite();
             Sprite hamburger = new Sprite();
+            Sprite raquette = new Sprite();
             #endregion
             int nextItemSpawn;
             int itemSpawnMin = 10;
@@ -56,8 +57,8 @@ namespace TurkeySmash
         public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
             nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000; //init des premier spawn
-            bonusSpawnMax = (int)(itemSpawnMax * 1.5f);
-            bonusSpawnMin = (int)(itemSpawnMin * 1.5f);
+            bonusSpawnMax = (int)(itemSpawnMax * 1.2f);
+            bonusSpawnMin = (int)(itemSpawnMin * 1.2f);
             nextBonusSpawn = ((bonusSpawnMax + bonusSpawnMin) / 2) * 1000;
             this.world = _world;
             this.personnages = personnages;
@@ -72,6 +73,7 @@ namespace TurkeySmash
 
             bonusTest.Load(TurkeySmashGame.content, "Jeu\\Objets\\BonusTest");
             hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
+            raquette.Load(TurkeySmashGame.content, "Jeu\\Objets\\raquette");
 
             switch (backgroundName)
             {
@@ -140,8 +142,6 @@ namespace TurkeySmash
                     plateformeBlocJaune.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocJaune");
                     Sprite plateformeBlocRouge = new Sprite();
                     plateformeBlocRouge.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocRouge");
-                    Sprite plateformeBlocVert = new Sprite();
-                    plateformeBlocVert.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocVert");
 
                     #endregion
                     
@@ -166,9 +166,10 @@ namespace TurkeySmash
             nextBonusSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
 
+
             if (nextItemSpawn < 0)
             {
-                spawnItem();
+                spawnItem(0,Vector2.Zero);
                 resetItemSpawnTimer();
             } if (nextBonusSpawn < 0)
             {
@@ -205,6 +206,12 @@ namespace TurkeySmash
             FarseerBodyUserData userData = (FarseerBodyUserData)bonus[i].body.UserData;
             if (outOfScreen(bonus[i].bodyPosition) | userData.IsUsed == true)
                 {
+                    if (userData.IsUsed == true & userData.BonusType == "raquette")
+                    {
+                        for (int k = 0; k < 25; k++)
+                            spawnItem(4,ConvertUnits.ToDisplayUnits(bonus[i].bodyPosition));
+                    }
+                    if (userData.IsUsed == true)
                     world.RemoveBody(bonus[i].body);
                     bonus.RemoveAt(i);
                     bonusSprite[i] = null;
@@ -235,7 +242,6 @@ namespace TurkeySmash
                     personnages[i].Draw(spriteBatch);
             }
         }
-
         bool outOfScreen(Vector2 position)
         {
             return (position.X < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X * -0.1f)
@@ -247,7 +253,7 @@ namespace TurkeySmash
         {
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             scoring(personnage);
-            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect != "vie")
+            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect == "vie")
                 personnage.vie = 0;
             if (!personnage.Mort)
             {
@@ -303,30 +309,35 @@ namespace TurkeySmash
                 }
             }
         }
-        void spawnItem()
-
+        void spawnItem(int i, Vector2 position)
         {
+            int num = i;
+            Vector2 pos = position;
+
+            if (i == 0)
+                num = RandomProvider.GetRandom().Next(1, 5);
+
+            if(position == Vector2.Zero)
+                pos = new Vector2(RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6)), TurkeySmashGame.WindowSize.Y / 6);
+            
             PhysicsObject item = null;
-            int rand = RandomProvider.GetRandom().Next(1, 5);
-            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
-            Vector2 randposition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
-            switch (rand)
+            switch (num)
             {
                 case 1:
                     itemsSprite.Add(football);
-                    item = new RoundPhysicsObject(world, randposition, 4, 0.7f, football);
+                    item = new RoundPhysicsObject(world, pos, 4, 0.7f, football);
                     break;
                 case 2:
                     itemsSprite.Add(caisseSprite);
-                    item = new RectPhysicsObject(world, randposition, 2.0f, caisseSprite);
+                    item = new RectPhysicsObject(world, pos, 2.0f, caisseSprite);
                     break;
                 case 3:
                     itemsSprite.Add(blocSwag);
-                    item = new RectPhysicsObject(world, randposition, 3.0f, blocSwag);
+                    item = new RectPhysicsObject(world, pos, 3.0f, blocSwag);
                     break;
                 case 4:
                     itemsSprite.Add(pingpong);
-                    item = new RoundPhysicsObject(world, randposition, 5, 0.90f, pingpong);
+                    item = new RoundPhysicsObject(world, pos, 5, 0.90f, pingpong);
                     break;
             }
             items.Add(item);
@@ -334,7 +345,7 @@ namespace TurkeySmash
         void spawnBonus()
         {
             PhysicsObject thisBonus = null;
-            int rand = RandomProvider.GetRandom().Next(1, 3);
+            int rand = RandomProvider.GetRandom().Next(1, 4);
             int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
             Vector2 randPosition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
             FarseerBodyUserData userData = new FarseerBodyUserData();
@@ -363,6 +374,18 @@ namespace TurkeySmash
                     };
                     thisBonus.body.UserData = userData2;
                     bonusSprite.Add(hamburger);
+                    break;
+                case 3:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, raquette);
+                    FarseerBodyUserData userData3 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        BonusType = "raquette"
+                    };
+                    thisBonus.body.UserData = userData3;
+                    bonusSprite.Add(raquette);
                     break;
             }
             bonus.Add(thisBonus);
