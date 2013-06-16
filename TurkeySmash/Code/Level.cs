@@ -45,8 +45,8 @@ namespace TurkeySmash
             Sprite hamburger = new Sprite();
             #endregion
             int nextItemSpawn;
-            int itemSpawnMin = 2;
-            int itemSpawnMax = 5;
+            int itemSpawnMin = 10;
+            int itemSpawnMax = 15;
 
             int nextBonusSpawn;
             int bonusSpawnMin;
@@ -348,7 +348,7 @@ namespace TurkeySmash
                         IsCharacter = false,
                         IsBonus = true,
                         IsUsed = false,
-                        bonusType = "vie"
+                        BonusType = "vie"
                     };
                     thisBonus.body.UserData = userData1;
                     break;
@@ -359,7 +359,7 @@ namespace TurkeySmash
                         IsCharacter = false,
                         IsBonus = true,
                         IsUsed = false,
-                        bonusType = "pourcent"
+                        BonusType = "pourcent"
                     };
                     thisBonus.body.UserData = userData2;
                     bonusSprite.Add(hamburger);

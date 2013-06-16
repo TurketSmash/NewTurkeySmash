@@ -345,13 +345,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\PinGPong.png">
-      <Name>PinGPong</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Menu1\BoutonOFF.png">
       <Name>BoutonOFF</Name>
       <Importer>TextureImporter</Importer>
@@ -539,6 +532,23 @@
   <ItemGroup>
     <Compile Include="Menu1\fondMenuPause.png">
       <Name>fondMenuPause</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\Objets\BonusTest.png">
+      <Name>BonusTest</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\Objets\hamburger.png">
+      <Name>hamburger</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\Objets\PingPong.png">
+      <Name>PingPong</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

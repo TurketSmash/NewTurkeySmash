@@ -63,11 +63,14 @@ namespace TurkeySmash
             this.playerindex = playerindex;
             body.FixedRotation = true;
             body.Friction = 0.1f;
-            FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
-            userdata.associatedName = definition.AssetName;
-            userdata.pourcent = 0;
-            userdata.lastHit = 0;
-
+            FarseerBodyUserData userData = new FarseerBodyUserData
+            {
+                AssociatedName = definition.AssetName,
+                IsCharacter = true,
+                Pourcent = 0,
+                LastHit = 0
+            };
+            body.UserData = userData;
             textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\star"));
             textures.Add(TurkeySmashGame.content.Load<Texture2D>("Jeu\\particules\\diamond"));
         }
@@ -78,7 +81,7 @@ namespace TurkeySmash
         {
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
-            userdata.protecting = isProtecting;
+            userdata.Protecting = isProtecting;
 
             if (particles != null)
                 particles.Update(gameTime, ConvertUnits.ToDisplayUnits(bodyPosition));
@@ -208,7 +211,7 @@ namespace TurkeySmash
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
             direction = Direction.Nodirection;
-            pourcent = userdata.pourcent;
+            pourcent = userdata.Pourcent;
             oldPosition = newPosition;
             isProtecting = false;
             //isCharging = false;
@@ -224,16 +227,29 @@ namespace TurkeySmash
 
         public bool hitOnColision(Fixture fixA, Fixture fixB, Contact contact)
         {
-            FarseerBodyUserData fixBuserdata = (FarseerBodyUserData)fixB.Body.UserData;
+            FarseerBodyUserData dataB = (FarseerBodyUserData)fixB.Body.UserData;
+            FarseerBodyUserData dataA = (FarseerBodyUserData)body.UserData;
             int pourcentB = 0;
 
             if (fixB.Body.UserData != null)
             {
-                if (!fixBuserdata.protecting)
+                if (dataB.IsBonus)
                 {
-                    fixBuserdata.lastHit = Convert.PlayerIndex2Int(playerindex);
-                    fixBuserdata.pourcent = fixBuserdata.pourcent + 7;
-                    pourcentB = fixBuserdata.pourcent;
+                    if (dataB.BonusType == "vie")
+                        vie++;
+                    if (dataB.BonusType == "pourcent")
+                    {
+                        dataA.Pourcent -= 7 * 3;
+                        if (dataA.Pourcent < 0)
+                            dataA.Pourcent = 0;
+                    }
+                    dataB.IsUsed = true;
+                }
+                if (!dataB.Protecting)
+                {
+                    dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
+                    dataB.Pourcent = dataB.Pourcent + 7;
+                    pourcentB = dataB.Pourcent;
                     fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
                     particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0,0), Color.White, 4, 500, 1.2f);
                 }
