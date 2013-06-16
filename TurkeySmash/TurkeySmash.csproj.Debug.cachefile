@@ -74,6 +74,11 @@ Content\Menu1\fondMenuPause.xnb
 Content\Jeu\Objets\BonusTest.xnb
 Content\Jeu\Objets\hamburger.xnb
 Content\Jeu\Objets\PingPong.xnb
+Content\Menu1\Scores\argent.xnb
+Content\Menu1\Scores\bronze.xnb
+Content\Menu1\Scores\fondMenuFin.xnb
+Content\Menu1\Scores\or.xnb
+Content\Menu1\Scores\Scores.xnb
 Content\Sons\musique1.wma
 Content\Sons\musique2.wma
 Content\Sons\Halo.wma

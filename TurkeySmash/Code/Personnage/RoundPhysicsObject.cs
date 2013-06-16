@@ -12,7 +12,7 @@ namespace TurkeySmash
     {
 
         public RoundPhysicsObject(World world, Vector2 position, float density,float restitution, Sprite sprite)
-            : base(world, position, density,Vector2.Zero, sprite)
+            : base(sprite)
         {
             body = new Body(world);
             CircleShape circleShape = new CircleShape(ConvertUnits.ToSimUnits(sprite.Height/2),density);
