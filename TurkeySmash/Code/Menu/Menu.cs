@@ -20,6 +20,7 @@ namespace TurkeySmash
         protected List<Texte> textes = new List<Texte>();
         protected Sprite nomMenu = new Sprite();
         protected Sprite backgroundMenu = new Sprite();
+        protected Sprite aidesImages = null;
         private int selecty = 1;
         private KeyboardState oldStateK;
         private GamePadState oldStateG;
@@ -112,6 +113,8 @@ namespace TurkeySmash
             backgroundMenu.Resize(TurkeySmashGame.manager.PreferredBackBufferWidth);
             backgroundMenu.Draw(TurkeySmashGame.spriteBatch);
             nomMenu.Draw(TurkeySmashGame.spriteBatch);
+            if (aidesImages != null)
+                aidesImages.Draw(TurkeySmashGame.spriteBatch);
             foreach (IBouton bouton in boutons)
             {
                 bouton.Draw(TurkeySmashGame.spriteBatch);

@@ -21,7 +21,6 @@ namespace TurkeySmash
         private Texte quitter;
 
         private SoundEffect soundByebye;
-        public static string modeDeJeu;
 
         #endregion
 
@@ -80,19 +79,17 @@ namespace TurkeySmash
 
         public override void Bouton1()
         {
-            modeDeJeu = "1j";
             Basic.SetScreen(new ChoixNombrePersonnage());
         }
 
         public override void Bouton2()
         {
-            modeDeJeu = "2j";
-            Basic.SetScreen(new SelectionPersonnage());
+            Basic.SetScreen(new Options());
         }
 
         public override void Bouton3()
         {
-            Basic.SetScreen(new Options());
+            Basic.SetScreen(new Aides());
         }
 
         public override void Bouton4()
