@@ -12,7 +12,7 @@ namespace TurkeySmash
     {
 
         public RectPhysicsObject(World world, Vector2 position, float density, Vector2 bodySize)
-            : base(world, position, density,bodySize, null)
+            : base(null)
         {
             body = BodyFactory.CreateRectangle(
                 world,ConvertUnits.ToSimUnits(bodySize.X), ConvertUnits.ToSimUnits(bodySize.Y), density);
@@ -22,7 +22,7 @@ namespace TurkeySmash
         }
 
         public RectPhysicsObject(World world, Vector2 position, float density, Sprite sprite)
-            : base(world, position, density, Vector2.Zero, sprite)
+            : base(sprite)
         {
             this.sprite = sprite;
             body = BodyFactory.CreateRectangle(

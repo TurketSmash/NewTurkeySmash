@@ -22,8 +22,6 @@ namespace TurkeySmash
         List<Sprite> bonusSprite = new List<Sprite>();
 
         decimal timer;
-        float Xwin = TurkeySmashGame.WindowSize.X;
-        float Ywin = TurkeySmashGame.WindowSize.Y;
         public Vector2[] spawnPoints = new Vector2[4];
         Vector2 respawnPoint;
         Character[] personnages;
@@ -73,93 +71,9 @@ namespace TurkeySmash
             bonusTest.Load(TurkeySmashGame.content, "Jeu\\Objets\\BonusTest");
             hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
 
-            switch (backgroundName)
-            {
-                case "Jeu\\level1\\background1":
-                    #region Level 1
-
-                    respawnPoint = new Vector2(Xwin * 0.510f, Ywin * 0.444f);
-                    spawnPoints[0] = new Vector2(Xwin * 0.331f,Ywin * 0.528f);
-                    spawnPoints[1] = new Vector2(Xwin * 0.729f,Ywin * 0.444f);
-                    spawnPoints[2] = new Vector2(Xwin * 0.106f,Ywin * 0.537f); 
-                    spawnPoints[3] = new Vector2(Xwin * 0.621f,Ywin * 0.557f);
-
-                    bodylist = new StaticPhysicsObject[5];
-
-                    #region Sprites Loading
-
-                    Sprite plateforme1Mid = new Sprite();
-                    plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Mid");
-                    Sprite plateforme1Left = new Sprite();
-                    plateforme1Left.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Left");
-                    //Sprite plateforme1Right = new Sprite();
-                    //plateforme1Right.Load(TurkeySmashGame.content, "Jeu\\plateforme1Right");   //créé un bug CHELOU
-                    Sprite plateforme2 = new Sprite();
-                    plateforme2.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme2");
-
-                    #endregion
-
-                    #region Bodies
-
-                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin*0.111f, Ywin*0.611f), 1, plateforme2);
-                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin*0.512f, Ywin*0.515f), 1, plateforme2); //3 plateformes volantes
-                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin*0.735f, Ywin*0.520f), 1, plateforme2);
-
-                    bodylist[3] = new StaticPhysicsObject(world, new Vector2((Xwin/2) - (plateforme1Mid.Width/2) + (plateforme1Left.Width/2),(2*Ywin/3)-(plateforme1Mid.Height /2) - (plateforme1Left.Height/2)+1), 1, plateforme1Left); //partie gauche de la plateforme centrale
-                    bodylist[4] = new StaticPhysicsObject(world, new Vector2(Xwin/2, 2*Ywin/3), 1, plateforme1Mid); //partie central de la plateforme centrale
-                    //bodylist[5] = new StaticPhysicsObject(world, new Vector2((Xwin/2) + (plateforme1Mid.Width/2) - (plateforme1Right.Width/2) -1,(2*Ywin/3)-(plateforme1Mid.Height /2) - (plateforme1Right.Height/2)+1), 1, plateforme1Right); //partie droite de la plateforme centrale
-                    
-                    #endregion
-
-                    #region Items
-
-                    #endregion
-
-                    #endregion
-                    break;
-
-                case "Jeu\\level2\\background2":
-                    #region Level 2
-                    
-                    respawnPoint = new Vector2(Xwin * 0.427f, Ywin * 0.417f);
-                    spawnPoints[0] = new Vector2(Xwin * 0.328f,Ywin * 0.602f);
-                    spawnPoints[1] = new Vector2(Xwin * 0.620f, Ywin * 0.602f);
-                    spawnPoints[2] = new Vector2(Xwin * 0.463f,Ywin * 0.546f);
-                    spawnPoints[3] = new Vector2(Xwin * 0.941f, Ywin * 0.638f);
-
-                    
-                    bodylist = new StaticPhysicsObject[4];
-                    
-                    #region Sprites Loading
-
-                    Sprite plateforme3 = new Sprite();
-                    plateforme3.Load(TurkeySmashGame.content, "Jeu\\level2\\plateforme3");
-                    Sprite plateformeBlocBleu = new Sprite();
-                    plateformeBlocBleu.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocBleu");
-                    Sprite plateformeBlocJaune = new Sprite();
-                    plateformeBlocJaune.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocJaune");
-                    Sprite plateformeBlocRouge = new Sprite();
-                    plateformeBlocRouge.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocRouge");
-                    Sprite plateformeBlocVert = new Sprite();
-                    plateformeBlocVert.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocVert");
-
-                    #endregion
-                    
-                    #region Bodies
-                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin*0.479f , Ywin*0.741f) , 1, plateforme3);
-                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.861f + (plateformeBlocBleu.Width / 2), Ywin * 0.64f + plateformeBlocBleu.Height / 2), 1, plateformeBlocBleu);
-                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.191f + (plateformeBlocJaune.Width / 2), Ywin * 0.457f + plateformeBlocJaune.Height / 2), 1, plateformeBlocJaune);
-                    bodylist[3] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.383f + plateformeBlocRouge.Width / 2, Ywin * 0.55f + plateformeBlocRouge.Height / 2), 1, plateformeBlocRouge);
-
-                    #endregion
-
-                    #region Items
-                    #endregion
-
-                    #endregion
-                    break;
-            }
+            Init(backgroundName);
         }
+
         public void Update(GameTime gameTime)
         {
             nextItemSpawn -= gameTime.ElapsedGameTime.Milliseconds;
@@ -235,7 +149,6 @@ namespace TurkeySmash
                     personnages[i].Draw(spriteBatch);
             }
         }
-
         bool outOfScreen(Vector2 position)
         {
             return (position.X < ConvertUnits.ToSimUnits(TurkeySmashGame.WindowSize.X * -0.1f)
@@ -247,7 +160,7 @@ namespace TurkeySmash
         {
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             scoring(personnage);
-            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect != "vie")
+            if (personnage.vie == 1 & OptionsCombat.TypePartieSelect == "vie")
                 personnage.vie = 0;
             if (!personnage.Mort)
             {
@@ -379,6 +292,97 @@ namespace TurkeySmash
             Console.WriteLine(timer / 1000 + nextBonusSpawn);
             nextBonusSpawn *= 1000;
         }
-        
+        void Init(string backgroundName)
+        {
+            float Xwin = TurkeySmashGame.WindowSize.X;
+            float Ywin = TurkeySmashGame.WindowSize.Y;
+
+            switch (backgroundName)
+            {
+                case "Jeu\\level1\\background1":
+                    #region Level 1
+
+                    respawnPoint = new Vector2(Xwin * 0.510f, Ywin * 0.444f);
+                    spawnPoints[0] = new Vector2(Xwin * 0.331f, Ywin * 0.528f);
+                    spawnPoints[1] = new Vector2(Xwin * 0.729f, Ywin * 0.444f);
+                    spawnPoints[2] = new Vector2(Xwin * 0.106f, Ywin * 0.537f);
+                    spawnPoints[3] = new Vector2(Xwin * 0.621f, Ywin * 0.557f);
+
+                    bodylist = new StaticPhysicsObject[5];
+
+                    #region Sprites Loading
+
+                    Sprite plateforme1Mid = new Sprite();
+                    plateforme1Mid.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Mid");
+                    Sprite plateforme1Left = new Sprite();
+                    plateforme1Left.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme1Left");
+                    //Sprite plateforme1Right = new Sprite();
+                    //plateforme1Right.Load(TurkeySmashGame.content, "Jeu\\plateforme1Right");   //créé un bug CHELOU
+                    Sprite plateforme2 = new Sprite();
+                    plateforme2.Load(TurkeySmashGame.content, "Jeu\\level1\\plateforme2");
+
+
+                    #endregion
+
+                    #region Bodies
+
+                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.111f, Ywin * 0.611f), 1, plateforme2);
+                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.512f, Ywin * 0.515f), 1, plateforme2); //3 plateformes volantes
+                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.735f, Ywin * 0.520f), 1, plateforme2);
+
+                    bodylist[3] = new StaticPhysicsObject(world, new Vector2((Xwin / 2) - (plateforme1Mid.Width / 2) + (plateforme1Left.Width / 2), (2 * Ywin / 3) - (plateforme1Mid.Height / 2) - (plateforme1Left.Height / 2) + 1), 1, plateforme1Left); //partie gauche de la plateforme centrale
+                    bodylist[4] = new StaticPhysicsObject(world, new Vector2(Xwin / 2, 2 * Ywin / 3), 1, plateforme1Mid); //partie central de la plateforme centrale
+                    //bodylist[5] = new StaticPhysicsObject(world, new Vector2((Xwin/2) + (plateforme1Mid.Width/2) - (plateforme1Right.Width/2) -1,(2*Ywin/3)-(plateforme1Mid.Height /2) - (plateforme1Right.Height/2)+1), 1, plateforme1Right); //partie droite de la plateforme centrale
+
+                    #endregion
+
+                    #region Items
+
+                    #endregion
+
+                    #endregion
+                    break;
+
+                case "Jeu\\level2\\background2":
+                    #region Level 2
+
+                    respawnPoint = new Vector2(Xwin * 0.427f, Ywin * 0.417f);
+                    spawnPoints[0] = new Vector2(Xwin * 0.328f, Ywin * 0.602f);
+                    spawnPoints[1] = new Vector2(Xwin * 0.620f, Ywin * 0.602f);
+                    spawnPoints[2] = new Vector2(Xwin * 0.463f, Ywin * 0.546f);
+                    spawnPoints[3] = new Vector2(Xwin * 0.941f, Ywin * 0.638f);
+
+
+                    bodylist = new StaticPhysicsObject[4];
+
+                    #region Sprites Loading
+
+                    Sprite plateforme3 = new Sprite();
+                    plateforme3.Load(TurkeySmashGame.content, "Jeu\\level2\\plateforme3");
+                    Sprite plateformeBlocBleu = new Sprite();
+                    plateformeBlocBleu.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocBleu");
+                    Sprite plateformeBlocJaune = new Sprite();
+                    plateformeBlocJaune.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocJaune");
+                    Sprite plateformeBlocRouge = new Sprite();
+                    plateformeBlocRouge.Load(TurkeySmashGame.content, "Jeu\\level2\\plateformeBlocRouge");
+
+
+                    #endregion
+
+                    #region Bodies
+                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.479f, Ywin * 0.741f), 1, plateforme3);
+                    bodylist[1] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.861f + (plateformeBlocBleu.Width / 2), Ywin * 0.64f + plateformeBlocBleu.Height / 2), 1, plateformeBlocBleu);
+                    bodylist[2] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.191f + (plateformeBlocJaune.Width / 2), Ywin * 0.457f + plateformeBlocJaune.Height / 2), 1, plateformeBlocJaune);
+                    bodylist[3] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.383f + plateformeBlocRouge.Width / 2, Ywin * 0.55f + plateformeBlocRouge.Height / 2), 1, plateformeBlocRouge);
+
+                    #endregion
+
+                    #region Items
+                    #endregion
+
+                    #endregion
+                    break;
+            }
+        }
     }
 }
