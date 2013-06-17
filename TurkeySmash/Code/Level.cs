@@ -105,9 +105,10 @@ namespace TurkeySmash
             {
                 spawnItem(0, Vector2.Zero);
                 resetItemSpawnTimer();
-            } if (nextBonusSpawn < 0)
+            }
+            if (nextBonusSpawn < 0)
             {
-                spawnBonus();
+                spawnBonus(0, Vector2.Zero);
                 resetBonusSpawnTimer();
             }
 
@@ -433,18 +434,22 @@ namespace TurkeySmash
             }
             items.Add(item);
         }
-        void spawnBonus()
+        void spawnBonus(int i, Vector2 position)
         {
             PhysicsObject thisBonus = null;
-            //int rand = RandomProvider.GetRandom().Next(1, 5);
-            int rand = 4;
-            int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
-            Vector2 randPosition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
-            FarseerBodyUserData userData = new FarseerBodyUserData();
-            switch (rand)
+            int num = i;
+            Vector2 pos = position;
+
+            if (i == 0)
+                num = RandomProvider.GetRandom().Next(1, 5);
+
+            if (position == Vector2.Zero)
+                pos = new Vector2(RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6)), TurkeySmashGame.WindowSize.Y / 6);
+
+            switch (num)
             {
                 case 1:
-                    thisBonus = new RectPhysicsObject(world, randPosition, 1, bonusTest);
+                    thisBonus = new RectPhysicsObject(world, pos, 1, bonusTest);
                     bonusSprite.Add(bonusTest);
                     FarseerBodyUserData userData1 = new FarseerBodyUserData
                     {
@@ -456,7 +461,7 @@ namespace TurkeySmash
                     thisBonus.body.UserData = userData1;
                     break;
                 case 2:
-                    thisBonus = new RectPhysicsObject(world, randPosition, 1, hamburger);
+                    thisBonus = new RectPhysicsObject(world, pos, 1, hamburger);
                     FarseerBodyUserData userData2 = new FarseerBodyUserData
                     {
                         IsCharacter = false,
@@ -468,7 +473,7 @@ namespace TurkeySmash
                     bonusSprite.Add(hamburger);
                     break;
                 case 3:
-                    thisBonus = new RectPhysicsObject(world, randPosition, 1, raquette);
+                    thisBonus = new RectPhysicsObject(world, pos, 1, raquette);
                     FarseerBodyUserData userData3 = new FarseerBodyUserData
                     {
                         IsCharacter = false,
@@ -480,7 +485,7 @@ namespace TurkeySmash
                     bonusSprite.Add(raquette);
                     break;
                 case 4:
-                    thisBonus = new RectPhysicsObject(world, randPosition, 1, invincible);
+                    thisBonus = new RectPhysicsObject(world, pos, 1, invincible);
                     FarseerBodyUserData userData4 = new FarseerBodyUserData
                     {
                         IsCharacter = false,
