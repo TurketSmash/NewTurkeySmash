@@ -85,11 +85,11 @@ namespace TurkeySmash
 
             animSortie = new AnimatedSpriteDef()
             {
-                AssetName = "Defaut",
+                AssetName = "Jeu\\effets\\fumeeTp",
                 FrameRate = 60,
-                FrameSize = new Point(512, 512),
+                FrameSize = new Point(110, 110),
                 Loop = false,
-                NbFrames = new Point(5, 1)
+                NbFrames = new Point(5, 1),
             };
 
             Init(backgroundName);
@@ -121,20 +121,42 @@ namespace TurkeySmash
                     personnages[i].Update(gameTime);
                     gameFinished(personnages[i]);
 
+                    #region Ejection Terrain
+
                     if (outOfScreen(personnages[i].bodyPosition))
                     {
-                        sortiesTerrain.Add(new AnimatedSprite(ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition), animSortie));
+                        float x = 0; // milieu sprite sortie terrain
+                        float y = 0;
+                        SpriteEffects spriteEffect = SpriteEffects.None;
+
+                        if (ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) > TurkeySmashGame.WindowSize.X) // sortie à droite
+                        {
+                            x = TurkeySmashGame.WindowSize.X - 110;
+                            y = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) - 55;
+                        }
+                        else if (personnages[i].bodyPosition.X < 0) // sortie à gauche
+                        {
+                            y = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) - 55;
+                        }
+
+                        if (ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) > TurkeySmashGame.WindowSize.Y) // sortie en bas
+                        {
+                            x = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) - 55;
+                            y = TurkeySmashGame.WindowSize.Y - 110;
+                            spriteEffect = SpriteEffects.FlipVertically;
+                        }
+                        else if (personnages[i].bodyPosition.Y < 0)
+                        {
+                            x = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) - 55;
+                        }
+                        sortiesTerrain.Add(new AnimatedSprite(new Vector2(x, y), animSortie, spriteEffect));
                         respawn(personnages[i]);
                     }
+
+                    #endregion
+
                     if (personnages[i].Mort)
                         personnages[i] = null;
-                }
-
-            for (int i = 0; i < sortiesTerrain.Count; i++)
-                if (sortiesTerrain[i].FinishedAnimation)
-                {
-                    sortiesTerrain.RemoveAt(i);
-                    i--;
                 }
 
             for (int i = 0; i < items.Count; i++)
@@ -162,6 +184,16 @@ namespace TurkeySmash
                     bonusSprite.RemoveAt(i);
                 }
             }
+
+            for (int i = 0; i < sortiesTerrain.Count; i++)
+                if (sortiesTerrain[i].FinishedAnimation)
+                {
+                    sortiesTerrain.RemoveAt(i);
+                    i--;
+                }
+
+            foreach (AnimatedSprite anim in sortiesTerrain)
+                anim.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -185,6 +217,9 @@ namespace TurkeySmash
                 if (personnages[i] != null)
                     personnages[i].Draw(spriteBatch);
             }
+
+            foreach (AnimatedSprite anim in sortiesTerrain)
+                anim.Draw(spriteBatch);
         }
         void Init(string backgroundName)
         {

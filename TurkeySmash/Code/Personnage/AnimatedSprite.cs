@@ -22,7 +22,7 @@ namespace TurkeySmash
         public double TimeBetweenFrame = 100;
         protected double lastFrameUpdatedTime = 0;
         protected float scale = 1.0f;
-        public SpriteEffects spriteEffects;
+        protected SpriteEffects spriteEffects = SpriteEffects.None;
         public Color color = Color.White;
         int frameRate = 60;
 
@@ -34,6 +34,16 @@ namespace TurkeySmash
             frameRate = definition.FrameRate;
             texture = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
         }
+        public AnimatedSprite(Vector2 position, AnimatedSpriteDef definition, SpriteEffects spriteEffects)
+        {
+            this.spriteEffects = spriteEffects;
+            this.definition = definition;
+            this.position = position;
+            CurrentFrame = new Point();
+            frameRate = definition.FrameRate;
+            texture = TurkeySmashGame.content.Load<Texture2D>(definition.AssetName);
+        }
+
         public void Reset(Point point)
         {
             CurrentFrame = point;
