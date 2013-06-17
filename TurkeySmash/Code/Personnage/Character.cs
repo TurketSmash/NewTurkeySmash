@@ -5,6 +5,7 @@ using FarseerPhysics.Dynamics.Contacts;
 using System.Collections.Generic;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace TurkeySmash
 {
@@ -43,6 +44,7 @@ namespace TurkeySmash
         bool isHit = false;
         bool isProtecting = false;
         bool invincible = false;
+        bool powerUp = false;
         //bool isCharging = false;
         //int chargedAttack = 1;
         int frameHit = 0;
@@ -59,8 +61,10 @@ namespace TurkeySmash
         int compteurRoulade = 0;
         int compteurProtection = 0;
         int compteurInvincible = 0;
+        int compteurPowerUp = 0;
         const int tempsProtection = 5000; // en ms
         const int tempsInvincibilite = 30000; // 30 sec
+        const int tempsPowerUp = 15000; // 15 sec
         int x = 0;
         int y = 0;
         int pourcentageInflige = 3;
@@ -127,11 +131,15 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime)
         {
+            if (playerindex == PlayerIndex.One)
+                Console.WriteLine(forceItem);
+
             position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize; // update de la position de l'image
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.Protecting = isProtecting;
             invincible = userdata.Invincible;
+            powerUp = userdata.PowerUp;
             int time = gameTime.ElapsedGameTime.Milliseconds;
 
             #region animatedEffects & particules update
@@ -186,6 +194,11 @@ namespace TurkeySmash
             else
                 compteurInvincible = 0;
 
+            if (powerUp)
+                compteurPowerUp+= time;
+            else
+                compteurPowerUp = 0;
+
             #endregion
 
             #region Protection
@@ -220,6 +233,26 @@ namespace TurkeySmash
                 {
                     particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(bodyPosition), Vector2.Zero, Color.Yellow, 15, 600, 1.0f, false);
                     color = Color.DarkBlue;
+                    compteur = 0;
+                }
+            }
+
+            #endregion
+
+            #region PowerUp
+
+            if (compteurPowerUp > tempsPowerUp)
+            {
+                powerUp = false;
+                userdata.PowerUp = false;
+            }
+            else
+            {
+                compteur += time;
+                if (powerUp & compteur > 600)
+                {
+                    forceItem = 0.8f;
+                    color = new Color(210,70,90);
                     compteur = 0;
                 }
             }
@@ -295,8 +328,12 @@ namespace TurkeySmash
                 canHit = false;
             }
             else
-                if (!invincible)
+            {
+                if (!invincible & !powerUp)
                     color = Color.White;
+                if (!powerUp)
+                    forceItem = 0.3f;
+            }
 
             #endregion
 
@@ -352,11 +389,11 @@ namespace TurkeySmash
                 if (dataB.IsBonus)
                 {
                     punchBonus.Play();
-                    if (dataB.BonusType == "vie")
-                        vie++;
+                    if (dataB.BonusType == "dinde")
+                        dataA.PowerUp = true;
                     if (dataB.BonusType == "pourcent")
                     {
-                        dataA.Pourcent -= 7 * 3;
+                        dataA.Pourcent -= 3 * 3;
                         if (dataA.Pourcent < 0)
                             dataA.Pourcent = 0;
                     }

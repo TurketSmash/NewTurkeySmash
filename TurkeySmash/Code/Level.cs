@@ -48,7 +48,7 @@ namespace TurkeySmash
         Sprite pingpong = new Sprite();
         #endregion
         #region Bonus
-        Sprite bonusTest = new Sprite();
+        Sprite dinde = new Sprite();
         Sprite hamburger = new Sprite();
         Sprite raquette = new Sprite();
         Sprite invincible = new Sprite();
@@ -78,7 +78,7 @@ namespace TurkeySmash
             blocSwag.Load(TurkeySmashGame.content, "Jeu\\level2\\blocSwag");
             pingpong.Load(TurkeySmashGame.content, "Jeu\\Objets\\PingPong");
 
-            bonusTest.Load(TurkeySmashGame.content, "Jeu\\Objets\\BonusTest");
+            dinde.Load(TurkeySmashGame.content, "Jeu\\Objets\\dinde");
             hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
             raquette.Load(TurkeySmashGame.content, "Jeu\\Objets\\raquette");
             invincible.Load(TurkeySmashGame.content, "Jeu\\Objets\\invincible");
@@ -101,6 +101,10 @@ namespace TurkeySmash
             nextBonusSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
 
+            if ((Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0)))
+                spawnBonus(1, Vector2.Zero);
+            if ((Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad1)))
+                spawnBonus(4, Vector2.Zero);
             if (nextItemSpawn < 0)
             {
                 spawnItem(0, Vector2.Zero);
@@ -484,14 +488,14 @@ namespace TurkeySmash
             switch (num)
             {
                 case 1:
-                    thisBonus = new RectPhysicsObject(world, pos, 1, bonusTest);
-                    bonusSprite.Add(bonusTest);
+                    thisBonus = new RectPhysicsObject(world, pos, 1, dinde);
+                    bonusSprite.Add(dinde);
                     FarseerBodyUserData userData1 = new FarseerBodyUserData
                     {
                         IsCharacter = false,
                         IsBonus = true,
                         IsUsed = false,
-                        BonusType = "vie"
+                        BonusType = "dinde"
                     };
                     thisBonus.body.UserData = userData1;
                     break;

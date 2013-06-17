@@ -12,6 +12,7 @@ namespace TurkeySmash
         public bool IsBonus { get; set; }
         public bool IsUsed { get; set; }
         public bool Invincible { get; set; }
+        public bool PowerUp { get; set; }
 
         public string BonusType { get; set; }
             
