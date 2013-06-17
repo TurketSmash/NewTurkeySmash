@@ -117,6 +117,17 @@ namespace TurkeySmash
                                 NbFrames = new Point(6, 1),
                             });
                         }
+                        if (str == "turkey")
+                        {
+                            personnages[i] = new Joueur(world, level.spawnPoints[i], 1f, new Vector2(25, 25), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\turkey",
+                                FrameRate = 60,
+                                FrameSize = new Point(46, 46),
+                                Loop = true,
+                                NbFrames = new Point(5, 1),
+                            });
+                        }
                         #endregion
                     }
                     else
@@ -164,6 +175,17 @@ namespace TurkeySmash
                                 FrameSize = new Point(92, 92),
                                 Loop = true,
                                 NbFrames = new Point(6, 1),
+                            });
+                        }
+                        if (str == "turkey")
+                        {
+                            personnages[i] = new Joueur(world, level.spawnPoints[i], 1f, new Vector2(25, 25), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
+                            {
+                                AssetName = "Jeu\\turkey",
+                                FrameRate = 60,
+                                FrameSize = new Point(46, 46),
+                                Loop = true,
+                                NbFrames = new Point(5, 1),
                             });
                         }
                         #endregion

@@ -89,6 +89,12 @@ namespace TurkeySmash
                         if (OptionsCombat.TypePartieSelect == "vie")
                             iconeLife[i].Load(TurkeySmashGame.content, "HUD\\HUDsuigetsuLifeIcone");
                     }
+                    if (players[i].definition.AssetName == "Jeu\\turkey")
+                    {
+                        icone[i].Load(TurkeySmashGame.content, "HUD\\HUDTurkey");
+                        if (OptionsCombat.TypePartieSelect == "vie")
+                            iconeLife[i].Load(TurkeySmashGame.content, "HUD\\HUDTurkeyLifeIcone");
+                    }
                 }
             }
         }

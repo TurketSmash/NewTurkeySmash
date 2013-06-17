@@ -101,6 +101,9 @@ namespace TurkeySmash
                     case 6:
                         Bouton6();
                         break;
+                    case 7:
+                        Bouton7();
+                        break;
                 }
             }
             oldStateK = newStateK;
@@ -138,5 +141,6 @@ namespace TurkeySmash
         public virtual void Bouton4() { }
         public virtual void Bouton5() { }
         public virtual void Bouton6() { }
+        public virtual void Bouton7() { }
     }
 }
