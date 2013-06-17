@@ -14,6 +14,8 @@ namespace TurkeySmash
         World world;
         Sprite background;
         StaticPhysicsObject[] bodylist;
+        List<AnimatedSprite> sortiesTerrain = new List<AnimatedSprite>();
+        AnimatedSpriteDef animSortie;
 
         List<PhysicsObject> items = new List<PhysicsObject>();
         List<Sprite> itemsSprite = new List<Sprite>();
@@ -42,10 +44,12 @@ namespace TurkeySmash
         Sprite bonusTest = new Sprite();
         Sprite hamburger = new Sprite();
         Sprite raquette = new Sprite();
+        Sprite invincible = new Sprite();
         #endregion
         int nextItemSpawn;
         int itemSpawnMin = 10;
         int itemSpawnMax = 15;
+        int respawnDelay = 0;
 
         int nextBonusSpawn;
         int bonusSpawnMin;
@@ -72,6 +76,16 @@ namespace TurkeySmash
             bonusTest.Load(TurkeySmashGame.content, "Jeu\\Objets\\BonusTest");
             hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
             raquette.Load(TurkeySmashGame.content, "Jeu\\Objets\\raquette");
+            invincible.Load(TurkeySmashGame.content, "Jeu\\Objets\\invincible");
+
+            animSortie = new AnimatedSpriteDef()
+            {
+                AssetName = "Defaut",
+                FrameRate = 60,
+                FrameSize = new Point(512, 512),
+                Loop = false,
+                NbFrames = new Point(5, 1)
+            };
 
             Init(backgroundName);
         }
@@ -102,9 +116,19 @@ namespace TurkeySmash
                     gameFinished(personnages[i]);
 
                     if (outOfScreen(personnages[i].bodyPosition))
+                    {
+                        sortiesTerrain.Add(new AnimatedSprite(ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition), animSortie));
                         respawn(personnages[i]);
+                    }
                     if (personnages[i].Mort)
                         personnages[i] = null;
+                }
+
+            for(int i = 0; i < sortiesTerrain.Count; i++)
+                if (sortiesTerrain[i].FinishedAnimation)
+                {
+                    sortiesTerrain.RemoveAt(i);
+                    i--;
                 }
 
             for (int i = 0; i < items.Count; i++)
@@ -388,7 +412,8 @@ namespace TurkeySmash
         void spawnBonus()
         {
             PhysicsObject thisBonus = null;
-            int rand = RandomProvider.GetRandom().Next(1, 4);
+            //int rand = RandomProvider.GetRandom().Next(1, 5);
+            int rand = 4;
             int Xrand = RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6));
             Vector2 randPosition = new Vector2(Xrand, TurkeySmashGame.WindowSize.Y / 6);
             FarseerBodyUserData userData = new FarseerBodyUserData();
@@ -430,19 +455,29 @@ namespace TurkeySmash
                     thisBonus.body.UserData = userData3;
                     bonusSprite.Add(raquette);
                     break;
+                case 4:
+                    thisBonus = new RectPhysicsObject(world, randPosition, 1, invincible);
+                    FarseerBodyUserData userData4 = new FarseerBodyUserData
+                    {
+                        IsCharacter = false,
+                        IsBonus = true,
+                        IsUsed = false,
+                        BonusType = "invincible"
+                    };
+                    thisBonus.body.UserData = userData4;
+                    bonusSprite.Add(invincible);
+                    break;
             }
             bonus.Add(thisBonus);
         }
         void resetItemSpawnTimer()
         {
             nextItemSpawn = RandomProvider.GetRandom().Next(itemSpawnMin, itemSpawnMax);
-            Console.WriteLine(timer / 1000 + nextItemSpawn);
             nextItemSpawn *= 1000;
         }
         void resetBonusSpawnTimer()
         {
             nextBonusSpawn = RandomProvider.GetRandom().Next(bonusSpawnMin, bonusSpawnMax);
-            Console.WriteLine(timer / 1000 + nextBonusSpawn);
             nextBonusSpawn *= 1000;
         }
     }

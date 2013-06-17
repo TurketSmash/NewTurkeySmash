@@ -42,6 +42,7 @@ namespace TurkeySmash
         bool canHit = true;
         bool isHit = false;
         bool isProtecting = false;
+        bool invincible = false;
         //bool isCharging = false;
         //int chargedAttack = 1;
         int frameHit = 0;
@@ -55,8 +56,11 @@ namespace TurkeySmash
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
         int compteur = 0;
+        int compteurRoulade = 0;
         int compteurProtection = 0;
+        int compteurInvincible = 0;
         const int tempsProtection = 5000; // en ms
+        const int tempsInvincibilite = 30000; // 30 sec
         int x = 0;
         int y = 0;
         int pourcentageInflige = 3;
@@ -127,6 +131,8 @@ namespace TurkeySmash
             newPosition = bodyPosition;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.Protecting = isProtecting;
+            invincible = userdata.Invincible;
+            int time = gameTime.ElapsedGameTime.Milliseconds;
 
             #region animatedEffects & particules update
 
@@ -166,14 +172,19 @@ namespace TurkeySmash
             #region Update Compteurs
 
             if (!inAction)
-                compteur += gameTime.ElapsedGameTime.Milliseconds;
+                compteurRoulade += time;
             else
-                compteur = 0;
+                compteurRoulade = 0;
 
             if (isProtecting)
-                compteurProtection += gameTime.ElapsedGameTime.Milliseconds;
+                compteurProtection += time;
             else
-                compteurProtection -= compteurProtection > 0 ? gameTime.ElapsedGameTime.Milliseconds : 0;
+                compteurProtection -= compteurProtection > 0 ? time : 0;
+
+            if (invincible)
+                compteurInvincible += time;
+            else
+                compteurInvincible = 0;
 
             #endregion
 
@@ -190,6 +201,26 @@ namespace TurkeySmash
                 {
                     particles = new ParticleEngine(TurkeySmashGame.content.Load<Texture2D>("Jeu\\effets\\bulleProtectrice"), ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X, bodyPosition.Y - 0.1f)),
                         Vector2.Zero, Color.Red, 1, BlendState.Additive, 0, 1.0f, false, false, false, false, false, false);
+                }
+            }
+
+            #endregion
+
+            #region Invincible
+
+            if (compteurInvincible > tempsInvincibilite)
+            {
+                invincible = false;
+                userdata.Invincible = false;
+            }
+            else
+            {
+                compteur += time;
+                if (invincible & compteur > 600)
+                {
+                    particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(bodyPosition), Vector2.Zero, Color.Yellow, 15, 600, 1.0f, false);
+                    color = Color.DarkBlue;
+                    compteur = 0;
                 }
             }
 
@@ -264,7 +295,8 @@ namespace TurkeySmash
                 canHit = false;
             }
             else
-                color = Color.White;
+                if (!invincible)
+                    color = Color.White;
 
             #endregion
 
@@ -328,11 +360,13 @@ namespace TurkeySmash
                         if (dataA.Pourcent < 0)
                             dataA.Pourcent = 0;
                     }
+                    if (dataB.BonusType == "invincible")
+                        dataA.Invincible = true;
                     dataB.IsUsed = true;
                 }
                 if (dataB.IsCharacter)
                 {
-                    if (!dataB.Protecting)
+                    if (!dataB.Protecting & !dataB.Invincible)
                     {
                         punchCharacter.Play();
                         dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
@@ -431,7 +465,7 @@ namespace TurkeySmash
         }
         protected void Roulade()
         {
-            if (!inAction & compteur > 1000)
+            if (!inAction & compteurRoulade > 1000)
             {
                 teleportation.Play();
                 Reset(new Point(0, 7));
@@ -449,7 +483,7 @@ namespace TurkeySmash
                     FrameRate = 60,
                     FrameSize = new Point(110, 110),
                     Loop = false,
-                    NbFrames = new Point(5, 0),
+                    NbFrames = new Point(5, 1),
                 }));
             }
         }
