@@ -11,7 +11,7 @@ namespace TurkeySmash
     {
         private Random random;
         public Vector2 Location { get; set; }
-        private List<Particle> particles;
+        public List<Particle> particles;
         private List<Texture2D> textures;
         private bool matchWithPlayer = false;
         private BlendState blending;

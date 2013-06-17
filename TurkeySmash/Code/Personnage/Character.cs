@@ -45,14 +45,16 @@ namespace TurkeySmash
         bool isProtecting = false;
         bool invincible = false;
         bool powerUp = false;
-        //bool isCharging = false;
-        //int chargedAttack = 1;
+        bool isCharging = false;
         int frameHit = 0;
         Vector2 oldPosition; // variable pour calcul la chute du personnage
         Vector2 newPosition;
+        Color lastColor;
+        Color newColor;
 
-        ParticleEngine particles;
+        List<ParticleEngine> particles = new List<ParticleEngine>();
         List<AnimatedSprite> animatedEffects = new List<AnimatedSprite>();
+        AnimatedSprite chargedDiamond;
         List<Texture2D> textures = new List<Texture2D>();
 
         int oldPourcent;
@@ -125,6 +127,15 @@ namespace TurkeySmash
             punchBonus = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\bonus");
             teleportation = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\Teleportation");
 
+            chargedDiamond = new AnimatedSprite(ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X + (lookingRight ? 0.2f : -0.2f), bodyPosition.Y - 0.15f)), new AnimatedSpriteDef()
+            {
+                AssetName = "Jeu\\effets\\chargedStar",
+                FrameRate = 60,
+                FrameSize = new Point(16, 16),
+                Loop = true,
+                NbFrames = new Point(2, 1),
+            });
+            chargedDiamond.color = Color.Yellow;
         }
 
         #endregion 
@@ -136,6 +147,7 @@ namespace TurkeySmash
 
             position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize; // update de la position de l'image
             newPosition = bodyPosition;
+            newColor = color;
             FarseerBodyUserData userdata = (FarseerBodyUserData)body.UserData;
             userdata.Protecting = isProtecting;
             invincible = userdata.Invincible;
@@ -154,8 +166,15 @@ namespace TurkeySmash
                 }
             }
 
-            if (particles != null)
-                particles.Update(gameTime, ConvertUnits.ToDisplayUnits(bodyPosition));
+            if (particles.Count > 0)
+            {
+                for (int index = 0; index < particles.Count; index++)
+                {
+                    particles[index].Update(gameTime, ConvertUnits.ToDisplayUnits(bodyPosition));
+                    if (particles[index].particles.Count == 0)
+                        particles.RemoveAt(index);
+                }
+            }
 
             #endregion
 
@@ -163,6 +182,7 @@ namespace TurkeySmash
 
             if (inAction & CurrentFrame.X == frameHit & canHit)
             {
+                punchMiss.Play();
                 RectPhysicsObject hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
                     ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                 hit.body.IsSensor = true;
@@ -212,8 +232,8 @@ namespace TurkeySmash
             {
                 if (isProtecting)
                 {
-                    particles = new ParticleEngine(TurkeySmashGame.content.Load<Texture2D>("Jeu\\effets\\bulleProtectrice"), ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X, bodyPosition.Y - 0.1f)),
-                        Vector2.Zero, Color.Red, 1, BlendState.Additive, 0, 1.0f, false, false, false, false, false, false);
+                    particles.Add(new ParticleEngine(TurkeySmashGame.content.Load<Texture2D>("Jeu\\effets\\bulleProtectrice"), ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X, bodyPosition.Y - 0.1f)),
+                        Vector2.Zero, Color.Red, 1, BlendState.Additive, 0, 1.0f, false, false, false, false, false, false));
                 }
             }
 
@@ -229,10 +249,10 @@ namespace TurkeySmash
             else
             {
                 compteur += time;
-                if (invincible & compteur > 600)
+                if (invincible & compteur > 50)
                 {
-                    particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(bodyPosition), Vector2.Zero, Color.Yellow, 15, 600, 1.0f, false);
-                    color = Color.DarkBlue;
+                    particles.Add(new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X, bodyPosition.Y - 0.15f)), Vector2.Zero, Color.Yellow, 4, 600, 1.0f, false, true, false, false));
+                    color = lastColor == Color.Yellow ? Color.White : Color.Yellow;
                     compteur = 0;
                 }
             }
@@ -337,39 +357,27 @@ namespace TurkeySmash
 
             #endregion
 
-            #region Charging
-
-            /* if (isCharging)
-            {
-                inAction = true;
-                CurrentFrame.X = 0;
-                definition.Loop = false;
-                FinishedAnimation = true;
-            }
-            else
-            {
-                if (true)
-                {
-                    CurrentFrame.Y = chargedAttack;
-                    FinishedAnimation = false;
-                    definition.Loop = false;
-                    inAction = true;
-                }
-            } */
-
-            #endregion
-
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
             oldDirection = direction;
             direction = Direction.Nodirection;
             pourcent = userdata.Pourcent;
             oldPosition = newPosition;
+            lastColor = newColor;
             isMoving = false;
             isProtecting = false;
-            //isCharging = false;
 
             base.Update(gameTime);
+
+            if (isCharging)
+            {
+                inAction = true;
+                CurrentFrame.X = 0;
+                definition.Loop = false;
+                ForceItem += 0.01f;
+                chargedDiamond.Update(gameTime, ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X + (lookingRight ? 0.1f : -0.1f), bodyPosition.Y - 0.1f)));
+            }
+            isCharging = false;
         }
 
         private bool bodyOnCollision(Fixture fixA, Fixture fixB, Contact contact)
@@ -410,7 +418,7 @@ namespace TurkeySmash
                         dataB.Pourcent = dataB.Pourcent + pourcentageInflige;
                         pourcentB = dataB.Pourcent;
                         fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
-                        particles = new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0, 0), Color.White, 4, 500, 1.2f);
+                        particles.Add(new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0, 0), Color.White, 4, 500, 1.2f));
                     }
                     else
                     {
@@ -431,7 +439,6 @@ namespace TurkeySmash
         {
             if (!inAction & canHit)
             {
-                punchMiss.Play();
                 x = 0;
                 if (direction == Direction.Up)
                 {
@@ -473,7 +480,7 @@ namespace TurkeySmash
                 // Si la direction est vers le bas et le personnage est en l'air y = 1
                 // Si c'est aucune des deux directions y = 0;
             }
-            //isCharging = true;
+            isCharging = true;
         }
         protected void Jump()
         {
@@ -541,8 +548,10 @@ namespace TurkeySmash
             base.Draw(spriteBatch);
             foreach (AnimatedSprite effect in animatedEffects)
                 effect.Draw(spriteBatch);
-            if (particles != null)
-                particles.Draw(spriteBatch);
+            foreach (ParticleEngine particle in particles)
+                particle.Draw(spriteBatch);
+            if (isCharging)
+                chargedDiamond.Draw(spriteBatch);
         }
     }
 }

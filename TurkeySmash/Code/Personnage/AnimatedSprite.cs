@@ -78,6 +78,34 @@ namespace TurkeySmash
                 }
             }
         }
+        public virtual void Update(GameTime gameTime, Vector2 position)
+        {
+            this.position = position;
+            if (FinishedAnimation) return;
+            lastFrameUpdatedTime += gameTime.ElapsedGameTime.Milliseconds;
+            if (lastFrameUpdatedTime > TimeBetweenFrame)
+            {
+                lastFrameUpdatedTime = 0;
+                if (definition.Loop)
+                {
+                    CurrentFrame.X++;
+                    if (CurrentFrame.X >= definition.NbFrames.X)
+                    {
+                        CurrentFrame.X = 0;
+                    }
+                }
+                else
+                {
+                    CurrentFrame.X++;
+                    if (CurrentFrame.X >= definition.NbFrames.X)
+                    {
+                        CurrentFrame.X = 0;
+                        CurrentFrame.X = definition.NbFrames.X - 1;
+                        FinishedAnimation = true;
+                    }
+                }
+            }
+        }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, new Rectangle(CurrentFrame.X * definition.FrameSize.X, CurrentFrame.Y * definition.FrameSize.Y, definition.FrameSize.X, definition.FrameSize.Y),
