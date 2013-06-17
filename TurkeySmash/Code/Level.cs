@@ -392,18 +392,12 @@ namespace TurkeySmash
             }
             else
             {
-                if (personnages[userData.LastHit - 1] == null)
-                {
+                if (personnages[userData.LastHit - 1] != null)
                     personnages[userData.LastHit - 1].score++;
-                    tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++;
+                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++;
+                personnage.score--;
+                tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //+1 au kill du joueur mort
 
-                }
-                else
-                {
-                    personnages[userData.LastHit - 1].score++;
-                    personnage.score--;
-                    tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++;
-                }
             }
 
             for (int i = 0; i < personnages.Length; i++)
