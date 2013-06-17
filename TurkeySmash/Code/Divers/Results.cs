@@ -9,9 +9,8 @@ namespace TurkeySmash
     public static class Results
     {
         public static int[][] ResultsBoard { get; set; }
-        public static int LastOneStanding { get; set; }
 
-        public static void SaveResults(int[][] scores, int lastOneStanding)
+        public static void SaveResults(int[][] scores, string typePartie)
         {
                 int[] aux;
                 int i = 0;
@@ -28,7 +27,6 @@ namespace TurkeySmash
                         i++;
                 }
                 ResultsBoard = scores;
-                LastOneStanding = lastOneStanding;
         }
     }
 }

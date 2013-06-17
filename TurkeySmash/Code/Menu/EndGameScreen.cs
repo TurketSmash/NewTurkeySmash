@@ -40,6 +40,9 @@ namespace TurkeySmash
         Texte[] kills3 = new Texte[4];
         Texte[][] kills = new Texte[3][];
 
+        float[] posTimers = new float[4];
+        Texte[] timers = new Texte[4];
+
         #region Code de porc
         private Texte antibug1 = new Texte(0, 0);
         private Texte antibug2 = new Texte(0, 0);
@@ -140,33 +143,62 @@ namespace TurkeySmash
                     suicide[i].Texte = "Suicide : " + Results.ResultsBoard[i][2];
                 }
             #endregion
-            #region affichage kills
-            float YkillsPos = Ypos * 0.730f;
-            posKills[0] = Xpos * 0.130f;
-            posKills[1] = posKills[0] + Xpos / 4;
-            posKills[2] = posKills[1] + Xpos / 4;
-            posKills[3] = posKills[2] + Xpos / 4;
-            kills[0] = kills1;
-            kills[1] = kills2;
-            kills[2] = kills3;
-
-            for (int i = 0; i < 4; i++)
+            if (OptionsCombat.TypePartieSelect == "temps")
+                #region affichage kills
             {
-                int con = 0;
-                for (int j = 0; j < 3; j++)
+                float YkillsPos = Ypos * 0.730f;
+                posKills[0] = Xpos * 0.130f;
+                posKills[1] = posKills[0] + Xpos / 4;
+                posKills[2] = posKills[1] + Xpos / 4;
+                posKills[3] = posKills[2] + Xpos / 4;
+                kills[0] = kills1;
+                kills[1] = kills2;
+                kills[2] = kills3;
+
+                for (int i = 0; i < 4; i++)
                 {
-                    if (Results.ResultsBoard[i][1] != -999 & Results.ResultsBoard[j + 1][1] != -999)
+                    int con = 0;
+                    for (int j = 0; j < 3; j++)
                     {
-                        int n = j + 1;
-                        if ((Results.ResultsBoard[i][0]) == n)
-                            con = 1;
-                        n += con;
-                        kills[j][i] = new Texte(posKills[Results.ResultsBoard[i][0] - 1], Ypos * (0.730f + (0.092f * j)));
-                        kills[j][i].Texte = "Joueur " + n + " tues : " + Results.ResultsBoard[i][3 + (n - 1)];
+                        if (Results.ResultsBoard[i][1] != -999 & Results.ResultsBoard[j + 1][1] != -999)
+                        {
+                            int n = j + 1;
+                            if ((Results.ResultsBoard[i][0]) == n)
+                                con = 1;
+                            n += con;
+                            kills[j][i] = new Texte(posKills[Results.ResultsBoard[i][0] - 1], Ypos * (0.730f + (0.092f * j)));
+                            kills[j][i].Texte = "Joueur " + n + " tues : " + Results.ResultsBoard[i][3 + (n - 1)];
+                        }
                     }
                 }
             }
             #endregion
+            if (OptionsCombat.TypePartieSelect == "vie")
+                #region affichage temps
+            {
+                float YposTimers = Ypos * 0.810f;
+                posTimers[0] = Xpos * 0.130f;
+                posTimers[1] = posTimers[0] + Xpos / 4;
+                posTimers[2] = posTimers[1] + Xpos / 4;
+                posTimers[3] = posTimers[2] + Xpos / 4;
+
+                for (int i = 0; i < 4; i++)
+                    if (Results.ResultsBoard[i][1] != -999)
+                    {
+                        timers[i] = new Texte(posTimers[Results.ResultsBoard[i][0] - 1], YposTimers);
+                        if (Results.ResultsBoard[i][3] != -1)
+                        {
+                            timers[i].Texte = ((Results.ResultsBoard[i][3] / 1000) / 60) + " : " + ((Results.ResultsBoard[i][3] / 1000) % 60);
+                            timers[i].SizeText = 1.3f;
+                        }
+                        else
+                        {
+                            timers[i].Texte = "Dernier" + "\n" + "debout"; //last one standing
+                        }
+                    }
+            }
+                #endregion
+
             #region Code de porc
             texteBoutons.Add(antibug1); texteBoutons.Add(antibug2);
             #endregion
@@ -216,13 +248,25 @@ namespace TurkeySmash
                     suicide[i].NameFont = "pourcent";
                     suicide[i].Load(TurkeySmashGame.content, textes);
                 }
-                for (int j = 0; j < 3;j++ )
-                    if (kills[j][i] != null)
+                if (OptionsCombat.TypePartieSelect == "temps")
+                {
+                    for (int j = 0; j < 3; j++)
+                        if (kills[j][i] != null)
+                        {
+                            kills[j][i].NameFont = "pourcent";
+                            kills[j][i].Load(TurkeySmashGame.content, textes);
+                            kills[j][i].SizeText = 0.7f;
+                        }
+                }
+                if (OptionsCombat.TypePartieSelect == "vie")
+                {
+                    if (timers[i] != null)
                     {
-                        kills[j][i].NameFont = "pourcent";
-                        kills[j][i].Load(TurkeySmashGame.content, textes);
-                        kills[j][i].SizeText = 0.7f;
+                        timers[i].SizeText = 1.1f;
+                        timers[i].NameFont = "pourcent";
+                        timers[i].Load(TurkeySmashGame.content, textes);
                     }
+                }
             }
         }
 

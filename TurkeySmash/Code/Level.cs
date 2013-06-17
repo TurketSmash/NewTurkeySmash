@@ -34,6 +34,13 @@ namespace TurkeySmash
             new int[] {3,-999,0,0,0,0,0},
             new int[] {4,-999,0,0,0,0,0}
         };
+        int[][] scoresLife = new int[4][]
+        {//{Index,Score,Suicide,Temps}
+            new int[] {1,-999,0, -1},
+            new int[] {2,-999,0, -1},
+            new int[] {3,-999,0, -1},
+            new int[] {4,-999,0, -1}
+            };
         #region Items
         Sprite caisseSprite = new Sprite(); //items.Add(new RectPhysicsObject(world, TurkeySmashGame.WindowMid, 3.0f, caisseSprite));
         Sprite blocSwag = new Sprite();
@@ -96,7 +103,7 @@ namespace TurkeySmash
 
             if (nextItemSpawn < 0)
             {
-                spawnItem(0,Vector2.Zero);
+                spawnItem(0, Vector2.Zero);
                 resetItemSpawnTimer();
             } if (nextBonusSpawn < 0)
             {
@@ -122,7 +129,7 @@ namespace TurkeySmash
                         personnages[i] = null;
                 }
 
-            for(int i = 0; i < sortiesTerrain.Count; i++)
+            for (int i = 0; i < sortiesTerrain.Count; i++)
                 if (sortiesTerrain[i].FinishedAnimation)
                 {
                     sortiesTerrain.RemoveAt(i);
@@ -326,6 +333,11 @@ namespace TurkeySmash
                 if (OptionsCombat.TypePartieSelect != "temps")
                     personnage.vie--;
             }
+            else
+            {
+                if (OptionsCombat.TypePartieSelect == "vie")
+                    scoresLife[Convert.PlayerIndex2Int(personnage.playerindex) - 1][3] = (int)timer;
+            }
             userData.LastHit = 0;
             userData.Pourcent = 0;
             personnage.body.ResetDynamics();
@@ -335,14 +347,23 @@ namespace TurkeySmash
             FarseerBodyUserData userData = (FarseerBodyUserData)personnage.body.UserData;
             if (userData.LastHit <= 0)
             {
-                personnage.score -= 2;//Suicide = -2 pts
-                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++; //Ajout +1 suicide dans le compteur
+                personnage.score -= 2;
+                tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++;
             }
             else
             {
-                if (personnages[userData.LastHit - 1] != null)
-                    personnages[userData.LastHit - 1].score++; //score ++ pour le dernier perso qui t'as tapé
-                tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++; //Ajout +1 au score de kill pour le joueur qui t'as tué
+                if (personnages[userData.LastHit - 1] == null)
+                {
+                    personnages[userData.LastHit - 1].score++;
+                    tabScores[Convert.PlayerIndex2Int(personnage.playerindex) - 1][2]++;
+
+                }
+                else
+                {
+                    personnages[userData.LastHit - 1].score++;
+                    personnage.score--;
+                    tabScores[userData.LastHit - 1][Convert.PlayerIndex2Int(personnage.playerindex) + 2]++;
+                }
             }
 
             for (int i = 0; i < personnages.Length; i++)
@@ -356,7 +377,7 @@ namespace TurkeySmash
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
                     timer = 0;
-                    Results.SaveResults(tabScores, -1);
+                    Results.SaveResults(tabScores, "temps");
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
@@ -367,9 +388,14 @@ namespace TurkeySmash
                     personnages[0] == null & personnages[1] == null & personnages[2] != null & personnages[3] == null |
                     personnages[0] == null & personnages[1] == null & personnages[2] == null & personnages[3] != null)
                 {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        scoresLife[i][1] = tabScores[i][1];
+                        scoresLife[i][2] = tabScores[i][2];
+                    }
                     for (int i = 0; i < personnages.Length; i++)
                         if (personnages[i] != null)
-                            Results.SaveResults(tabScores, i + 1);
+                            Results.SaveResults(scoresLife, "vie");
                     Basic.SetScreen(new EndGameScreen());
                 }
             }
