@@ -36,7 +36,12 @@ namespace TurkeySmash
                 if (SelectionNiveau.niveauSelect == "level2")
                     level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
                 else
-                    level = new Level(world, "Jeu\\level3\\background3", personnages, TurkeySmashGame.content);
+                {
+                    if (SelectionNiveau.niveauSelect == "level3")
+                        level = new Level(world, "Jeu\\level3\\background3", personnages, TurkeySmashGame.content);
+                    else
+                        level = new Level(world, "Jeu\\level4\\background4", personnages, TurkeySmashGame.content);
+                }
             }
 
             #region loadPersonnage

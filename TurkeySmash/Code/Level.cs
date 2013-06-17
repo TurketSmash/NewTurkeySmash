@@ -352,6 +352,37 @@ namespace TurkeySmash
 
                     #endregion
                     break;
+
+                case "Jeu\\level4\\background4":
+                    #region Level 4
+
+                    respawnPoint = new Vector2(Xwin * 0.5f, Ywin * 0.2f);
+                    spawnPoints[0] = new Vector2(Xwin * 0.150f, Ywin * 0.635f);
+                    spawnPoints[1] = new Vector2(Xwin * 0.800f, Ywin * 0.635f);
+                    spawnPoints[2] = new Vector2(Xwin * 0.350f, Ywin * 0.635f);
+                    spawnPoints[3] = new Vector2(Xwin * 0.575f, Ywin * 0.635f);
+
+
+                    bodylist = new StaticPhysicsObject[4];
+
+                    #region Sprites Loading
+
+                    Sprite plateformelvl4 = new Sprite();
+                    plateformelvl4.Load(TurkeySmashGame.content, "Jeu\\level4\\plateformePrincipale");
+
+
+                    #endregion
+
+                    #region Bodies
+                    bodylist[0] = new StaticPhysicsObject(world, new Vector2(Xwin * 0.5f, Ywin * 0.860f), 1, plateformelvl4);
+
+                    #endregion
+
+                    #region Items
+                    #endregion
+
+                    #endregion
+                    break;
             }
         }
         bool outOfScreen(Vector2 position)
