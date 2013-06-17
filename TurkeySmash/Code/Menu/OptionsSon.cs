@@ -29,8 +29,9 @@ namespace TurkeySmash
         private Texte antibug3 = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
         private Texte antibug4 = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
 
-        Song song2 = TurkeySmashGame.content.Load<Song>("Sons\\musique2");
-        Song song3 = TurkeySmashGame.content.Load<Song>("Sons\\Halo");
+
+        Song song3 = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\Halo");
+        Song songMenu = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicMenu");
         bool aDejaChangéGROSBULLSHITDeNikeurDeControleur = false;
 
         #endregion
@@ -83,12 +84,14 @@ namespace TurkeySmash
         {
             if (aDejaChangéGROSBULLSHITDeNikeurDeControleur == false)
             {
-                MediaPlayer.Play(song2);
+                MediaPlayer.Play(song3);
                 aDejaChangéGROSBULLSHITDeNikeurDeControleur = true;
             }
             else
-                MediaPlayer.Play(song3);
-
+            {
+                MediaPlayer.Play(songMenu);
+                aDejaChangéGROSBULLSHITDeNikeurDeControleur = false;
+            }
         }
 
         public override void Bouton4()

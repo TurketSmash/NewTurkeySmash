@@ -38,7 +38,6 @@ namespace TurkeySmash
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
             nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-SelectionDuNiveau");
-            //nomMenu.Resize(TurkeySmashGame.manager.PreferredBackBufferWidth);
             nomMenu.Position = new Microsoft.Xna.Framework.Vector2(760, 80);
 
             bouton1.Load(TurkeySmashGame.content, "Menu1\\PersoLevel\\BoutonLevel1ON", "Menu1\\PersoLevel\\BoutonLevel1OFF", boutons);

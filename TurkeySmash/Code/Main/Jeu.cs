@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework.Media;
 
 namespace TurkeySmash
 {
@@ -9,8 +10,6 @@ namespace TurkeySmash
     {
         World world;
         HUD hud = new HUD();
-        public static SoundEffect sonEspace = TurkeySmashGame.content.Load<SoundEffect>("Sons\\sonEspace");
-        public SoundEffectInstance sonInstance = sonEspace.CreateInstance();
         Character[] personnages = new Character[4];
         Level level;
         float fixedMass = 0.22f;
@@ -30,17 +29,37 @@ namespace TurkeySmash
             world =new World(Vector2.UnitY * 20f);
 
             if (SelectionNiveau.niveauSelect == "level1")
+            {
                 level = new Level(world, "Jeu\\level1\\background1", personnages, TurkeySmashGame.content);
+                Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicLvl1");
+                MediaPlayer.Volume = 0.35f;
+                MediaPlayer.Play(song);
+            }
             else
             {
                 if (SelectionNiveau.niveauSelect == "level2")
+                {
                     level = new Level(world, "Jeu\\level2\\background2", personnages, TurkeySmashGame.content);
+                    Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicLvl2");
+                    MediaPlayer.Volume = 0.35f;
+                    MediaPlayer.Play(song);
+                }
                 else
                 {
                     if (SelectionNiveau.niveauSelect == "level3")
+                    {
                         level = new Level(world, "Jeu\\level3\\background3", personnages, TurkeySmashGame.content);
+                        Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicLvl3");
+                        MediaPlayer.Volume = 0.35f;
+                        MediaPlayer.Play(song);
+                    }
                     else
+                    {
                         level = new Level(world, "Jeu\\level4\\background4", personnages, TurkeySmashGame.content);
+                        Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicLvl4");
+                        MediaPlayer.Volume = 0.35f;
+                        MediaPlayer.Play(song);
+                    }
                 }
             }
 
@@ -219,9 +238,6 @@ namespace TurkeySmash
 
             #endregion
 
-            sonInstance.Volume = 0.5f;
-            sonInstance.IsLooped = true;
-            sonInstance.Resume();
 
             hud.Load(personnages);
         }
@@ -230,7 +246,7 @@ namespace TurkeySmash
         {
             if (input.Escape())
             {
-                sonInstance.Pause();
+                MediaPlayer.Pause();
                 Basic.SetScreen(new Pause());
             }
 

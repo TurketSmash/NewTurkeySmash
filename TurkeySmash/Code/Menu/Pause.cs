@@ -59,9 +59,8 @@ namespace TurkeySmash
 
         public override void Bouton1()
         {
-            MediaPlayer.Pause();
             Basic.Quit();
-            MediaPlayer.Pause();
+            MediaPlayer.Resume();
         }
 
         public override void Bouton2()
@@ -72,6 +71,9 @@ namespace TurkeySmash
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
+            Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicMenu");
+            MediaPlayer.Volume = 0.35f;
+            MediaPlayer.Play(song);
             Basic.SetScreen(new SelectionPersonnage());
         }
 
@@ -82,6 +84,9 @@ namespace TurkeySmash
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
+            Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicMenu");
+            MediaPlayer.Volume = 0.35f;
+            MediaPlayer.Play(song);
         }
     }
 }

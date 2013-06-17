@@ -166,11 +166,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sons\Halo.wma">
-      <Name>Halo</Name>
-      <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="Sons\musique2.mp3">
       <Name>musique2</Name>
       <Importer>Mp3Importer</Importer>
@@ -710,6 +705,38 @@
       <Name>chargedStar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sons\Musiques\Halo.wma">
+      <Name>Halo</Name>
+      <Importer>WmaImporter</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Sons\Musiques\MusicLvl1.mp3">
+      <Name>MusicLvl1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Sons\Musiques\MusicLvl2.mp3">
+      <Name>MusicLvl2</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Sons\Musiques\MusicLvl3.mp3">
+      <Name>MusicLvl3</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Sons\Musiques\MusicLvl4.mp3">
+      <Name>MusicLvl4</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Sons\Musiques\MusicMenu.mp3">
+      <Name>MusicMenu</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

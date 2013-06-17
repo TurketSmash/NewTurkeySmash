@@ -52,10 +52,10 @@ namespace TurkeySmash
 
         public override void Init()
         {
-            Song song = TurkeySmashGame.content.Load<Song>("Sons\\musique1");
-            MediaPlayer.Volume = 0.5f;
+            Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicMenu");
+            MediaPlayer.Volume = 0.35f;
             MediaPlayer.IsRepeating = true;
-            //MediaPlayer.Play(song);
+            MediaPlayer.Play(song);
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
             nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-MenuPrincipal");
             nomMenu.Position = new Microsoft.Xna.Framework.Vector2(730, 120);

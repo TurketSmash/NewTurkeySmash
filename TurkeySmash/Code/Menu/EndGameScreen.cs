@@ -280,6 +280,9 @@ namespace TurkeySmash
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
+            Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicLvl3");
+            MediaPlayer.Volume = 0.35f;
+            MediaPlayer.Play(song);
             Basic.SetScreen(new SelectionPersonnage());
         }
 
@@ -294,6 +297,9 @@ namespace TurkeySmash
             Basic.Quit();
             Basic.Quit();
             Basic.Quit();
+            Song song = TurkeySmashGame.content.Load<Song>("Sons\\Musiques\\MusicLvl3");
+            MediaPlayer.Volume = 0.35f;
+            MediaPlayer.Play(song);
         }
     }
 }
