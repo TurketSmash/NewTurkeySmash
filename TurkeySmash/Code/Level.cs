@@ -125,48 +125,51 @@ namespace TurkeySmash
             for (int i = 0; i < personnages.Length; i++)
                 if (personnages[i] != null)
                 {
-                    foreach (IA ia in personnages.OfType<IA>())
-                        ia.UpdatePosition(personnages);
-
-                    personnages[i].Update(gameTime);
-                    gameFinished(personnages[i]);
-
-                    #region Ejection Terrain
-
-                    if (outOfScreen(personnages[i].bodyPosition))
+                    if (!isFinish)
                     {
-                        float x = 0; // milieu sprite sortie terrain
-                        float y = 0;
-                        SpriteEffects spriteEffect = SpriteEffects.None;
+                        foreach (IA ia in personnages.OfType<IA>())
+                            ia.UpdatePosition(personnages);
 
-                        if (ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) > TurkeySmashGame.WindowSize.X) // sortie à droite
+                        personnages[i].Update(gameTime);
+
+                        #region Ejection Terrain
+
+                        if (outOfScreen(personnages[i].bodyPosition))
                         {
-                            x = TurkeySmashGame.WindowSize.X - 110;
-                            y = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) - 55;
-                        }
-                        else if (personnages[i].bodyPosition.X < 0) // sortie à gauche
-                        {
-                            y = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) - 55;
+                            float x = 0; // milieu sprite sortie terrain
+                            float y = 0;
+                            SpriteEffects spriteEffect = SpriteEffects.None;
+
+                            if (ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) > TurkeySmashGame.WindowSize.X) // sortie à droite
+                            {
+                                x = TurkeySmashGame.WindowSize.X - 110;
+                                y = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) - 55;
+                            }
+                            else if (personnages[i].bodyPosition.X < 0) // sortie à gauche
+                            {
+                                y = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) - 55;
+                            }
+
+                            if (ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) > TurkeySmashGame.WindowSize.Y) // sortie en bas
+                            {
+                                x = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) - 55;
+                                y = TurkeySmashGame.WindowSize.Y - 110;
+                                spriteEffect = SpriteEffects.FlipVertically;
+                            }
+                            else if (personnages[i].bodyPosition.Y < 0)
+                            {
+                                x = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) - 55;
+                            }
+                            sortiesTerrain.Add(new AnimatedSprite(new Vector2(x, y), animSortie, spriteEffect));
+                            respawn(personnages[i]);
                         }
 
-                        if (ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.Y) > TurkeySmashGame.WindowSize.Y) // sortie en bas
-                        {
-                            x = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) - 55;
-                            y = TurkeySmashGame.WindowSize.Y - 110;
-                            spriteEffect = SpriteEffects.FlipVertically;
-                        }
-                        else if (personnages[i].bodyPosition.Y < 0)
-                        {
-                            x = ConvertUnits.ToDisplayUnits(personnages[i].bodyPosition.X) - 55;
-                        }
-                        sortiesTerrain.Add(new AnimatedSprite(new Vector2(x, y), animSortie, spriteEffect));
-                        respawn(personnages[i]);
+                        #endregion
+
+                        if (personnages[i].Mort)
+                            personnages[i] = null;
                     }
-
-                    #endregion
-
-                    if (personnages[i].Mort)
-                        personnages[i] = null;
+                    gameFinished(personnages[i]);
                 }
 
             for (int i = 0; i < items.Count; i++)

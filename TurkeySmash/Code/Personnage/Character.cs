@@ -315,48 +315,6 @@ namespace TurkeySmash
 
             #endregion
 
-            #region Filtre couleur + Anim coup reçu
-
-            if (isHit)
-            {
-                color = Color.Red;
-                i = 5;
-                if (newPosition.X > (oldPosition.X + 0.1f) || newPosition.X < (oldPosition.X - 0.1f))
-                {
-                    if (!inAction)
-                    {
-                        Reset(new Point(0, 8));
-                        TimeBetweenFrame = 50;
-                        inAction = true;
-                    }
-                }
-                else
-                {
-                    CurrentFrame = new Point(0, 10);
-                    FinishedAnimation = true;
-                }
-                canHit = false;
-                definition.Loop = false;
-            }
-            else if (i > 0)
-            {
-                color = Color.Red;
-                i--;
-                CurrentFrame = new Point(0, 10);
-                definition.Loop = false;
-                FinishedAnimation = true;
-                canHit = false;
-            }
-            else
-            {
-                if (!invincible & !powerUp)
-                    color = Color.White;
-                if (!powerUp)
-                    forceItem = 0.3f;
-            }
-
-            #endregion
-
             body.OnCollision += bodyOnCollision;
             oldPourcent = pourcent;
             oldDirection = direction;
@@ -374,10 +332,55 @@ namespace TurkeySmash
                 inAction = true;
                 CurrentFrame.X = 0;
                 definition.Loop = false;
-                ForceItem += 0.01f;
+                forceItem = 0.3f;
                 chargedDiamond.Update(gameTime, ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X + (lookingRight ? 0.1f : -0.1f), bodyPosition.Y - 0.1f)));
+                if (isHit)
+                {
+                    forceItem = 0.3f;
+
+                }
             }
             isCharging = false;
+
+            #region Filtre couleur + Anim coup reçu
+
+            if (isHit)
+            {
+                color = Color.Red;
+                i = 5;
+                if (newPosition.X > (oldPosition.X + 0.1f) || newPosition.X < (oldPosition.X - 0.1f))
+                {
+                    Reset(new Point(0, 8));
+                    TimeBetweenFrame = 50;
+                }
+                else
+                {
+                    CurrentFrame = new Point(0, 10);
+                    FinishedAnimation = true;
+                }
+                inAction = true;
+                canHit = false;
+                definition.Loop = false;
+            }
+            else if (i > 0)
+            {
+                color = Color.Red;
+                i--;
+                if (FinishedAnimation)
+                {
+                    CurrentFrame = new Point(0, 10);
+                    definition.Loop = false;
+                    FinishedAnimation = true;
+                }
+                canHit = false;
+            }
+            else
+            {
+                if (!invincible & !powerUp)
+                    color = Color.White;
+            }
+
+            #endregion
         }
 
         private bool bodyOnCollision(Fixture fixA, Fixture fixB, Contact contact)
@@ -437,7 +440,7 @@ namespace TurkeySmash
 
         protected void Attack()
         {
-            if (!inAction & canHit)
+            if (!inAction & canHit & !isCharging)
             {
                 x = 0;
                 if (direction == Direction.Up)
@@ -446,6 +449,7 @@ namespace TurkeySmash
                     Reset(new Point(0, 4));
                     allongeCoup = 20;
                     frameHit = 2;
+                    forceItem = 0.4f;
                 }
                 else if (direction == Direction.Down && !canJump)
                 {
@@ -453,6 +457,7 @@ namespace TurkeySmash
                     Reset(new Point(0, 6));
                     allongeCoup = 15;
                     frameHit = 2;
+                    forceItem = 0.3f;
                 }
                 else
                 {
@@ -462,16 +467,17 @@ namespace TurkeySmash
                         Reset(new Point(0, 3));
                         allongeCoup = 15;
                         frameHit = 1;
+                        forceItem = 0.3f;
                     }
                     else
                     {
                         Reset(new Point(0, 5));
                         allongeCoup = 25;
                         frameHit = 2;
+                        forceItem = 0.4f;
                     }
                     x = lookingRight ? 1 : -1;
                 }
-                //chargedAttack = CurrentFrame.Y;
                 definition.Loop = false;
                 inAction = true;
 
