@@ -13,6 +13,7 @@ namespace TurkeySmash
         #region Fields
         World world;
         Sprite background;
+        Sprite finDePartie = null;
         StaticPhysicsObject[] bodylist;
         List<AnimatedSprite> sortiesTerrain = new List<AnimatedSprite>();
         AnimatedSpriteDef animSortie;
@@ -24,6 +25,9 @@ namespace TurkeySmash
         List<Sprite> bonusSprite = new List<Sprite>();
 
         decimal timer;
+        int compteur = 0;
+        bool isFinish = false;
+        const int tempsAffichageFinDePartie = 5000;
         public Vector2[] spawnPoints = new Vector2[4];
         Vector2 respawnPoint;
         Character[] personnages;
@@ -100,6 +104,8 @@ namespace TurkeySmash
             nextItemSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             nextBonusSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (isFinish)
+                compteur += gameTime.ElapsedGameTime.Milliseconds;
 
             if ((Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0)))
                 spawnBonus(1, Vector2.Zero);
@@ -224,6 +230,9 @@ namespace TurkeySmash
 
             foreach (AnimatedSprite anim in sortiesTerrain)
                 anim.Draw(spriteBatch);
+
+            if (finDePartie != null)
+                finDePartie.Draw(spriteBatch);
         }
         void Init(string backgroundName)
         {
@@ -437,13 +446,24 @@ namespace TurkeySmash
         }
         void gameFinished(Character personnage)
         {
+
+            if (compteur > tempsAffichageFinDePartie)
+                Basic.SetScreen(new EndGameScreen());
+            else
+                if (isFinish)
+                {
+                    finDePartie = new Sprite();
+                    finDePartie.Load(TurkeySmashGame.content, "Menu1\\FR-PartieTerminée");
+                    finDePartie.Position = new Vector2(TurkeySmashGame.WindowMid.X, TurkeySmashGame.WindowMid.Y);
+                }
+
             if (OptionsCombat.TypePartieSelect == "temps")
             {
                 if (timer >= OptionsCombat.TempsPartie * 1000 * 60)
                 {
+                    isFinish = true;
                     timer = 0;
                     Results.SaveResults(tabScores, "temps");
-                    Basic.SetScreen(new EndGameScreen());
                 }
             }
             if (OptionsCombat.TypePartieSelect == "vie")
@@ -461,7 +481,7 @@ namespace TurkeySmash
                     for (int i = 0; i < personnages.Length; i++)
                         if (personnages[i] != null)
                             Results.SaveResults(scoresLife, "vie");
-                    Basic.SetScreen(new EndGameScreen());
+                    isFinish = true;
                 }
             }
         }
