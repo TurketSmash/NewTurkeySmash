@@ -13,6 +13,8 @@ namespace TurkeySmash
         #region Fields 
 
         private bool etat = false;
+        public Color colorOn = Color.DarkViolet;
+        public Color colorOff = Color.Indigo;
 
         #endregion
 
@@ -48,9 +50,9 @@ namespace TurkeySmash
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (etat)
-                Color = Color.DarkViolet;
+                Color = colorOn;
             else
-                Color = Color.Indigo;
+                Color = colorOff;
 
             base.Draw(spriteBatch);
         }

@@ -50,10 +50,14 @@ namespace TurkeySmash
 
         public EndGameScreen()
         {
-            boutonRejouer = new BoutonTexte(TurkeySmashGame.WindowSize.X / 4, TurkeySmashGame.WindowSize.Y / 10);
-            boutonMainMenu = new BoutonTexte(3 * TurkeySmashGame.WindowSize.X / 4, TurkeySmashGame.WindowSize.Y / 10);
+            boutonRejouer = new BoutonTexte(TurkeySmashGame.WindowSize.X * 0.15f , TurkeySmashGame.WindowSize.Y * 0.1f);
+            boutonMainMenu = new BoutonTexte(TurkeySmashGame.WindowSize.X * 0.85f, TurkeySmashGame.WindowSize.Y * 0.1f);
             boutonRejouer.Texte = "Rejouer";
             boutonMainMenu.Texte = "Menu Principal";
+            boutonRejouer.SizeText = 1.2f;
+            boutonMainMenu.SizeText = 1f;
+            boutonRejouer.colorOn = Color.Red; boutonRejouer.colorOff = Color.DarkRed;
+            boutonMainMenu.colorOn = Color.Red; boutonMainMenu.colorOff = Color.DarkRed;
 
             #region affichage joueurs
             float YjoueurPos = Ypos * 0.333f;

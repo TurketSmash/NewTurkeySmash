@@ -47,8 +47,6 @@ namespace TurkeySmash
         Sprite invincible = new Sprite();
         #endregion
         int nextItemSpawn;
-        int itemSpawnMin = 10;
-        int itemSpawnMax = 15;
         int respawnDelay = 0;
 
         int nextBonusSpawn;
@@ -58,9 +56,9 @@ namespace TurkeySmash
 
         public Level(World _world, string backgroundName, Character[] personnages, ContentManager content)
         {
-            nextItemSpawn = ((itemSpawnMin + itemSpawnMax) / 2) * 1000; //init des premier spawn
-            bonusSpawnMax = (int)(itemSpawnMax * 1.5f);
-            bonusSpawnMin = (int)(itemSpawnMin * 1.5f);
+            nextItemSpawn = ((OptionsCombat.itemSpawnMin + OptionsCombat.itemSpawnMax) / 2) * 1000; //init des premier spawn
+            bonusSpawnMax = (int)(OptionsCombat.itemSpawnMax * 1.5f);
+            bonusSpawnMin = (int)(OptionsCombat.itemSpawnMin * 1.5f);
             nextBonusSpawn = ((bonusSpawnMax + bonusSpawnMin) / 2) * 1000;
             this.world = _world;
             this.personnages = personnages;
@@ -472,7 +470,7 @@ namespace TurkeySmash
         }
         void resetItemSpawnTimer()
         {
-            nextItemSpawn = RandomProvider.GetRandom().Next(itemSpawnMin, itemSpawnMax);
+            nextItemSpawn = RandomProvider.GetRandom().Next(OptionsCombat.itemSpawnMin, OptionsCombat.itemSpawnMax);
             nextItemSpawn *= 1000;
         }
         void resetBonusSpawnTimer()
