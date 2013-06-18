@@ -45,7 +45,6 @@ namespace TurkeySmash
         bool isProtecting = false;
         bool invincible = false;
         bool powerUp = false;
-        bool isCharging = false;
         int frameHit = 0;
         Vector2 oldPosition; // variable pour calcul la chute du personnage
         Vector2 newPosition;
@@ -54,7 +53,6 @@ namespace TurkeySmash
 
         List<ParticleEngine> particles = new List<ParticleEngine>();
         List<AnimatedSprite> animatedEffects = new List<AnimatedSprite>();
-        AnimatedSprite chargedDiamond;
         List<Texture2D> textures = new List<Texture2D>();
 
         int oldPourcent;
@@ -126,22 +124,25 @@ namespace TurkeySmash
             punchObjet = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\punchboite");
             punchBonus = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\bonus");
             teleportation = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\Teleportation");
-
-            chargedDiamond = new AnimatedSprite(ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X + (lookingRight ? 0.2f : -0.2f), bodyPosition.Y - 0.15f)), new AnimatedSpriteDef()
-            {
-                AssetName = "Jeu\\effets\\chargedStar",
-                FrameRate = 60,
-                FrameSize = new Point(16, 16),
-                Loop = true,
-                NbFrames = new Point(2, 1),
-            });
-            chargedDiamond.color = Color.Yellow;
         }
 
         #endregion 
 
         public override void Update(GameTime gameTime)
         {
+            #region Reset Anim
+
+            if (FinishedAnimation)
+            {
+                inAction = false;
+                Reset(new Point(0, 1));
+                TimeBetweenFrame = 100;
+                canHit = true;
+                isHit = false;
+            }
+
+            #endregion
+
             position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize; // update de la position de l'image
             newPosition = bodyPosition;
             newColor = color;
@@ -193,30 +194,6 @@ namespace TurkeySmash
 
             if (pourcent > oldPourcent)
                 isHit = true;
-
-            #region Update Compteurs
-
-            if (!inAction)
-                compteurRoulade += time;
-            else
-                compteurRoulade = 0;
-
-            if (isProtecting)
-                compteurProtection += time;
-            else
-                compteurProtection -= compteurProtection > 0 ? time : 0;
-
-            if (invincible)
-                compteurInvincible += time;
-            else
-                compteurInvincible = 0;
-
-            if (powerUp)
-                compteurPowerUp+= time;
-            else
-                compteurPowerUp = 0;
-
-            #endregion
 
             #region Protection
 
@@ -276,19 +253,6 @@ namespace TurkeySmash
 
             #endregion
 
-            #region Reset Anim
-
-            if (FinishedAnimation)
-            {
-                inAction = false;
-                Reset(new Point(0, 1));
-                TimeBetweenFrame = 100;
-                canHit = true;
-                isHit = false;
-            }
-
-            #endregion
-
             #region Chute
 
             if (newPosition.Y > (oldPosition.Y + 0.1f) & !inAction)
@@ -311,33 +275,6 @@ namespace TurkeySmash
             }
 
             #endregion
-
-            body.OnCollision += bodyOnCollision;
-            oldPourcent = pourcent;
-            oldDirection = direction;
-            direction = Direction.Nodirection;
-            pourcent = userdata.Pourcent;
-            oldPosition = newPosition;
-            lastColor = newColor;
-            isMoving = false;
-            isProtecting = false;
-
-            base.Update(gameTime);
-
-            if (isCharging)
-            {
-                inAction = true;
-                CurrentFrame.X = 0;
-                definition.Loop = false;
-                forceItem = 0.3f;
-                chargedDiamond.Update(gameTime, ConvertUnits.ToDisplayUnits(new Vector2(bodyPosition.X + (lookingRight ? 0.1f : -0.1f), bodyPosition.Y - 0.1f)));
-                if (isHit)
-                {
-                    forceItem = 0.3f;
-
-                }
-            }
-            isCharging = false;
 
             #region Filtre couleur + Anim coup reçu
 
@@ -378,6 +315,42 @@ namespace TurkeySmash
             }
 
             #endregion
+
+            #region Update Compteurs
+
+            if (!inAction)
+                compteurRoulade += time;
+            else
+                compteurRoulade = 0;
+
+            if (isProtecting)
+                compteurProtection += time;
+            else
+                compteurProtection -= compteurProtection > 0 ? time : 0;
+
+            if (invincible)
+                compteurInvincible += time;
+            else
+                compteurInvincible = 0;
+
+            if (powerUp)
+                compteurPowerUp += time;
+            else
+                compteurPowerUp = 0;
+
+            #endregion
+
+            body.OnCollision += bodyOnCollision;
+            oldPourcent = pourcent;
+            oldDirection = direction;
+            direction = Direction.Nodirection;
+            pourcent = userdata.Pourcent;
+            oldPosition = newPosition;
+            lastColor = newColor;
+            isMoving = false;
+            isProtecting = false;
+
+            base.Update(gameTime);
         }
 
         private bool bodyOnCollision(Fixture fixA, Fixture fixB, Contact contact)
@@ -439,7 +412,7 @@ namespace TurkeySmash
 
         protected void Attack()
         {
-            if (!inAction & canHit & !isCharging)
+            if (!inAction & canHit)
             {
                 x = 0;
                 if (direction == Direction.Up)
@@ -485,7 +458,6 @@ namespace TurkeySmash
                 // Si la direction est vers le bas et le personnage est en l'air y = 1
                 // Si c'est aucune des deux directions y = 0;
             }
-            isCharging = true;
         }
         protected void Jump()
         {
@@ -555,8 +527,6 @@ namespace TurkeySmash
                 effect.Draw(spriteBatch);
             foreach (ParticleEngine particle in particles)
                 particle.Draw(spriteBatch);
-            if (isCharging)
-                chargedDiamond.Draw(spriteBatch);
         }
     }
 }
