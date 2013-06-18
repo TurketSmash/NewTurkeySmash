@@ -27,7 +27,7 @@ namespace TurkeySmash
 
         protected bool canJump = true;
         protected bool inAction = false;
-        public bool lookingRight = true;
+        protected bool lookingRight = true;
         protected bool jump = false;
         protected bool isMoving = false;
         protected Direction direction;
@@ -293,7 +293,6 @@ namespace TurkeySmash
                     FinishedAnimation = true;
                 }
                 inAction = true;
-                canHit = false;
                 definition.Loop = false;
             }
             else if (i > 0)
@@ -306,7 +305,6 @@ namespace TurkeySmash
                     definition.Loop = false;
                     FinishedAnimation = true;
                 }
-                canHit = false;
             }
             else
             {
