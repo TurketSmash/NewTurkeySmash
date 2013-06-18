@@ -17,6 +17,8 @@ namespace TurkeySmash
         private ImageMenu silverFrame;
         private ImageMenu bronzeFrame;
         private ImageMenu bronzeFrame2;
+        private Point frameSize;
+        private Point nbFrame;
 
         float Xpos = TurkeySmashGame.WindowSize.X;
         float Ypos = TurkeySmashGame.WindowSize.Y;
@@ -266,6 +268,47 @@ namespace TurkeySmash
                         timers[i].NameFont = "pourcent";
                         timers[i].Load(TurkeySmashGame.content, textes);
                     }
+                }
+
+                switch (SelectionPersonnage.listPerso[i])
+                {
+                    case "naruto" :
+                        frameSize = new Point(88, 88);
+                        nbFrame = new Point(5, 11);
+                        break;
+                    case "sakura" : 
+                        frameSize = new Point(80, 80);
+                        nbFrame = new Point(6, 11);
+                        break;
+                    case "sai":
+                        frameSize = new Point(80, 80);
+                        nbFrame = new Point(6, 11);
+                        break;
+                    case "suigetsu":
+                        frameSize = new Point(92, 92);
+                        nbFrame = new Point(6, 11);
+                        break;
+                    case "turkey":
+                        frameSize = new Point(46, 46);
+                        nbFrame = new Point(5, 11);
+                        break;
+                    default :
+                        frameSize = new Point(88, 88);
+                        nbFrame = new Point(5, 11);
+                        break;
+                }
+                if (SelectionPersonnage.listPerso[i] != null)
+                {
+                    string assetName = "Jeu\\" + SelectionPersonnage.listPerso[i];
+                    animJoueurs[i] = new AnimatedSprite(new Vector2(Xpos / 4 * i + 90, Ypos * 0.39f), new AnimatedSpriteDef()
+                    {
+                        AssetName = assetName,
+                        FrameRate = 60,
+                        FrameSize = frameSize,
+                        Loop = true,
+                        NbFrames = nbFrame
+                    });
+                    animJoueurs[i].CurrentFrame.Y = 1;
                 }
             }
         }

@@ -27,6 +27,7 @@ namespace TurkeySmash
         private GamePadState oldStateG;
         private SoundEffect soundSelect;
         private SoundEffect soundEnter;
+        protected AnimatedSprite[] animJoueurs = new AnimatedSprite[4];
 
         #endregion
 
@@ -106,6 +107,11 @@ namespace TurkeySmash
                         break;
                 }
             }
+
+            for (int i = 0; i < 4; i++)
+                if (animJoueurs[i] != null)
+                    animJoueurs[i].Update(gameTime);
+
             oldStateK = newStateK;
             oldStateG = newStateG;
         }
@@ -131,6 +137,9 @@ namespace TurkeySmash
             {
                 texte.Draw(TurkeySmashGame.spriteBatch);
             }
+            for (int i = 0; i < 4; i++)
+                if (animJoueurs[i] != null)
+                    animJoueurs[i].Draw(TurkeySmashGame.spriteBatch);
 
             TurkeySmashGame.spriteBatch.End();
         }

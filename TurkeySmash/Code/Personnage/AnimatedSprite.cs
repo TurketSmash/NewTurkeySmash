@@ -17,7 +17,7 @@ namespace TurkeySmash
         public AnimatedSpriteDef definition;
         private Texture2D texture;
         protected Vector2 position; // position en haut à gauche en DisplayUnits
-        protected Point CurrentFrame;
+        public Point CurrentFrame;
         public bool FinishedAnimation = false;
         public double TimeBetweenFrame = 100;
         protected double lastFrameUpdatedTime = 0;
