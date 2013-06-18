@@ -9,7 +9,7 @@ namespace TurkeySmash
     {
         #region Fields 
 
-        public static bool French = true;
+        public static bool French = false;
 
         private BoutonTexte bouton1;
         private BoutonTexte bouton2;
