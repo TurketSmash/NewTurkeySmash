@@ -114,11 +114,6 @@ namespace TurkeySmash
 
         public void Update(GameTime gameTime)
         {
-            //debug
-            if ((Keyboard.GetState().IsKeyDown(Keys.NumPad1)))
-                spawnItem(0, Vector2.Zero);
-
-
             nextItemSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             nextBonusSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;

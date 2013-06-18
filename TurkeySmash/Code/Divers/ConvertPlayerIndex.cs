@@ -21,7 +21,6 @@ namespace TurkeySmash
                 case PlayerIndex.Four:
                     return 4;
             }
-            Console.WriteLine("Erreur <PlayerIndex2Int> : Erreur index.");
             return -1;
         }
         public static PlayerIndex Int2PlayerIndex(int integer)
@@ -37,7 +36,6 @@ namespace TurkeySmash
                 case 4:
                     return PlayerIndex.Four;
             }
-            Console.WriteLine("Erreur <Int2PlayerIndex> : int != 1,2,3 ou 4. (PlayerIndex.One returned)");
             return PlayerIndex.One;
         }
     }
