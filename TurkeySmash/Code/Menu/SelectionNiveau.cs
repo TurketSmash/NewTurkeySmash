@@ -28,7 +28,7 @@ namespace TurkeySmash
         {
             texteBoutons.Add(antibug1); texteBoutons.Add(antibug2); texteBoutons.Add(antibug3); texteBoutons.Add(antibug4);
             bouton5txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.88f);
-            bouton5txt.Texte = "Retour";
+            bouton5txt.Texte = Langue.French ? "Retour" : "Back";
             bouton5txt.NameFont = "MenuFont";
             bouton5txt.SizeText = 1;
             texteBoutons.Add(bouton5txt);
@@ -37,7 +37,7 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
-            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-SelectionDuNiveau");
+            nomMenu.Load(TurkeySmashGame.content, Langue.French ? "Menu1\\FR-SelectionDuNiveau" : "Menu1\\EN-LevelSelection");
             nomMenu.Position = new Microsoft.Xna.Framework.Vector2(760, 80);
 
             bouton1.Load(TurkeySmashGame.content, "Menu1\\PersoLevel\\BoutonLevel1ON", "Menu1\\PersoLevel\\BoutonLevel1OFF", boutons);

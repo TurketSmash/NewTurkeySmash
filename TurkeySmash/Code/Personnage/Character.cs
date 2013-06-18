@@ -58,16 +58,18 @@ namespace TurkeySmash
         int oldPourcent;
         int i = 0; // compteur nombre de frame filtre rouge
         int compteur = 0;
+        int compteur0 = 0;
         int compteurRoulade = 0;
         int compteurProtection = 0;
         int compteurInvincible = 0;
         int compteurPowerUp = 0;
+        float puissPowerUp = 1;
         const int tempsProtection = 5000; // en ms
         const int tempsInvincibilite = 30000; // 30 sec
         const int tempsPowerUp = 15000; // 15 sec
         int x = 0;
         int y = 0;
-        int pourcentageInflige = 3;
+        int pourcentageInflige = 7;
 
         int allongeCoup = 18;
         int forceJump = 70;
@@ -181,7 +183,7 @@ namespace TurkeySmash
             if (inAction & CurrentFrame.X == frameHit & canHit)
             {
                 punchMiss.Play();
-                RectPhysicsObject hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + bodySize.X / 2) * x,
+                RectPhysicsObject hit = new RectPhysicsObject(world, new Vector2(ConvertUnits.ToDisplayUnits(body.Position.X) + (allongeCoup + (bodySize.X / 2)) * x,
                     ConvertUnits.ToDisplayUnits(body.Position.Y) + (allongeCoup + bodySize.Y) * y), 1, new Vector2(bodySize.X / 2, bodySize.Y / 2));
                 hit.body.IsSensor = true;
                 hit.body.OnCollision += hitOnColision;
@@ -242,12 +244,11 @@ namespace TurkeySmash
             }
             else
             {
-                compteur += time;
-                if (powerUp & compteur > 600)
+                compteur0 += time;
+                if (powerUp & compteur0 > 600)
                 {
-                    forceItem = 0.8f;
                     color = new Color(210,70,90);
-                    compteur = 0;
+                    compteur0 = 0;
                 }
             }
 
@@ -332,9 +333,15 @@ namespace TurkeySmash
                 compteurInvincible = 0;
 
             if (powerUp)
+            {
                 compteurPowerUp += time;
+                puissPowerUp = 1.5f;
+            }
             else
-                compteurPowerUp = 0;
+            {
+                puissPowerUp = 1;
+                compteurPowerUp = 1;
+            }
 
             #endregion
 
@@ -361,7 +368,7 @@ namespace TurkeySmash
         {
             FarseerBodyUserData dataB = (FarseerBodyUserData)fixB.Body.UserData;
             FarseerBodyUserData dataA = (FarseerBodyUserData)body.UserData;
-            int pourcentB = 0;
+            int pourcentB;
 
             if (fixB.Body.UserData != null)
             {
@@ -388,7 +395,7 @@ namespace TurkeySmash
                         dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
                         dataB.Pourcent = dataB.Pourcent + pourcentageInflige;
                         pourcentB = dataB.Pourcent;
-                        fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem *3);
+                        fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 35)) * forceItem *1.2f * puissPowerUp);
                         particles.Add(new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0, 0), Color.White, 4, 500, 1.2f));
                     }
                     else
@@ -399,7 +406,7 @@ namespace TurkeySmash
                 if (dataB.IsItem)
                 {
                     punchObjet.Play();
-                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 12 : -12, 2 * 2 - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
+                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 12 : -12, 2 * 2 - 0.5f) * forceItem * puissPowerUp);
                 }
             }
             else

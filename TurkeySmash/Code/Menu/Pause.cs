@@ -21,13 +21,13 @@ namespace TurkeySmash
         public Pause()
         {
             bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.4f);
-            bouton1txt.Texte = "Retour";
+            bouton1txt.Texte =Langue.French ? "Retour" : "Back";
 
             bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.6f);
-            bouton2txt.Texte = "Selection Personnages";
+            bouton2txt.Texte = Langue.French ? "Selection Personnages" : "Characters Selection";
 
             bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.8f);
-            bouton3txt.Texte = "Menu Principal";
+            bouton3txt.Texte = Langue.French ? "Menu Principal" : "Main Menu";
 
             bouton1txt.NameFont = bouton2txt.NameFont = bouton3txt.NameFont = "MenuFont";
             texteBoutons.Add(bouton1txt); texteBoutons.Add(bouton2txt); texteBoutons.Add(bouton3txt);

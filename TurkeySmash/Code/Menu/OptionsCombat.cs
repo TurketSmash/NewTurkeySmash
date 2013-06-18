@@ -32,35 +32,35 @@ namespace TurkeySmash
             if (TypePartieSelect == "vie")
             {
                 bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.37f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
-                bouton1txt.Texte = "Type de partie : Vies";
+                bouton1txt.Texte = Langue.French ? "Type de partie : Vies" : "Game's Mode : Lifes";
                 bouton1txt.SizeText = 1;
                 texteBoutons.Add(bouton1txt);
 
                 bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.42f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
-                bouton2txt.Texte = "Nombre de vies: " + NombreVies;
+                bouton2txt.Texte = (Langue.French ? "Nombre de vies : " : "Lifes : ") + NombreVies;
                 bouton2txt.SizeText = 1;
                 texteBoutons.Add(bouton2txt);
             }
             else
             {
                 bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.37f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
-                bouton1txt.Texte = "Type de Partie : Temps";
+                bouton1txt.Texte = Langue.French ? "Type de Partie : Temps" : "Game's Mode : Time";
                 bouton1txt.SizeText = 1;
                 texteBoutons.Add(bouton1txt);
 
                 bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.42f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
-                bouton2txt.Texte = "Temps par Partie: " + TempsPartie + " min";
+                bouton2txt.Texte = (Langue.French ? "Temps par Partie : " : "Game's Duration : ") + TempsPartie + " min";
                 bouton2txt.SizeText = 1;
                 texteBoutons.Add(bouton2txt);
             }
 
-            bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.37f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
-            bouton3txt.Texte = "Objets et bonus: " + frequenceObjetsBonus;
+            bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
+            bouton3txt.Texte = (Langue.French ? "Objets et bonus : " : "Items and Bonuses : ") + frequenceObjetsBonus;
             bouton3txt.SizeText = 1;
             texteBoutons.Add(bouton3txt);
 
             bouton4txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.42f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
-            bouton4txt.Texte = "Retour";
+            bouton4txt.Texte = Langue.French ? "Retour" : "Back";
             bouton4txt.SizeText = 1;
             texteBoutons.Add(bouton4txt);
 
@@ -71,7 +71,7 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
-            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-OptionsDeJeu");
+            nomMenu.Load(TurkeySmashGame.content, Langue.French ? "Menu1\\FR-OptionsDeJeu" : "Menu1\\EN-GameOptions");
             nomMenu.Position = new Microsoft.Xna.Framework.Vector2(630, 100);
 
 
@@ -94,14 +94,14 @@ namespace TurkeySmash
             if (TypePartieSelect == "vie")
             {
                 TypePartieSelect = "temps";
-                bouton1txt.Texte = "Type de Partie : Temps";
-                bouton2txt.Texte = "Temps par Partie: " + TempsPartie + " min";
+                bouton1txt.Texte = Langue.French ? "Type de Partie : Temps" : "Game's Mode : Time";
+                bouton2txt.Texte = (Langue.French ? "Temps par Partie : " : "Game's Duration : ") + TempsPartie + " min";
             }
             else
             {
                 TypePartieSelect = "vie";
-                bouton1txt.Texte = "Type de Partie : Vies";
-                bouton2txt.Texte = "Nombre de Vies: " + NombreVies;
+                bouton1txt.Texte = Langue.French ? "Type de Partie : Vies": "Game's Mode : Lifes";
+                bouton2txt.Texte = (Langue.French ? "Nombre de Vies : " : "Lifes : ") + NombreVies;
             }
         }
 
@@ -109,61 +109,63 @@ namespace TurkeySmash
         {
             if (TypePartieSelect == "vie")
             {
+                string gogole = Langue.French ? "Nombre de Vies : " : "Lifes : ";
                 switch (NombreVies)
                 {
                     case 1:
                         NombreVies = 2;
-                        bouton2txt.Texte = "Nombre de Vies : 2";
+                        bouton2txt.Texte = gogole + 2;
                         break;
 
                     case 2:
                         NombreVies = 3;
-                        bouton2txt.Texte = "Nombre de Vies : 3";
+                        bouton2txt.Texte = gogole +3;
                         break;
 
                     case 3:
                         NombreVies = 5;
-                        bouton2txt.Texte = "Nombre de Vies : 5";
+                        bouton2txt.Texte = gogole + 5;
                         break;
 
                     case 5:
                         NombreVies = 10;
-                        bouton2txt.Texte = "Nombre de Vies : 10";
+                        bouton2txt.Texte = gogole + 10;
                         break;
 
                     case 10:
                         NombreVies = 1;
-                        bouton2txt.Texte = "Nombre de Vies : 1";
+                        bouton2txt.Texte = gogole + 1;
                         break;
                 }
             }
             else
             {
+                string GOGOOOLE = Langue.French ? "Temps par Partie : " : "Game's Duration : ";
                 switch (TempsPartie)
                 {
                     case 1:
                         TempsPartie = 2;
-                        bouton2txt.Texte = "Temps par Partie : 2 min";
+                        bouton2txt.Texte = GOGOOOLE +"2 min";
                         break;
 
                     case 2:
                         TempsPartie = 3;
-                        bouton2txt.Texte = "Temps par Partie : 3 min";
+                        bouton2txt.Texte = GOGOOOLE +"3 min";
                         break;
 
                     case 3:
                         TempsPartie = 5;
-                        bouton2txt.Texte = "Temps par Partie : 5 min";
+                        bouton2txt.Texte = GOGOOOLE +"5 min";
                         break;
 
                     case 5:
                         TempsPartie = 10;
-                        bouton2txt.Texte = "Temps par Partie : 10 min";
+                        bouton2txt.Texte = GOGOOOLE +"10 min";
                         break;
 
                     case 10:
                         TempsPartie = 1;
-                        bouton2txt.Texte = "Temps par Partie : 1 min";
+                        bouton2txt.Texte = GOGOOOLE +"1 min";
                         break;
                 }
             }
@@ -175,31 +177,33 @@ namespace TurkeySmash
             switch (frequenceObjetsBonus)
             {
                 case "Normal":
-                    itemSpawnMin = 4;
-                    itemSpawnMax = 8;
-                    frequenceObjetsBonus = "Souvent";
-                    bouton3txt.Texte = "Objets et bonus: Souvent";
+                    itemSpawnMin = 10;
+                    itemSpawnMax = 15;
+                    frequenceObjetsBonus = Langue.French ? "Souvent" : "Often";
+                    bouton3txt.Texte = Langue.French ? "Objets et bonus : Souvent" : "Items and Bonuses : Often";
                     break;
 
                 case "Souvent":
+                case "Often":
                     itemSpawnMin = 90000;
                     itemSpawnMax = 90010;
-                    frequenceObjetsBonus = "Jamais";
-                    bouton3txt.Texte = "Objets et bonus: Jamais";
+                    frequenceObjetsBonus = Langue.French ? "Jamais" : "Never";
+                    bouton3txt.Texte = Langue.French ? "Objets et bonus : Jamais" : "Items and Bonuses : Never";
                     break;
 
                 case "Jamais":
-                    itemSpawnMin = 17;
-                    itemSpawnMax = 25;
+                case "Never":
+                    itemSpawnMin = 30;
+                    itemSpawnMax = 40;
                     frequenceObjetsBonus = "Rare";
-                    bouton3txt.Texte = "Objets et bonus: Rare";
+                    bouton3txt.Texte = Langue.French ? "Objets et bonus : Rare" : "Items and Bonuses : Rare";
                     break;
 
                 case "Rare":
-                    itemSpawnMin = 10;
-                    itemSpawnMax = 15;
+                    itemSpawnMin = 20;
+                    itemSpawnMax = 30;
                     frequenceObjetsBonus = "Normal";
-                    bouton3txt.Texte = "Objets et bonus: Normal";
+                    bouton3txt.Texte = Langue.French ? "Objets et bonus : Normal" : "Items and Bonuses : Normal";
                     break;
             }
         }

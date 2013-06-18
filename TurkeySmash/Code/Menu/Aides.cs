@@ -19,7 +19,7 @@ namespace TurkeySmash
         public Aides()
         {
             continuRetour = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
-            continuRetour.Texte = "Continuer";
+            continuRetour.Texte = Langue.French ?"Continuer" : "Next";
             texteBoutons.Add(continuRetour);
             aidesImages = new Sprite();
 
@@ -29,7 +29,7 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
-            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-Aides");
+            nomMenu.Load(TurkeySmashGame.content, Langue.French ? "Menu1\\FR-Aides" : "Menu1\\EN-Help");
             nomMenu.Position = new Microsoft.Xna.Framework.Vector2(280, 100);
             aidesImages.Load(TurkeySmashGame.content, nomImage);
             aidesImages.Position = new Microsoft.Xna.Framework.Vector2(900, 450);
@@ -55,7 +55,7 @@ namespace TurkeySmash
                     nomImage = "Menu1\\Aides-controlsPC";
                     aidesImages.Load(TurkeySmashGame.content, nomImage);
                     compteurNbPages++;
-                    continuRetour.Texte = "Quitter";
+                    continuRetour.Texte =Langue.French ? "Quitter" : "Quit";
                 }
             }
         }

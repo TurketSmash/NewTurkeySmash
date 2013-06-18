@@ -30,19 +30,19 @@ namespace TurkeySmash
             nombreIA = 1;
 
             bouton1txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
-            bouton1txt.Texte = "Nombre de joueur : " + nombreJoueur;
+            bouton1txt.Texte = (Langue.French ? "Nombre de Joueur : " : "Players : ") + nombreJoueur;
             texteBoutons.Add(bouton1txt);
 
             bouton2txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
-            bouton2txt.Texte = "Nombre d'IA : " + nombreIA;
+            bouton2txt.Texte = (Langue.French ? "Nombre d'IA : " : "IAs : ") + nombreIA;
             texteBoutons.Add(bouton2txt);
 
             bouton3txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
-            bouton3txt.Texte = "Continuer";
+            bouton3txt.Texte = Langue.French ? "Continuer" : "Next";
             texteBoutons.Add(bouton3txt);
 
             bouton4txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.35f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
-            bouton4txt.Texte = "Retour";
+            bouton4txt.Texte = Langue.French ? "Retour" : "Back";
             texteBoutons.Add(bouton4txt);
 
             bouton1txt.NameFont = bouton2txt.NameFont = bouton3txt.NameFont = bouton4txt.NameFont = "MenuFont";
@@ -51,9 +51,12 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
-            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-SelectionDesPersonnages");
+            nomMenu.Load(TurkeySmashGame.content, Langue.French ? "Menu1\\FR-SelectionDesPersonnages" : "Menu1\\EN-CharactersSelection");
             nomMenu.Resize(TurkeySmashGame.manager.PreferredBackBufferWidth);
-            nomMenu.Position = new Microsoft.Xna.Framework.Vector2(1000, 100);
+            if (Langue.French)
+                nomMenu.Position = new Microsoft.Xna.Framework.Vector2(1000, 100);
+            else
+                nomMenu.Position = new Microsoft.Xna.Framework.Vector2(800, 100);
 
             bouton1.Load(TurkeySmashGame.content, "Menu1\\BoutonON Allongé 2", "Menu1\\BoutonOFF Allongé 2", boutons);
             bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
@@ -80,7 +83,7 @@ namespace TurkeySmash
                 nombreJoueur = nombreJoueur + 1;
             else
                 nombreJoueur = 0;
-            bouton1txt.Texte = "Nombre de Joueur : " + nombreJoueur;
+            bouton1txt.Texte = (Langue.French ? "Nombre de Joueur : " : "Players : ") + nombreJoueur;
         }
 
         public override void Bouton2()
@@ -89,7 +92,7 @@ namespace TurkeySmash
                 nombreIA = nombreIA + 1;
             else
                 nombreIA = 0;
-            bouton2txt.Texte = "Nombre d'IA : " + nombreIA;
+            bouton2txt.Texte = (Langue.French ? "Nombre d'IA : ": "IAs : ") + nombreIA;
         }
 
         public override void Bouton3()

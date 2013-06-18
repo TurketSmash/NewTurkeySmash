@@ -55,8 +55,8 @@ namespace TurkeySmash
         {
             boutonRejouer = new BoutonTexte(TurkeySmashGame.WindowSize.X * 0.15f , TurkeySmashGame.WindowSize.Y * 0.1f);
             boutonMainMenu = new BoutonTexte(TurkeySmashGame.WindowSize.X * 0.85f, TurkeySmashGame.WindowSize.Y * 0.1f);
-            boutonRejouer.Texte = "Rejouer";
-            boutonMainMenu.Texte = "Menu Principal";
+            boutonRejouer.Texte = Langue.French ? "Rejouer" : "Replay";
+            boutonMainMenu.Texte = Langue.French ?"Menu Principal" : "Main Menu";
             boutonRejouer.SizeText = 1.2f;
             boutonMainMenu.SizeText = 1f;
             boutonRejouer.colorOn = Color.Red; boutonRejouer.colorOff = Color.DarkRed;
@@ -69,7 +69,7 @@ namespace TurkeySmash
                 if (Results.ResultsBoard[i][1] != -999) // Si il y a 3 joueurs
                 {
                     joueurs[i] = new Texte((Xpos / 8) + ((Xpos / 4) * (Results.ResultsBoard[i][0] - 1)), YjoueurPos);
-                    joueurs[i].Texte = "Joueur " + Results.ResultsBoard[i][0];
+                    joueurs[i].Texte = Langue.French ? "Joueur " : "Player " + Results.ResultsBoard[i][0];
                 }
 
             #endregion
@@ -97,7 +97,7 @@ namespace TurkeySmash
             posClassement[3] = posClassement[2] + Xpos / 4;
 
             classement[0] = new Texte(posClassement[Results.ResultsBoard[0][0] - 1], YclassPos);
-            classement[0].Texte = "1er";
+            classement[0].Texte = Langue.French ?"1er":"1st";
 
             classement[1] = new Texte(posClassement[Results.ResultsBoard[1][0] - 1], YclassPos);
             classement[1].Texte = "2nd";
@@ -105,13 +105,13 @@ namespace TurkeySmash
             if (Results.ResultsBoard[2][1] != -999) // Si il y a 3 joueurs
             {
                 classement[2] = new Texte(posClassement[Results.ResultsBoard[2][0] - 1], YclassPos);
-                classement[2].Texte = "3e";
+                classement[2].Texte = Langue.French ? "3e" : "3rd";
             }
 
             if (Results.ResultsBoard[3][1] != -999) // Si il y a 4 joueurs
             {
                 classement[3] = new Texte(posClassement[Results.ResultsBoard[3][0] - 1], YclassPos);
-                classement[3].Texte = "4e";
+                classement[3].Texte = Langue.French ?"4e" :"4th";
             }
             #endregion
             #region affichage results
@@ -167,7 +167,7 @@ namespace TurkeySmash
                                 con = 1;
                             n += con;
                             kills[j][i] = new Texte(posKills[Results.ResultsBoard[i][0] - 1], Ypos * (0.730f + (0.092f * j)));
-                            kills[j][i].Texte = "Joueur " + n + " tues : " + Results.ResultsBoard[i][3 + (n - 1)];
+                            kills[j][i].Texte = Langue.French ?"Joueur " : "Player " + n + (Langue.French ?" tues : ":" killed : ") + Results.ResultsBoard[i][3 + (n - 1)];
                         }
                     }
                 }
@@ -193,7 +193,7 @@ namespace TurkeySmash
                         }
                         else
                         {
-                            timers[i].Texte = "Dernier" + "\n" + "debout"; //last one standing
+                            timers[i].Texte = Langue.French ? ("Dernier" + "\n" + "Debout") : ("Last One" + "\n" + "Standing"); //last one standing
                         }
                     }
             }

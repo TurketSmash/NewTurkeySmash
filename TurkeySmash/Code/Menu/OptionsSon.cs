@@ -48,8 +48,8 @@ namespace TurkeySmash
             bouton2 = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.5f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
             bouton1MOINS.Texte = "Vol-";
             bouton1PLUS.Texte = "Vol+";
-            bouton1Change.Texte = "Change de musique";
-            bouton2.Texte = "Retour";
+            bouton1Change.Texte = Langue.French ? "Change de musique" : "Change Music";
+            bouton2.Texte = Langue.French ?"Retour":"Back";
 
             texteBoutons.Add(antibug1); texteBoutons.Add(antibug2); texteBoutons.Add(antibug3); texteBoutons.Add(antibug4);
         }

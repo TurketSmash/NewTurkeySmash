@@ -32,7 +32,7 @@ namespace TurkeySmash
             yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
 
             jouer = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
-            jouer.Texte = "Jouer";
+            jouer.Texte = Langue.French ? "Jouer" : "Play";
             texteBoutons.Add(jouer);
 
             options = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
@@ -40,11 +40,11 @@ namespace TurkeySmash
             texteBoutons.Add(options);
 
             aides = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
-            aides.Texte = "Aides";
+            aides.Texte =Langue.French ? "Aides" : "Help" ;
             texteBoutons.Add(aides);
 
             quitter = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
-            quitter.Texte = "Quitter";
+            quitter.Texte =Langue.French ? "Quitter" : "Quit";
             texteBoutons.Add(quitter);
 
             jouer.NameFont = options.NameFont = aides.NameFont = quitter.NameFont = "MenuFont";
@@ -57,7 +57,7 @@ namespace TurkeySmash
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(song);
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
-            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-MenuPrincipal");
+            nomMenu.Load(TurkeySmashGame.content, Langue.French ? "Menu1\\FR-MenuPrincipal" : "Menu1\\EN-MainMenu");
             nomMenu.Position = new Microsoft.Xna.Framework.Vector2(730, 120);
 
             bouton1.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);

@@ -119,8 +119,6 @@ namespace TurkeySmash
                     else
                         isMoving = false;
             }
-
-
             if (fuir)
             {
                 if ((bodyPosition.X < positionXLaPlusProche + 1.7) && (bodyPosition.X > positionXLaPlusProche))

@@ -67,28 +67,6 @@ namespace TurkeySmash
 
             #region loadPersonnage
 
-            /*
-            #region Debug
-
-            personnages[0] = new Joueur(world, level.spawnPoints[0], 1f, new Vector2(42, 55), PlayerIndex.Three, new AnimatedSpriteDef()
-            {
-                AssetName = "Jeu\\naruto",
-                FrameRate = 60,
-                FrameSize = new Point(88, 88),
-                Loop = true,
-                NbFrames = new Point(5, 1),
-            });
-            personnages[1] = new Joueur(world, level.spawnPoints[1], 1f, new Vector2(40, 50), Convert.Int2PlayerIndex(i + 1), new AnimatedSpriteDef()
-            {
-                AssetName = "Jeu\\sakura",
-                FrameRate = 60,
-                FrameSize = new Point(80, 80),
-                Loop = true,
-                NbFrames = new Point(6, 1),
-            });
-
-            #endregion
-            */
             
             #region Selection persoonage
 
@@ -216,7 +194,11 @@ namespace TurkeySmash
                         }
                         #endregion
                     }
-                    personnages[i].body.Mass = fixedMass;
+                    FarseerBodyUserData userdata = (FarseerBodyUserData)personnages[i].body.UserData;
+                    if (userdata.AssociatedName != "Jeu\\turkey")
+                        personnages[i].body.Mass = fixedMass;
+                    else
+                        personnages[i].body.Mass = 0.18f;
                     i = i + 1;
                 }
             }

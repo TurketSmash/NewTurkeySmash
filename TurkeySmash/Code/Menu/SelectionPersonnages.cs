@@ -47,15 +47,15 @@ namespace TurkeySmash
             texteBoutons.Add(antibug1); texteBoutons.Add(antibug2); texteBoutons.Add(antibug3); texteBoutons.Add(antibug4); texteBoutons.Add(antibug5);
 
             bouton7txt = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.85f);
-            bouton7txt.Texte = "Retour";
+            bouton7txt.Texte = Langue.French ? "Retour": "Back";
             bouton7txt.SizeText = 1;
             texteBoutons.Add(bouton7txt);
 
             affichQuiChoisitSonPersonnage = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.3f, TurkeySmashGame.WindowSize.Y * 0.55f);
             if (ChoixNombrePersonnage.nombreJoueur != 0)
-                affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
             else
-                affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
 
 
             bouton1txt.NameFont = affichQuiChoisitSonPersonnage.NameFont = bouton7txt.NameFont = "MenuFont";
@@ -65,9 +65,12 @@ namespace TurkeySmash
         public override void Init()
         {
             backgroundMenu.Load(TurkeySmashGame.content, "Menu1\\fondMenu");
-            nomMenu.Load(TurkeySmashGame.content, "Menu1\\FR-SelectionDesPersonnages");
+            nomMenu.Load(TurkeySmashGame.content, Langue.French ? "Menu1\\FR-SelectionDesPersonnages" : "Menu1\\EN-CharactersSelection");
             nomMenu.Resize(TurkeySmashGame.manager.PreferredBackBufferWidth);
-            nomMenu.Position = new Microsoft.Xna.Framework.Vector2(1000, 100);
+            if (Langue.French)
+                nomMenu.Position = new Microsoft.Xna.Framework.Vector2(1000, 100);
+            else
+                nomMenu.Position = new Microsoft.Xna.Framework.Vector2(800, 100);
 
             bouton1.Load(TurkeySmashGame.content, "Menu1\\BoutonON", "Menu1\\BoutonOFF", boutons);
             bouton1.Position = new Microsoft.Xna.Framework.Vector2(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
@@ -93,9 +96,9 @@ namespace TurkeySmash
         {
             i = 0;
             if (ChoixNombrePersonnage.nombreJoueur != 0)
-                affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
             else
-                affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
             Basic.Quit();
             Basic.SetScreen(new OptionsCombat());
         }
@@ -109,14 +112,14 @@ namespace TurkeySmash
             {
                 i = 0;
                 if (ChoixNombrePersonnage.nombreJoueur != 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
                 Basic.SetScreen(new SelectionNiveau());
             }
             else
                 if (ChoixNombrePersonnage.nombreJoueur - i > 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur " + (i + 1) + ":";
+                    affichQuiChoisitSonPersonnage.Texte =  Langue.French ? "Joueur " : "Player " + (i + 1) + ":";
                 else
                     affichQuiChoisitSonPersonnage.Texte = "Ordinateur " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
 
@@ -132,14 +135,14 @@ namespace TurkeySmash
             {
                 i = 0;
                 if (ChoixNombrePersonnage.nombreJoueur != 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
                 Basic.SetScreen(new SelectionNiveau());
             }
             else
                 if (ChoixNombrePersonnage.nombreJoueur - i > 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur " + (i + 1) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur " : "Player " + (i + 1) + ":";
                 else
                     affichQuiChoisitSonPersonnage.Texte = "Ordinateur " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
         }
@@ -153,16 +156,16 @@ namespace TurkeySmash
             {
                 i = 0;
                 if (ChoixNombrePersonnage.nombreJoueur != 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
                 Basic.SetScreen(new SelectionNiveau());
             }
             else
                 if (ChoixNombrePersonnage.nombreJoueur - i > 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur " + (i + 1) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur " : "Player " + (i + 1) + ":";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur ": "Computer " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
         }
 
         public override void Bouton5()
@@ -174,16 +177,16 @@ namespace TurkeySmash
             {
                 i = 0;
                 if (ChoixNombrePersonnage.nombreJoueur != 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
                 Basic.SetScreen(new SelectionNiveau());
             }
             else
                 if (ChoixNombrePersonnage.nombreJoueur - i > 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur " + (i + 1) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur " : "Player " + (i + 1) + ":";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur " : "Computer " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
         }
 
         public override void Bouton6()
@@ -195,25 +198,25 @@ namespace TurkeySmash
             {
                 i = 0;
                 if (ChoixNombrePersonnage.nombreJoueur != 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
                 Basic.SetScreen(new SelectionNiveau());
             }
             else
                 if (ChoixNombrePersonnage.nombreJoueur - i > 0)
-                    affichQuiChoisitSonPersonnage.Texte = "Joueur " + (i + 1) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur " : "Player " + (i + 1) + ":";
                 else
-                    affichQuiChoisitSonPersonnage.Texte = "Ordinateur " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
+                    affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur " : "Computer " + (i + 1 - ChoixNombrePersonnage.nombreJoueur) + ":";
         }
 
         public override void Bouton7()
         {
             i = 0;
             if (ChoixNombrePersonnage.nombreJoueur != 0)
-                affichQuiChoisitSonPersonnage.Texte = "Joueur 1:";
+                affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Joueur 1:" : "Player 1:";
             else
-                affichQuiChoisitSonPersonnage.Texte = "Ordinateur 1:";
+                affichQuiChoisitSonPersonnage.Texte = Langue.French ? "Ordinateur 1:" : "Computer 1";
             Basic.Quit();
         }
 

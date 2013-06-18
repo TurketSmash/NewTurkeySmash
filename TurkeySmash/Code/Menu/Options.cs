@@ -9,8 +9,11 @@
         private BoutonImageMenu bouton3 = new BoutonImageMenu();
         private BoutonImageMenu bouton4 = new BoutonImageMenu();
         private Texte son;
+        private Texte affichage;
+        private Texte langue;
+        /*
         private Texte resolution;
-        private Texte pleinEcran;
+        private Texte pleinEcran;*/
         private Texte retour;
         private float xPos = 350;
         private float yPos = 300;
@@ -25,22 +28,22 @@
             yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
 
             son = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.3f);
-            son.Texte = "Son";
+            son.Texte = Langue.French ? "Son" : "Sound";
             texteBoutons.Add(son);
 
-            resolution = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
-            resolution.Texte = "Resolution";
-            texteBoutons.Add(resolution);
+            affichage = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.5f);
+            affichage.Texte = Langue.French ? "Affichage" : "Display";
+            texteBoutons.Add(affichage);
 
-            pleinEcran = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
-            pleinEcran.Texte = "Plein Ecran";
-            texteBoutons.Add(pleinEcran);
+            langue = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.2f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.7f);
+            langue.Texte = Langue.French ? "Langue" : "Language";
+            texteBoutons.Add(langue);
 
             retour = new Texte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.25f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.9f);
-            retour.Texte = "Retour";
+            retour.Texte = Langue.French ? "Retour" : "Back";
             texteBoutons.Add(retour);
 
-            son.NameFont = resolution.NameFont = pleinEcran.NameFont = retour.NameFont = "MenuFont";
+            son.NameFont = affichage.NameFont = langue.NameFont = retour.NameFont = "MenuFont";
         }
 
         public override void Init()
@@ -80,7 +83,7 @@
 
         public override void Bouton3()
         {
-            TurkeySmashGame.manager.ToggleFullScreen();
+            Basic.SetScreen(new Langue());
         }
 
         public override void Bouton4()
