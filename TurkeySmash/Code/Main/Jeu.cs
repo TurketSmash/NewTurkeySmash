@@ -16,6 +16,8 @@ namespace TurkeySmash
         bool gameStarted = false;
         int compteurDebutDePartie = 0;
         AnimatedSprite compteur;
+        bool compteurMusique = true;
+        SoundEffect compteurMusic = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\321fight");
 
         private int i = 0;
 
@@ -262,6 +264,11 @@ namespace TurkeySmash
             else
             {
                 compteur.Update(gameTime);
+                if (compteurMusique)
+                {
+                    compteurMusic.Play();
+                    compteurMusique = false;
+                }
                 if (compteurDebutDePartie > 3000)
                     gameStarted = true;
                 compteurDebutDePartie += gameTime.ElapsedGameTime.Milliseconds;
