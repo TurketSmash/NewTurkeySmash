@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework.Content;
 using System;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace TurkeySmash
 {
@@ -27,6 +29,8 @@ namespace TurkeySmash
         decimal timer;
         int compteur = 0;
         bool isFinish = false;
+        bool gameOver = true;
+        SoundEffect gameOverSound = TurkeySmashGame.content.Load<SoundEffect>("Sons\\effets\\Game Over");
         const int tempsAffichageFinDePartie = 5000;
         public Vector2[] spawnPoints = new Vector2[4];
         Vector2 respawnPoint;
@@ -46,10 +50,15 @@ namespace TurkeySmash
             new int[] {4,-999,0, -1}
             };
         #region Items
-        Sprite caisseSprite = new Sprite(); //items.Add(new RectPhysicsObject(world, TurkeySmashGame.WindowMid, 3.0f, caisseSprite));
+        float massItem = 0.25f;
+        Sprite caisseSprite = new Sprite();
         Sprite blocSwag = new Sprite();
-        Sprite football = new Sprite(); //items.Add(new RoundPhysicsObject(world, TurkeySmashGame.WindowMid, 4, 0.7f, football));
+        Sprite football = new Sprite();
         Sprite pingpong = new Sprite();
+        Sprite baguette = new Sprite();
+        Sprite pq = new Sprite();
+        Sprite pneu = new Sprite();
+        Sprite tv = new Sprite();
         #endregion
         #region Bonus
         Sprite dinde = new Sprite();
@@ -78,9 +87,13 @@ namespace TurkeySmash
             background.Load(content, backgroundName);
 
             football.Load(TurkeySmashGame.content, "Jeu\\level2\\football");
-            caisseSprite.Load(TurkeySmashGame.content, "Jeu\\level1\\caisse");
+            caisseSprite.Load(TurkeySmashGame.content, "Jeu\\Objets\\caisse");
             blocSwag.Load(TurkeySmashGame.content, "Jeu\\level2\\blocSwag");
             pingpong.Load(TurkeySmashGame.content, "Jeu\\Objets\\PingPong");
+            baguette.Load(TurkeySmashGame.content, "Jeu\\Objets\\baguette");
+            pneu.Load(TurkeySmashGame.content, "Jeu\\Objets\\pneu");
+            pq.Load(TurkeySmashGame.content, "Jeu\\Objets\\rouleauPQ");
+            tv.Load(TurkeySmashGame.content, "Jeu\\Objets\\télé");
 
             dinde.Load(TurkeySmashGame.content, "Jeu\\Objets\\dinde");
             hamburger.Load(TurkeySmashGame.content, "Jeu\\Objets\\hamburger");
@@ -101,16 +114,17 @@ namespace TurkeySmash
 
         public void Update(GameTime gameTime)
         {
+            //debug
+            if ((Keyboard.GetState().IsKeyDown(Keys.NumPad1)))
+                spawnItem(0, Vector2.Zero);
+
+
             nextItemSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             nextBonusSpawn -= gameTime.ElapsedGameTime.Milliseconds;
             timer += (decimal)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (isFinish)
                 compteur += gameTime.ElapsedGameTime.Milliseconds;
-
-            if ((Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0)))
-                spawnBonus(1, Vector2.Zero);
-            if ((Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad1)))
-                spawnBonus(4, Vector2.Zero);
+           
             if (nextItemSpawn < 0)
             {
                 spawnItem(0, Vector2.Zero);
@@ -458,6 +472,11 @@ namespace TurkeySmash
                     finDePartie = new Sprite();
                     finDePartie.Load(TurkeySmashGame.content, "Menu1\\FR-PartieTerminée");
                     finDePartie.Position = new Vector2(TurkeySmashGame.WindowMid.X, TurkeySmashGame.WindowMid.Y);
+                    if (gameOver)
+                    {
+                        gameOver = false;
+                        gameOverSound.Play();
+                    }
                 }
 
             if (OptionsCombat.TypePartieSelect == "temps")
@@ -494,7 +513,7 @@ namespace TurkeySmash
             Vector2 pos = position;
 
             if (i == 0)
-                num = RandomProvider.GetRandom().Next(1, 5);
+                num = RandomProvider.GetRandom().Next(1, 9);
 
             if (position == Vector2.Zero)
                 pos = new Vector2(RandomProvider.GetRandom().Next((int)(TurkeySmashGame.WindowSize.X / 6), (int)(5 * TurkeySmashGame.WindowSize.X / 6)), TurkeySmashGame.WindowSize.Y / 6);
@@ -504,7 +523,7 @@ namespace TurkeySmash
             {
                 case 1:
                     itemsSprite.Add(football);
-                    item = new RoundPhysicsObject(world, pos, 4, 0.7f, football);
+                    item = new RoundPhysicsObject(world, pos, 3f, 0.7f, football);
                     break;
                 case 2:
                     itemsSprite.Add(caisseSprite);
@@ -512,13 +531,37 @@ namespace TurkeySmash
                     break;
                 case 3:
                     itemsSprite.Add(blocSwag);
-                    item = new RectPhysicsObject(world, pos, 3.0f, blocSwag);
+                    item = new RectPhysicsObject(world, pos, 1f, blocSwag);
                     break;
                 case 4:
                     itemsSprite.Add(pingpong);
                     item = new RoundPhysicsObject(world, pos, 5, 0.90f, pingpong);
                     break;
+                case 5:
+                    itemsSprite.Add(baguette);
+                    item = new RectPhysicsObject(world, pos, 4, baguette);
+                    break;
+                case 6:
+                    itemsSprite.Add(pneu);
+                    item = new RoundPhysicsObject(world, pos, 5, 0.75f, pneu);
+                    break;
+                case 7:
+                    itemsSprite.Add(pq);
+                    item = new RectPhysicsObject(world, pos, 5, pq);
+                    break;
+                case 8:
+                    itemsSprite.Add(tv);
+                    item = new RectPhysicsObject(world, pos, 1, tv);
+                    break;
             }
+            FarseerBodyUserData userData = new FarseerBodyUserData
+            {
+                IsCharacter = false,
+                IsBonus = false,
+                IsItem = true,
+            };
+            item.body.UserData = userData;
+            item.body.Mass = massItem;
             items.Add(item);
         }
         void spawnBonus(int i, Vector2 position)

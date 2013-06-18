@@ -142,9 +142,6 @@ namespace TurkeySmash
 
         public override void Update(GameTime gameTime)
         {
-            if (playerindex == PlayerIndex.One)
-                Console.WriteLine(forceItem);
-
             position = ConvertUnits.ToDisplayUnits(bodyPosition) - bodySize; // update de la position de l'image
             newPosition = bodyPosition;
             newColor = color;
@@ -395,7 +392,7 @@ namespace TurkeySmash
             FarseerBodyUserData dataA = (FarseerBodyUserData)body.UserData;
             int pourcentB = 0;
 
-            if (fixB.Body.UserData != null) 
+            if (fixB.Body.UserData != null)
             {
                 if (dataB.IsBonus)
                 {
@@ -420,7 +417,7 @@ namespace TurkeySmash
                         dataB.LastHit = Convert.PlayerIndex2Int(playerindex);
                         dataB.Pourcent = dataB.Pourcent + pourcentageInflige;
                         pourcentB = dataB.Pourcent;
-                        fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
+                        fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 1 : -1, 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem *3);
                         particles.Add(new ParticleEngine(textures, ConvertUnits.ToDisplayUnits(new Vector2(fixB.Body.Position.X, fixB.Body.Position.Y - 0.2f)), new Vector2(0, 0), Color.White, 4, 500, 1.2f));
                     }
                     else
@@ -428,12 +425,14 @@ namespace TurkeySmash
                         punchMiss.Play();
                     }
                 }
+                if (dataB.IsItem)
+                {
+                    punchObjet.Play();
+                    fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 12 : -12, 2 * 2 - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
+                }
             }
             else
-            {
                 punchObjet.Play();
-                fixB.Body.ApplyLinearImpulse(new Vector2(lookingRight ? 12 : -12, 2 * 2 * y - 0.5f) * (1 + (pourcentB / 50)) * forceItem);
-            }
 
             return true;
         }
@@ -523,7 +522,7 @@ namespace TurkeySmash
                 inAction = true;
                 canHit = false;
                 TimeBetweenFrame = 125;
-                x = lookingRight ? 2 : -2;
+                x = lookingRight ? 1 : -1;
                 bodyPosition = new Vector2(bodyPosition.X + x, bodyPosition.Y);
                 body.ApplyForce(new Vector2(0, 0.001f));
 

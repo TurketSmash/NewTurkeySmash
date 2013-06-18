@@ -173,13 +173,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\level1\caisse.png">
-      <Name>caisse</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Jeu\level2\blocSwag.png">
       <Name>blocSwag</Name>
       <Importer>TextureImporter</Importer>
@@ -737,6 +730,37 @@
       <Name>MusicMenu</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\Objets\caisse.png">
+      <Name>caisse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\Objets\baguette.png">
+      <Name>baguette</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jeu\Objets\pneu.png">
+      <Name>pneu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\Objets\rouleauPQ.png">
+      <Name>rouleauPQ</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Jeu\Objets\télé.png">
+      <Name>télé</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

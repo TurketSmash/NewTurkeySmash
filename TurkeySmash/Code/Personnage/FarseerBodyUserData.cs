@@ -10,6 +10,7 @@ namespace TurkeySmash
         public bool Protecting { get; set; }
         public bool IsCharacter { get; set; }
         public bool IsBonus { get; set; }
+        public bool IsItem { get; set; }
         public bool IsUsed { get; set; }
         public bool Invincible { get; set; }
         public bool PowerUp { get; set; }

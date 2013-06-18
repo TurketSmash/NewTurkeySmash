@@ -65,7 +65,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Up) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f & player == PlayerIndex.Two)
+                (GamePad.GetState(player).ThumbSticks.Left.Y > 0.5f & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.O) & player == PlayerIndex.Four)
                 );
         }
 
@@ -73,7 +74,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Down) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f & player == PlayerIndex.Two)
+                (GamePad.GetState(player).ThumbSticks.Left.Y < -0.5f & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.L) & player == PlayerIndex.Four)
                 );
         }
 
@@ -81,7 +83,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Right) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).ThumbSticks.Left.X > 0.5f & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).ThumbSticks.Left.X > 0.5f & player == PlayerIndex.Two)
+                (GamePad.GetState(player).ThumbSticks.Left.X > 0.5f & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.M) & player == PlayerIndex.Four)
                 );
         }
 
@@ -89,7 +92,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Left) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).ThumbSticks.Left.X < -0.5f & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).ThumbSticks.Left.X < -0.5f & player == PlayerIndex.Two)
+                (GamePad.GetState(player).ThumbSticks.Left.X < -0.5f & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.K) & player == PlayerIndex.Four)
                 );
         }
 
@@ -97,7 +101,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Space) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).Buttons.A == ButtonState.Pressed & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).Buttons.A == ButtonState.Pressed & player == PlayerIndex.Two)
+                (GamePad.GetState(player).Buttons.A == ButtonState.Pressed & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.P) & player == PlayerIndex.Four)
                 );
         }
 
@@ -105,7 +110,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.A) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).Buttons.B == ButtonState.Pressed & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).Buttons.B == ButtonState.Pressed & player == PlayerIndex.Two)
+                (GamePad.GetState(player).Buttons.B == ButtonState.Pressed & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.I) & player == PlayerIndex.Four)
                 );
         }
 
@@ -113,7 +119,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.E) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).Buttons.Y == ButtonState.Pressed & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).Buttons.Y == ButtonState.Pressed & player == PlayerIndex.Two)
+                (GamePad.GetState(player).Buttons.Y == ButtonState.Pressed & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.U) & player == PlayerIndex.Four)
                 );
         }
 
@@ -121,7 +128,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyDown(Keys.Z) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).Buttons.X == ButtonState.Pressed & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).Buttons.X == ButtonState.Pressed & player == PlayerIndex.Two)
+                (GamePad.GetState(player).Buttons.X == ButtonState.Pressed & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyDown(Keys.J) & player == PlayerIndex.Four)
                 );
         }
 
@@ -129,7 +137,8 @@ namespace TurkeySmash
         {
             return ((Keyboard.GetState().IsKeyUp(Keys.A) & player == PlayerIndex.Three) ||
                 (GamePad.GetState(player).Buttons.B == ButtonState.Released & player == PlayerIndex.One) ||
-                (GamePad.GetState(player).Buttons.B == ButtonState.Released & player == PlayerIndex.Two)
+                (GamePad.GetState(player).Buttons.B == ButtonState.Released & player == PlayerIndex.Two) ||
+                (Keyboard.GetState().IsKeyUp(Keys.I) & player == PlayerIndex.Four)
                 );
         }
 
