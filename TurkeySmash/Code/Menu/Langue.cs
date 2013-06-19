@@ -9,7 +9,7 @@ namespace TurkeySmash
     {
         #region Fields 
 
-        public static bool French = false;
+        public static bool French = true;
 
         private BoutonTexte bouton1;
         private BoutonTexte bouton2;
@@ -29,7 +29,7 @@ namespace TurkeySmash
             yPos = TurkeySmashGame.manager.PreferredBackBufferHeight / 4;
             bouton1 = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.5f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.4f);
             bouton2 = new BoutonTexte(TurkeySmashGame.manager.PreferredBackBufferWidth * 0.5f, TurkeySmashGame.manager.PreferredBackBufferHeight * 0.55f);
-            bouton2.Texte = "Retour";
+            bouton2.Texte = French ? "Retour" : "Back";
             texteBoutons.Add(antibug1); texteBoutons.Add(antibug2);
         }
 

@@ -35,7 +35,6 @@ Content\Jeu\particules\circle.xnb
 Content\Jeu\particules\diamond.xnb
 Content\Jeu\particules\star.xnb
 Content\Jeu\Objets\PingPong.xnb
-Content\Jeu\Objets\BonusTest.xnb
 Content\MenuFont.xnb
 Content\Jeu\Objets\hamburger.xnb
 Content\Jeu\Objets\raquette.xnb
@@ -100,8 +99,6 @@ Content\Menu1\PersoLevel\BoutonTurkeyOFF.xnb
 Content\Menu1\PersoLevel\BoutonTurkeyON.xnb
 Content\HUD\HUDTurkeyLifeIcone.xnb
 Content\HUD\HUDTurkey.xnb
-Content\Jeu\Objets\1up.xnb
-Content\Jeu\Objets\boxMario.xnb
 Content\Jeu\Objets\dinde.xnb
 Content\Menu1\PersoLevel\BoutonLevel4OFF.xnb
 Content\Menu1\PersoLevel\BoutonLevel4ON.xnb
@@ -119,6 +116,9 @@ Content\Jeu\Objets\baguette.xnb
 Content\Jeu\Objets\pneu.xnb
 Content\Jeu\Objets\rouleauPQ.xnb
 Content\Jeu\Objets\télé.xnb
+Content\Sons\effets\321fight.xnb
+Content\Sons\effets\Game Over.xnb
+Content\Jeu\effets\Ejection.xnb
 Content\Sons\musique1.wma
 Content\Sons\musique2.wma
 Content\Sons\Musiques\MusicLvl1.wma

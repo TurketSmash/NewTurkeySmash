@@ -71,7 +71,7 @@ namespace TurkeySmash
                 if (Results.ResultsBoard[i][1] != -999) // Si il y a 3 joueurs
                 {
                     joueurs[i] = new Texte((Xpos / 8) + ((Xpos / 4) * (Results.ResultsBoard[i][0] - 1)), YjoueurPos);
-                    joueurs[i].Texte = Langue.French ? "Joueur " : "Player " + Results.ResultsBoard[i][0];
+                    joueurs[i].Texte = (Langue.French ? "Joueur " : "Player ") + Results.ResultsBoard[i][0];
                 }
 
             #endregion
@@ -169,7 +169,7 @@ namespace TurkeySmash
                                 con = 1;
                             n += con;
                             kills[j][i] = new Texte(posKills[Results.ResultsBoard[i][0] - 1], Ypos * (0.730f + (0.092f * j)));
-                            kills[j][i].Texte = Langue.French ?"Joueur " : "Player " + n + (Langue.French ?" tues : ":" killed : ") + Results.ResultsBoard[i][3 + (n - 1)];
+                            kills[j][i].Texte = (Langue.French ?"Joueur " : "Player ") + n + (Langue.French ?" tues : ":" killed : ") + Results.ResultsBoard[i][3 + (n - 1)];
                         }
                     }
                 }
@@ -195,7 +195,7 @@ namespace TurkeySmash
                         }
                         else
                         {
-                            timers[i].Texte = Langue.French ? ("Dernier" + "\n" + "Debout") : ("Last One" + "\n" + "Standing"); //last one standing
+                            timers[i].Texte = (Langue.French ? ("Dernier" + "\n" + "Debout") : ("Last One" + "\n" + "Standing")); //last one standing
                         }
                     }
             }

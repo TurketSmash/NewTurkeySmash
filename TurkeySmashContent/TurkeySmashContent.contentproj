@@ -430,11 +430,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\Objets\BonusTest.png">
-      <Name>BonusTest</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Jeu\Objets\hamburger.png">
       <Name>hamburger</Name>
       <Importer>TextureImporter</Importer>
@@ -653,16 +648,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jeu\Objets\1up.png">
-      <Name>1up</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Jeu\Objets\boxMario.png">
-      <Name>boxMario</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Jeu\Objets\dinde.png">
       <Name>dinde</Name>
       <Importer>TextureImporter</Importer>

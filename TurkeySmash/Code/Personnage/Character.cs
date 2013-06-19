@@ -336,11 +336,13 @@ namespace TurkeySmash
             {
                 compteurPowerUp += time;
                 puissPowerUp = 1.5f;
+                pourcentageInflige = 14;
             }
             else
             {
                 puissPowerUp = 1;
                 compteurPowerUp = 1;
+                pourcentageInflige = 7;
             }
 
             #endregion
@@ -379,7 +381,7 @@ namespace TurkeySmash
                         dataA.PowerUp = true;
                     if (dataB.BonusType == "pourcent")
                     {
-                        dataA.Pourcent -= 3 * 3;
+                        dataA.Pourcent -= 7 * 3;
                         if (dataA.Pourcent < 0)
                             dataA.Pourcent = 0;
                     }
