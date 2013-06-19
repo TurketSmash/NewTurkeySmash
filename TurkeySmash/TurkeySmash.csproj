@@ -121,7 +121,9 @@
     <Compile Include="Code\Divers\Input.cs" />
     <Compile Include="Code\Divers\RandomProvider.cs" />
     <Compile Include="Code\Divers\Results.cs" />
-    <Compile Include="Code\Level.cs" />
+    <Compile Include="..\..\..\..\..\Desktop\Level.cs">
+      <Link>Code\Level.cs</Link>
+    </Compile>
     <Compile Include="Code\Main\Basic.cs" />
     <Compile Include="Code\Main\Jeu.cs" />
     <Compile Include="Code\Menu\Accueil.cs" />
