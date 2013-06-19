@@ -21,8 +21,10 @@ namespace TurkeySmash
             timerFont.NameFont = "Pourcent";
             timerFont.Load(TurkeySmashGame.content);
             timerFont.SizeText = 1.0f;
-            if (SelectionNiveau.niveauSelect == "level2")
-                timerFont.Color = Color.White;
+            if (SelectionNiveau.niveauSelect == "level1")
+                timerFont.Color = Color.Black;
+            else
+             timerFont.Color = Color.White;
 
             if (OptionsCombat.TypePartieSelect == "temps")
                 timer = OptionsCombat.TempsPartie * 60000 ; //60*1000 = 1 min en millisecond
